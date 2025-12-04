@@ -1,0 +1,43 @@
+<node componentName="tFileInputDelimited" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="{{pos_x}}" posY="{{pos_y}}">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="{{unique_name}}" show="false"/>
+    <elementParameter field="CHECK" name="USE_EXISTING_DYNAMIC" value="false"/>
+    <elementParameter field="COMPONENT_LIST" name="DYNAMIC" value="" show="false"/>
+    <elementParameter field="LABEL" name="FILENAMETEXT" value="&quot;When the input source is a stream or a zip file,footer and random shouldn't be bigger than 0.&quot;"/>
+    <elementParameter field="FILE" name="FILENAME" value="{{file_path}}"/>
+    <elementParameter field="CHECK" name="CSV_OPTION" value="{{csv_option}}"/>
+    <elementParameter field="TEXT" name="ROWSEPARATOR" value="{{row_separator}}"/>
+    <elementParameter field="OPENED_LIST" name="CSVROWSEPARATOR" value="{{csv_row_separator}}" show="false"/>
+    <elementParameter field="TEXT" name="FIELDSEPARATOR" value="{{field_separator}}"/>
+    <elementParameter field="TEXT" name="ESCAPE_CHAR" value="{{escape_char}}" show="false"/>
+    <elementParameter field="TEXT" name="TEXT_ENCLOSURE" value="{{text_enclosure}}" show="false"/>
+    <elementParameter field="TEXT" name="HEADER" value="{{header_lines}}"/>
+    <elementParameter field="TEXT" name="FOOTER" value="{{footer_lines}}"/>
+    <elementParameter field="TEXT" name="LIMIT" value="{{row_limit}}"/>
+    <elementParameter field="CHECK" name="REMOVE_EMPTY_ROW" value="{{remove_empty_row}}"/>
+    <elementParameter field="CHECK" name="UNCOMPRESS" value="{{uncompress}}"/>
+    <elementParameter field="CHECK" name="DIE_ON_ERROR" value="{{die_on_error}}"/>
+    <elementParameter field="DIRECTORY" name="TEMP_DIR" value="{{temp_directory}}" show="false"/>
+    <elementParameter field="CHECK" name="ADVANCED_SEPARATOR" value="{{advanced_separator}}"/>
+    <elementParameter field="TEXT" name="THOUSANDS_SEPARATOR" value="{{thousands_separator}}" show="false"/>
+    <elementParameter field="TEXT" name="DECIMAL_SEPARATOR" value="{{decimal_separator}}" show="false"/>
+    <elementParameter field="CHECK" name="RANDOM" value="false"/>
+    <elementParameter field="TEXT" name="NB_RANDOM" value="10" show="false"/>
+    <elementParameter field="CHECK" name="TRIMALL" value="{{trim_all}}"/>
+    <!-- TRIMSELECT: Generate dynamically based on schema columns -->
+    {{trim_select_table}}
+    <elementParameter field="CHECK" name="CHECK_FIELDS_NUM" value="{{check_fields_num}}"/>
+    <elementParameter field="CHECK" name="CHECK_DATE" value="{{check_date}}"/>
+    <elementParameter field="ENCODING_TYPE" name="ENCODING" value="{{encoding}}"/>
+    <elementParameter field="TECHNICAL" name="ENCODING:ENCODING_TYPE" value="{{encoding_type}}"/>
+    <elementParameter field="CHECK" name="SPLITRECORD" value="{{split_record}}"/>
+    <elementParameter field="CHECK" name="ENABLE_DECODE" value="{{enable_decode}}"/>
+    <!-- DECODE_COLS: Generate dynamically based on schema columns -->
+    {{decode_cols_table}}
+    <elementParameter field="TEXT" name="DESTINATION" value="" show="false"/>
+    <elementParameter field="CHECK" name="USE_HEADER_AS_IS" value="{{use_header_as_is}}"/>
+    <elementParameter field="TEXT" name="SCHEMA_OPT_NUM" value="100" show="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    <!-- METADATA: Generate dynamically based on schema columns -->
+    {{metadata_flow}}
+    {{metadata_reject}}
+</node>

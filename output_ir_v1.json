@@ -1,0 +1,2153 @@
+{
+  "irVersion": "1.0",
+  "generatedAt": "2025-11-27T17:22:04.655127Z",
+  "job": {
+    "id": "job-d4f477af",
+    "name": "DIM_TEST_CONTRACT_AECB_I"
+  },
+  "nodes": [
+    {
+      "id": "n0",
+      "type": "Transform",
+      "subtype": "Map",
+      "name": "value",
+      "props": {},
+      "schemaRef": "s_V0S323",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    },
+    {
+      "id": "n1",
+      "type": "Transform",
+      "subtype": "Map",
+      "name": "Xfm_Befr_Dim",
+      "props": {},
+      "schemaRef": "s_V0S332",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    },
+    {
+      "id": "n2",
+      "type": "Transform",
+      "subtype": "Map",
+      "name": "Xfm_Contract",
+      "props": {},
+      "schemaRef": "s_V0S333",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    },
+    {
+      "id": "n3",
+      "type": "Transform",
+      "subtype": "Custom",
+      "name": "selection",
+      "props": {
+        "customType": "CCustomStage",
+        "description": "DataStage CCustomStage component"
+      },
+      "schemaRef": "s_V0S339",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    },
+    {
+      "id": "n4",
+      "type": "Transform",
+      "subtype": "Map",
+      "name": "Xfm_Contratc",
+      "props": {},
+      "schemaRef": "s_V0S341",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    },
+    {
+      "id": "n5",
+      "type": "Transform",
+      "subtype": "Custom",
+      "name": "operator",
+      "props": {
+        "customType": "CCustomStage",
+        "description": "DataStage CCustomStage component"
+      },
+      "schemaRef": "s_V0S346",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    },
+    {
+      "id": "n6",
+      "type": "Transform",
+      "subtype": "Map",
+      "name": "key",
+      "props": {},
+      "schemaRef": "s_V0S348",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    },
+    {
+      "id": "n7",
+      "type": "Transform",
+      "subtype": "Custom",
+      "name": "key",
+      "props": {
+        "customType": "CCustomStage",
+        "description": "DataStage CCustomStage component"
+      },
+      "schemaRef": "s_V0S355",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    },
+    {
+      "id": "n8",
+      "type": "Transform",
+      "subtype": "Custom",
+      "name": "key",
+      "props": {
+        "customType": "CCustomStage",
+        "description": "DataStage CCustomStage component"
+      },
+      "schemaRef": "s_V0S357",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    },
+    {
+      "id": "n9",
+      "type": "Transform",
+      "subtype": "Map",
+      "name": "svPAYMENTAMOUNT",
+      "props": {},
+      "schemaRef": "s_V0S370",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    },
+    {
+      "id": "n10",
+      "type": "Transform",
+      "subtype": "Map",
+      "name": "Lookup_373",
+      "props": {},
+      "schemaRef": "s_V0S373",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    },
+    {
+      "id": "n11",
+      "type": "Transform",
+      "subtype": "Map",
+      "name": "key",
+      "props": {},
+      "schemaRef": "s_V0S379",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "nodeId": "n784",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n716",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S332"
+    },
+    {
+      "id": "l2",
+      "from": {
+        "nodeId": "n784",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n40",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S332"
+    },
+    {
+      "id": "l3",
+      "from": {
+        "nodeId": "n87",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n808",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S333"
+    },
+    {
+      "id": "l4",
+      "from": {
+        "nodeId": "n927",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n280",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S341"
+    },
+    {
+      "id": "l5",
+      "from": {
+        "nodeId": "n927",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n40",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S341"
+    },
+    {
+      "id": "l6",
+      "from": {
+        "nodeId": "n106",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n215",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S370"
+    }
+  ],
+  "schemas": {
+    "s_V0S323": [
+      {
+        "name": "ProviderSubjectNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DateOfLastUpdate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "FirstNameEN",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "LastNameEN",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "FullNameEN",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "FirstNameAR",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "LastNameAR",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "FullNameAR",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DOB",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gender",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Title",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ResidentFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Nationality",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PassprtNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PassportExpiryDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DrivingLicenseNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EmiratesId",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Address",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Emirate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PlotNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "POBox",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PhoneNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PrimaryMobileNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "AdditionalMobileNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Email",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EmployerName",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DateOfEmployment",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DateOfTermination",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "GrossAnnualIncome",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EmploymentType",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Source",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "GrossAnnualAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SourceType",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "change_code",
+        "type": "string",
+        "nullable": false
+      }
+    ],
+    "s_V0S332": [
+      {
+        "name": "ProviderSubjectNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OriginalCurrency",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ReferenceDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractType",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ActiveFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OpenDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ClosedDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractStatus",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractStatusDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "TotalAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PAYMENTAMOUNT",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NOOFINSTALMENTS",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NOOFREMAININGINSTALMENTS",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "MethodOfPayment",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PaymentFrequency",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Balance",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OverdueAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DaysPaymentDelay",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "IslamicContractFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SecuredContractFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SecurityTypeFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SourceSystem",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EconomicActivityCode",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ProviderSubjectNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ProviderContractNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OpenDate",
+        "type": "date",
+        "nullable": true
+      },
+      {
+        "name": "FullNameEN",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DOB",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gender",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ResidentFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Nationality",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PassprtNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EmiratesId",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Emirate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PrimaryMobileNo",
+        "type": "string",
+        "nullable": true
+      }
+    ],
+    "s_V0S333": [
+      {
+        "name": "V_CUSTOMER_CODE",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ProviderSubjectNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DateOfLastUpdate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "FirstNameEN",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "LastNameEN",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "FullNameEN",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "FirstNameAR",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "LastNameAR",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "FullNameAR",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DOB",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gender",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Title",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ResidentFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Nationality",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PassprtNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PassportExpiryDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DrivingLicenseNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EmiratesId",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Address",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Emirate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PlotNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "POBox",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PhoneNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PrimaryMobileNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "AdditionalMobileNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Email",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EmployerName",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DateOfEmployment",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DateOfTermination",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "GrossAnnualIncome",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EmploymentType",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Source",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "GrossAnnualAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SourceType",
+        "type": "string",
+        "nullable": true
+      }
+    ],
+    "s_V0S341": [
+      {
+        "name": "V_CUSTOMER_CODE",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ProviderSubjectNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OriginalCurrency",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ReferenceDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractType",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ActiveFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OpenDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ClosedDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractStatus",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractStatusDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "TotalAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PAYMENTAMOUNT",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NOOFINSTALMENTS",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NOOFREMAININGINSTALMENTS",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "MethodOfPayment",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PaymentFrequency",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Balance",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OverdueAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DaysPaymentDelay",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "IslamicContractFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SecuredContractFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SecurityTypeFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SourceSystem",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EconomicActivityCode",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Contract_change_code",
+        "type": "string",
+        "nullable": false
+      },
+      {
+        "name": "PROVIDERAPPLICATIONNO",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gross_Income",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Source",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gross_Amount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EMPLOYERNAME",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ProviderSubjectNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OpenDate",
+        "type": "date",
+        "nullable": true
+      },
+      {
+        "name": "FullNameEN",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DOB",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gender",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ResidentFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Nationality",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PassprtNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EmiratesId",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Emirate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PrimaryMobileNo",
+        "type": "string",
+        "nullable": true
+      }
+    ],
+    "s_V0S346": [
+      {
+        "name": "ProviderSubjectNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OpenDate",
+        "type": "date",
+        "nullable": true
+      },
+      {
+        "name": "FullNameEN",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DOB",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gender",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ResidentFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Nationality",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PassprtNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EmiratesId",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Emirate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PrimaryMobileNo",
+        "type": "string",
+        "nullable": true
+      }
+    ],
+    "s_V0S348": [
+      {
+        "name": "V_CUSTOMER_CODE",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ProviderSubjectNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OriginalCurrency",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ReferenceDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractType",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ActiveFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OpenDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ClosedDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractStatus",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractStatusDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "TotalAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PAYMENTAMOUNT",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NOOFINSTALMENTS",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NOOFREMAININGINSTALMENTS",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "MethodOfPayment",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PaymentFrequency",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Balance",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OverdueAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DaysPaymentDelay",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "IslamicContractFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SecuredContractFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SecurityTypeFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SourceSystem",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EconomicActivityCode",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DateOfLastUpdate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "FirstNameEN",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "LastNameEN",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "FullNameEN",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "FirstNameAR",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "LastNameAR",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "FullNameAR",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DOB",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gender",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Title",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ResidentFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Nationality",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PassprtNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PassportExpiryDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DrivingLicenseNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EmiratesId",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Address",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Emirate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PlotNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "POBox",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PhoneNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PrimaryMobileNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "AdditionalMobileNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Email",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EmployerName",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DateOfEmployment",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DateOfTermination",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "GrossAnnualIncome",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EmploymentType",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Source",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "GrossAnnualAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SourceType",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Contract_change_code",
+        "type": "string",
+        "nullable": false
+      },
+      {
+        "name": "PROVIDERAPPLICATIONNO",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gross_Income",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gross_Amount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Subject_change_code",
+        "type": "string",
+        "nullable": false
+      }
+    ],
+    "s_V0S355": [
+      {
+        "name": "ProviderSubjectNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "FullNameEN",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DOB",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gender",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ResidentFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Nationality",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PassprtNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EmiratesId",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Emirate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PrimaryMobileNo",
+        "type": "string",
+        "nullable": true
+      }
+    ],
+    "s_V0S357": [
+      {
+        "name": "V_CUSTOMER_CODE",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ProviderSubjectNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OriginalCurrency",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ReferenceDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractType",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ActiveFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OpenDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ClosedDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractStatus",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractStatusDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "TotalAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PAYMENTAMOUNT",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NOOFINSTALMENTS",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NOOFREMAININGINSTALMENTS",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "MethodOfPayment",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PaymentFrequency",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Balance",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OverdueAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DaysPaymentDelay",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "IslamicContractFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SecuredContractFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SecurityTypeFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SourceSystem",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EconomicActivityCode",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PROVIDERAPPLICATIONNO",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gross_Income",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Source",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gross_Amount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EMPLOYERNAME",
+        "type": "string",
+        "nullable": true
+      }
+    ],
+    "s_V0S370": [
+      {
+        "name": "V_CUSTOMER_CODE",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ProviderSubjectNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OriginalCurrency",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ReferenceDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractType",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ActiveFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OpenDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ClosedDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractStatus",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractStatusDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "TotalAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PAYMENTAMOUNT",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "MethodOfPayment",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PaymentFrequency",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Balance",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OverdueAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DaysPaymentDelay",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "IslamicContractFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SecuredContractFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SecurityTypeFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SourceSystem",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EconomicActivityCode",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PROVIDERAPPLICATIONNO",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gross_Income",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Source",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gross_Amount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EMPLOYERNAME",
+        "type": "string",
+        "nullable": true
+      }
+    ],
+    "s_V0S373": [
+      {
+        "name": "V_CUSTOMER_CODE",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ProviderSubjectNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OriginalCurrency",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ReferenceDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractType",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ActiveFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OpenDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ClosedDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractStatus",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "V_CONTRACT_STATUS",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractStatusDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "TotalAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PAYMENTAMOUNT",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NOOFINSTALMENTS",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NOOFREMAININGINSTALMENTS",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "MethodOfPayment",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PaymentFrequency",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Balance",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OverdueAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DaysPaymentDelay",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "IslamicContractFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SecuredContractFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SecurityTypeFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SourceSystem",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EconomicActivityCode",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PROVIDERAPPLICATIONNO",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gross_Income",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Source",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gross_Amount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EMPLOYERNAME",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "HF_CONTRACT",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "V_LAA_LPP_PRODCAT_C",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "TOTALAMOUNT_LD",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PAYMENTAMOUNT_A",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NOOFINSTALMENTS_V",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NOOFREMAININGINSTALMENTS_DUE",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "CONTRACTSTATUSDATE_DM",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PAYMENTAMOUNT_EMI",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "V_SEGMENT_DESC",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "V_PRODUCT_CODE",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EMI",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "RM_DPD",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "RM_OVRD",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "RM_FLG",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NEW_DPD",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NEW_OD",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "RM2_FLG",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "RM3_DPD",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "RM3_OVRD",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "RM3_FLG",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "RM4_DPD",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "RM4_OVRD",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "RM4_FLG",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "RM5_DPD",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "RM5_OVRD",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "RM5_FLG",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "RM6_FLG",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "TENOR",
+        "type": "string",
+        "nullable": true
+      }
+    ],
+    "s_V0S379": [
+      {
+        "name": "V_CUSTOMER_CODE",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ProviderSubjectNo",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OriginalCurrency",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ReferenceDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractType",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ActiveFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OpenDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ClosedDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractStatus",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "V_CONTRACT_STATUS",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "ContractStatusDate",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "TotalAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PAYMENTAMOUNT",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NOOFINSTALMENTS",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "NOOFREMAININGINSTALMENTS",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "MethodOfPayment",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PaymentFrequency",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Balance",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "OverdueAmount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "DaysPaymentDelay",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "IslamicContractFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SecuredContractFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SecurityTypeFlag",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "SourceSystem",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EconomicActivityCode",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "PROVIDERAPPLICATIONNO",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gross_Income",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Source",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Gross_Amount",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "EMPLOYERNAME",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "HF_CONTRACT",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "V_LAA_LPP_PRODCAT_C",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "TOTALAMOUNT_LD",
+        "type": "string",
+        "nullable": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<talendfile:ProcessType xmlns:xmi="http://www.omg.org/XMI" xmlns:talendfile="platform:/resource/org.talend.model/model/TalendFile.xsd" xmi:version="2.0" defaultContext="Default" jobType="Standard">
+  <node componentName="tWriteXMLField" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="100" posY="100">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="Address_compose"/>
+    <metadata connector="FLOW" name="Address_compose"/>
+  </node>
+  <node componentName="tFileInputDelimited" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="500" posY="100">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="Address_file"/>
+    <elementParameter field="FILE" name="FILENAME" value=""/>
+    <elementParameter field="TEXT" name="ROWSEPARATOR" value="&quot;\n&quot;"/>
+    <elementParameter field="TEXT" name="FIELDSEPARATOR" value="&quot;,&quot;"/>
+    <metadata connector="FLOW" name="Address_file">
+      <column comment="" key="false" length="255" name="street" nullable="true" pattern="" precision="0" sourceType="" type="id_String"/>
+      <column comment="" key="false" length="255" name="city" nullable="true" pattern="" precision="0" sourceType="" type="id_String"/>
+      <column comment="" key="false" length="255" name="state" nullable="true" pattern="" precision="0" sourceType="" type="id_String"/>
+      <column comment="" key="false" length="255" name="country" nullable="true" pattern="" precision="0" sourceType="" type="id_String"/>
+      <column comment="" key="false" length="255" name="postalCode" nullable="true" pattern="" precision="0" sourceType="" type="id_String"/>
+      <column comment="" key="false" length="255" name="phonenumber1" nullable="true" pattern="" precision="0" sourceType="" type="id_String"/>
+      <column comment="" key="false" length="255" name="phonenumber2" nullable="true" pattern="" precision="0" sourceType="" type="id_String"/>
+      <column comment="" key="false" length="255" name="address_type" nullable="true" pattern="" precision="0" sourceType="" type="id_String"/>
+    </metadata>
+  </node>
+  <connection connectorName="FLOW" label="Address" lineStyle="0" metaname="Address_file" offsetLabelX="0" offsetLabelY="0" source="Address_file" target="Address_compose"/>
+</talendfile:ProcessType>

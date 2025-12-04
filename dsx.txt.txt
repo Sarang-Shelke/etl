@@ -1,0 +1,815 @@
+BEGIN HEADER
+   CharacterSet "CP1252"
+   ExportingTool "IBM InfoSphere DataStage Export"
+   ToolVersion "8"
+   ServerName "99R0367"
+   ToolInstanceID "ANALYZERPROJECT"
+   MDISVersion "1.0"
+   Date "2011-10-31"
+   Time "16.32.56"
+   ServerVersion "8.7"
+END HEADER
+BEGIN DSJOB
+   Identifier "xml_hpivot_example"
+   DateModified "2011-10-31"
+   TimeModified "16.36.13"
+   BEGIN DSRECORD
+      Identifier "ROOT"
+      OLEType "CJobDefn"
+      Readonly "0"
+      Name "xml_hpivot_example"
+      NextID "1"
+      Container "V0"
+      JobVersion "56.0.0"
+      ControlAfterSubr "0"
+      Parameters "CParameters"
+      BEGIN DSSUBRECORD
+         Name "xml_example_root_folder"
+         Prompt "Root of example folder tree"
+         HelpTxt "Point to the root of the file tree folder"
+         ParamType "0"
+         ParamLength "0"
+         ParamScale "0"
+      END DSSUBRECORD
+      MetaBag "CMetaProperty"
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "AdvancedRuntimeOptions"
+         Value "#DSProjectARTOptions#"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "TraceMode"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "TraceSeq"
+         Value "1"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "TraceRecords"
+         Value "100"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "TraceSkip"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "TracePeriod"
+         Value "1"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "RecordJobPerformanceData"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "IdentList"
+         Value "Address_compose|Address_file"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "ClientCodePage"
+         Value "1252"
+      END DSSUBRECORD
+      NULLIndicatorPosition "0"
+      OrchestrateCode =+=+=+=
+#################################################################
+#### STAGE: Address_compose
+## Operator
+pxbridge
+## Operator options
+-Orientation stage
+-XMLProperties '<?xml version=\\'1.0\\' encoding=\\'UTF-16\\'?><Properties version=\\'1.1\\'><Common><Context type=\\'int\\'>2</Context><Variant type=\\'string\\'>1.0</Variant><DescriptorVersion type=\\'string\\'>1.0</DescriptorVersion><PartitionType type=\\'int\\'>-1</PartitionType><RCP type=\\'int\\'>0</RCP></Common><Usage><Java><HeapSize modified=\\'1\\' type=\\'int\\'><![CDATA[256]]></HeapSize><MaximumStackSize modified=\\'1\\' type=\\'int\\'><![CDATA[256]]></MaximumStackSize><ConnectorOtherOptions type=\\'string\\'><![CDATA[-Dcom.ibm.tools.attach.enable=no -Djava.ext.dirs=$(DSHOME)/../DSComponents/bin;$(DSHOME)/../../ASBNode/apps/jre/lib/ext;$(DSHOME)/../StagingArea/Installed/XMLStage/Server/Shared/;$(DSHOME)/../../ASBNode/eclipse/plugins/com.ibm.isf.client_8.5.0.0;$(DSHOME)/../../ASBNode/lib/java]]></ConnectorOtherOptions><ConnectorClasspath type=\\'string\\'><![CDATA[$(DSHOME)/../StagingArea/Installed/XMLStage/Server/Shared/e2-connector.jar]]></ConnectorClasspath></Java><EnableDiskBased modified=\\'1\\' type=\\'bool\\'><![CDATA[1]]></EnableDiskBased><NumAssemblyThreads modified=\\'1\\' type=\\'int\\'><![CDATA[4]]></NumAssemblyThreads><LimitOutputRows collapsed=\\'1\\' type=\\'bool\\'><![CDATA[0]]></LimitOutputRows><EnableLogging collapsed=\\'1\\' type=\\'bool\\'><![CDATA[0]]></EnableLogging><LastModified modified=\\'1\\' type=\\'string\\'><![CDATA[2011-10-31T16:36:06.380 +0530]]></LastModified><E2Assembly type=\\'string\\'><![CDATA[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]]></E2Assembly><E2AssemblyErrors type=\\'int\\'><![CDATA[0]]></E2AssemblyErrors><StageType type=\\'string\\'><![CDATA[XMLStage]]></StageType><SecurityInfo type=\\'protectedstring\\'><![CDATA[HMID89VIM9:L0FFM<JJ<2KI6B<<MM3U5CUB?kOI`O2U?3TG:LL2dO65N4A0LN<<iH5L<K<90C5=>3CL@54NBm=KRK<mD2QDD40BD0;RIM=;?4NEM58NEBO@7BD?ME@U53UBMkOIdGBQ72PGKHEB`G71FFE1MN=>iH5LLJ<82C5L>30HH50GAi<JVB?m4CQ<E40@@1;V@?9;<0OGI=:J<0KADF=LIL@U4@UJMkFKdF2QOAPOJHM2`G71FGE1<N4=m@5H4H813G4>>2@LHF4FAi4KV;Nm<2Q<F4@1@9;VA=93M4NDM5:J5AKH5B<NM5@U43UC>kN:dN2Q>APGKLD2dO65GFA1?N=LiH5L48<H3C5<>20LAF4F@i5JVCNi51U5D4H3@0JVA>93?0OFIL:J41KI5B4?MMAU52UK<oGI`NCU6ATNHHEC`F61OEE8NN4=i97L<9<81C5L>:3L@74FAm=HRBNm<3Q=G4HA@1HVA=9;L07FI<;J42KIFB<OMD@U<2QJ>oF;`G1U71TFKLL3`GF1OEE8=N<OiH7L<9<H3C5<>20LAF4F@i5JVCNi51U5D4@B@0:VA>9;<0OFIL:J41KI5B4?MMAU52UK<oGI`NCU>CTG;LD0dFE1NDE1<N=>iIFL48<H3C5<>20LAF4F@i5JVCNi51U5D4A@@09VA?9;N07FI<;J42KIFB<OMD@U<2QJ>oF;`O3U>BPNKHL3`FD1NEE@<N<<iI5L<I<02C4=>:2HH50GAi<9VCNm4AQ=54AB@19V0=9;L0GDI<KJ<1KH7B<NILBQ=2QB?kF8dN3Q73PN:HL2`GE1>FE0=N<?iIFL49<93C==:;0HH74N3i5IVJMm=3Q<E4@1@08V0=9;L0GDI<KJ<1KH7B<NILBU40UCMkOKdN@Q?@TFKLL3`G41OEE1?N==iI6L<I<91CE=>23LA54N0i<KVJNm43U5F0I@@1:V@<9;>0F7I=;J4AKH7BDNMEAU40UCMkFJdG3Q7ATFILE@dNF5OEE0<N<<iIDL=I<92C5L>32L174N@i4HVK?m42Q=D4H@D88RI=9:<0FDI4:J41KI4B4OMM2UD2UC=kNIdFBQ7@PNKHE0dND5F6A9<J=>iHFL=:<03C5<>21LA64F3iDJVKOm<1Q<54HA@0:VH==2O4NFI<:J4AKA7B4OM=@U5CUB=kNJd63Q?@POIHMA`OG1OFE8<J5?mAFH5I800G=M:33HIG0F0m5KRC>i4BQDD0H0D9JRIO=3=4O6M5HN<@OAGF=NIDCU42UCMkFKdF2QGAPN:HL1`GG1>FE0=N<?iIFL49<93C==:;0HH74NAi<KVC<m<BQ4D4A1@09VA?9KM0GGI<8J4AKA6B5NMM@Q=0U;LoF;d?BU71P>JLE@`7F16FA8LNMMmAGLM980CCMN:;2H@44NAi<KVC<m<BQ4D4A1@09VA?9KM0GGI<8J4AKA6B5NMM@Q=0QJ<kN9dFBQ72POJLE2dOF1>4E1MN=?iIFL4J<1BCE=>23LA54N0i<KVJNm43U5F0I@D09V@O9;<0O5I<;N<2OA7BD<MD1U50UCMkF9dOBQOAPOJHM2`G71FGE1<N4=m@5H58<9CC5<>;BL1E4O0i5HVK?m4AQ5540@@1;V@?9;<0OGI=:J<0O@5F=NIDCU5BUC=kG;d6AQ>0PNIHMA`O41G7E@<N<<iI5L<I<02C4=>:2HH50GAi=:VJOm=3QLD4@A@18V@L93L0FFI4:N=2O@7F5MML0U53UB<k>KdF2Q?CPO:HE1`FF1FFA9>J5=mH4L48<1BC=M>23L174N@i4HVK?m42Q=D4H@@9IRI?=2M0F7I4:J41KH6BDNMEAU40U3OkOHdG1Q?CPN:HM3dG61OGE0MN5Mi96L5H<0CC5L>30LA74N@i4JV:Lm=0Q<D4@A@9IRI<=;?4OGM4JN<@OIEF4>MM3U<2UKNkO:dF@Q7AP>JHMA`N61>GE9LN4MiIFL=:<83C5<>22L054OBi4JVKOm4@U5E0@2D9HRHM=3=4O6M<HN53O@5F=NM4AU4CUKLkF;dGBQ>CPOHH5C`OG1NEE0?N<<iADL48<9BC4>>30L1D4OBi5HVKLm=BQ<G4HA@9HV@L93M0F7I=9J52K9EB4OME1U50QCLkFJdN@Q?@P?KHM1`O51N5E8NN=LiAGL48<9BC4>>30L154O0i4KVJNm<3U5E0@2@9:VHO93L0GGM<HN4@KIFB5NMD@U51UK?kNJdF3QO2PNHHL2`OD1NGE8NN4NiHFL=;<91CEL>2ALAD4F@i<8VK?m<@Q550IAD1HV1=9JN0?5IDIJMAOIEF4>ME1U<3UK<kOHdG2Q?0PGKHM1`6E1F6E8<N=LiH4L=:<8BC4=>J0LA64N2i<JVJMm4AQ470IAD1HVH=93?0OGI<;N4BOIGB4?MMAU<2UB?kOJdFBQ7APOJH<3`O61FFE1MN=>iH5L<I<93CMN>2ALAF4OAi4;VC<m4@U5E0@2@9:VHO93L0GGM<HN4@KAEB4OMM@U<3UKNkOIdF2Q?AP79HM1`O51FGE1<N4=iADH5988AG=<:2@HH50GAi49VJMm=2Q=E4AC@08V1N9;L0N7IMKJD0O@5B5=MEAU=CQJ<oOHdF@Q>BPNJHL1`FE1ODEAON<<i@FLMI<H3G<?:;2LAD4OBi5KVJOm=0Q=F413@1;VIL9J<07FM58J5AKI7F=NIDCU4AUB?kOJdG2Q>BPNIH<C`GG1G7EAMNL=m@5H58890CD<>2CLIG4F1i5;VJLm<0QD74HA@19V@>9;L0O5I4:J5AKH4B5LM53U51UB>kNIdGBQ?BPGJHEB`G71FFE1MN=>iH5LLJ<82C5L>30HH50GAm5IV;?m<3Q=E4A1@08VAL93>0OFI4HJ4AKA7B5?MDCU50U3NkNJdFBQ>CTFI]]></SecurityInfo><ColumnProperties type=\\'string\\'><![CDATA[<?xml version="1.0" encoding="UTF-8"?><extendedAttributesList/>]]></ColumnProperties><Params type=\\'string\\'><![CDATA[<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"><properties><entry key="DSProjectName">#DSProjectName#</entry><entry key="DSJobWaveNo">#DSJobWaveNo#</entry><entry key="DSJobInvocationId">#DSJobInvocationId#</entry><entry key="xml_example_root_folder">[&"xml_example_root_folder"]</entry><entry key="DSJobController">#DSJobController#</entry><entry key="DSHostName">#DSHostName#</entry><entry key="DSJobName">#DSJobName#</entry><entry key="DSJobStartTime">#DSJobStartTime#</entry><entry key="DSJobStartDate">#DSJobStartDate#</entry><entry key="DSJobStartTimestamp">#DSJobStartTimestamp#</entry></properties>]]></Params><DebugTestData type=\\'string\\'><![CDATA[<?xml version="1.0" encoding="UTF-8"?><DebugTestValues><jobParams paramName="xml_example_root_folder"/><testData operatorID="Op-1#DSLink2">H4sIAAAAAAAAAH2OvQrCMBSFn6DvEOLqkDb9W6sIDoJDFUeJ9qKFNinJrdi392RwcHG53z2Hy8ddCRnYE7Fcy3vPCxDYMMXoZss+NpNDN2xdF+vp6SzZebyRT39jhmi6zlMIV14mkonMtErFzgQWBzMaLzbDq8NV44fePthZ7Cd6mwCe2wazqnWpwTTTOVCUVQ0co0pBdSGo2u/DfzVKgbnO4pMFCOxl8gHGLQV58AAAAA==</testData></DebugTestValues>]]></DebugTestData></Usage></Properties >'
+-connector '{
+   variant='1.0', 
+   library="java:com/ibm/e2/connector/datastage/cc/CC_E2ConnectorLibrary", 
+   version=1.0, 
+   variantlist='1.0', 
+   versionlist='1.0', 
+   name=XMLStage
+}'
+-linkXMLProperties target 0 '<?xml version=\\'1.0\\' encoding=\\'UTF-16\\'?><Properties version=\\'1.1\\'><Common><Context type=\\'int\\'>2</Context><Variant type=\\'string\\'></Variant><DescriptorVersion type=\\'string\\'>1.0</DescriptorVersion><PartitionType type=\\'int\\'>-1</PartitionType><RCP type=\\'int\\'>0</RCP><Reject></Reject></Common><Usage></Usage></Properties >'
+-target 0 '{
+      DSSQLType={street=12, city=12, state=12, country=12, postalCode=12, phonenumber1=12, phonenumber2=12, address_type=12}, 
+      DSSchema=\\'record
+         (
+           street\\:string\\[\\]\\;
+           city\\:string\\[\\]\\;
+           state\\:string\\[\\]\\;
+           country\\:string\\[\\]\\;
+           postalCode\\:string\\[\\]\\;
+           phonenumber1\\:string\\[\\]\\;
+           phonenumber2\\:string\\[\\]\\;
+           address_type\\:string\\[\\]\\;
+         )\\'
+}'
+   
+
+## General options
+[ident('Address_compose'); jobmon_ident('Address_compose'); seq]
+## Inputs
+0< [] 'Address_file:Address.v'
+;
+
+#################################################################
+#### STAGE: Address_file
+## Operator
+import
+## Operator options
+-schema record
+  {final_delim=end, delim=',', quote=double}
+(
+  street:string[];
+  city:string[];
+  state:string[];
+  country:string[];
+  postalCode:string[];
+  phonenumber1:string[];
+  phonenumber2:string[];
+  address_type:string[];
+)
+-file  '[&"xml_example_root_folder"]/xml_examples/hpivot_step/example1/input_files/address.txt'
+-rejects continue
+-reportProgress yes
+
+## General options
+[ident('Address_file'); jobmon_ident('Address_file')]
+## Outputs
+0> [] 'Address_file:Address.v'
+;
+
+
+=+=+=+=
+      IsTemplate "0"
+      NLSLocale ",,,,"
+      JobType "3"
+      Category "\\Jobs\\XML_Examples"
+      CenturyBreakYear "30"
+      NextAliasID "2"
+      ParameterFileDDName "DD00001"
+      ReservedWordCheck "1"
+      TransactionSize "0"
+      ValidationStatus "0"
+      Uploadable "0"
+      PgmCustomizationFlag "0"
+      JobReportFlag "0"
+      AllowMultipleInvocations "0"
+      Act2ActOverideDefaults "0"
+      Act2ActEnableRowBuffer "0"
+      Act2ActUseIPC "0"
+      Act2ActBufferSize "0"
+      Act2ActIPCTimeout "0"
+      ExpressionSemanticCheckFlag "0"
+      TraceOption "0"
+      EnableCacheSharing "0"
+      RuntimeColumnPropagation "0"
+      RelStagesInJobStatus "-1"
+      WebServiceEnabled "0"
+      MFProcessMetaData "0"
+      MFProcessMetaDataXMLFileExchangeMethod "0"
+      IMSProgType "0"
+      CopyLibPrefix "ARDT"
+      RecordPerformanceResults "0"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "V0"
+      OLEType "CContainerView"
+      Readonly "0"
+      Name "Job"
+      NextID "1"
+      IsTopLevel "0"
+      StageList "V0S0|V0S1"
+      StageXPos "384|120"
+      StageYPos "192|192"
+      StageTypes "CCustomStage.CC_GUI|CCustomStage"
+      NextStageID "3"
+      SnapToGrid "1"
+      GridLines "0"
+      ZoomValue "100"
+      StageXSize "48|48"
+      StageYSize "48|48"
+      ContainerViewSizing "0022 0022 0790 0610 0000 0001 0000 0000"
+      StageNames "Address_compose|Address_file"
+      StageTypeIDs "XMLStagePX|PxSequentialFile"
+      LinkNames " |Address"
+      LinkHasMetaDatas " |True"
+      LinkTypes " |1"
+      LinkNamePositionXs " |240"
+      LinkNamePositionYs " |216"
+      TargetStageIDs " |V0S0"
+      SourceStageEffectiveExecutionModes " |1"
+      SourceStageRuntimeExecutionModes " |1"
+      TargetStageEffectiveExecutionModes " |1"
+      TargetStageRuntimeExecutionModes " |1"
+      LinkIsSingleOperatorLookup " |False"
+      LinkIsSortSequential " |False"
+      LinkSortMode " |0"
+      LinkPartColMode " |1"
+      LinkSourcePinIDs " |V0S1P1"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "V0S0"
+      OLEType "CCustomStage"
+      Readonly "0"
+      Name "Address_compose"
+      NextID "2"
+      InputPins "V0S0P1"
+      StageType "XMLStagePX"
+      AllowColumnMapping "0"
+      Properties "CCustomProperty"
+      BEGIN DSSUBRECORD
+         Name "VariantName"
+         Value "1.0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "VariantLibrary"
+         Value "\"java:com/ibm/e2/connector/datastage/cc/CC_E2ConnectorLibrary\""
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "VariantVersion"
+         Value "1.0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "SupportedVariants"
+         Value "1.0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "SupportedVariantsLibraries"
+         Value "\"java:com.ibm.e2.connector.datastage.cc.CC_E2ConnectorLibrary\""
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "SupportedVariantsVersions"
+         Value "1.0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "Orientation"
+         Value "stage"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectFromLink"
+         Value "-1"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectThreshold"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectNumber"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectUsesPercentage"
+         Value "false"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "ConnectorName"
+         Value "XMLStage"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "Engine"
+         Value "EE"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "Context"
+         Value "target"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "XMLProperties"
+         Value "<?xml version='1.0' encoding='UTF-16'?><Properties version='1.1'><Common><Context type='int'>2</Context><Variant type='string'>1.0</Variant><DescriptorVersion type='string'>1.0</DescriptorVersion><PartitionType type='int'>-1</PartitionType><RCP type='int'>0</RCP></Common><Usage><Java><HeapSize modified='1' type='int'><![CDATA[256]]></HeapSize><MaximumStackSize modified='1' type='int'><![CDATA[256]]></MaximumStackSize><ConnectorOtherOptions type='string'><![CDATA[-Dcom.ibm.tools.attach.enable=no -Djava.ext.dirs=$(DSHOME)/../DSComponents/bin;$(DSHOME)/../../ASBNode/apps/jre/lib/ext;$(DSHOME)/../StagingArea/Installed/XMLStage/Server/Shared/;$(DSHOME)/../../ASBNode/eclipse/plugins/com.ibm.isf.client_8.5.0.0;$(DSHOME)/../../ASBNode/lib/java]]></ConnectorOtherOptions><ConnectorClasspath type='string'><![CDATA[$(DSHOME)/../StagingArea/Installed/XMLStage/Server/Shared/e2-connector.jar]]></ConnectorClasspath></Java><EnableDiskBased modified='1' type='bool'><![CDATA[1]]></EnableDiskBased><NumAssemblyThreads modified='1' type='int'><![CDATA[4]]></NumAssemblyThreads><LimitOutputRows collapsed='1' type='bool'><![CDATA[0]]></LimitOutputRows><EnableLogging collapsed='1' type='bool'><![CDATA[0]]></EnableLogging><LastModified modified='1' type='string'><![CDATA[2011-10-31T16:36:06.380 +0530]]></LastModified><E2Assembly type='string'><![CDATA[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]]></E2Assembly><E2AssemblyErrors type='int'><![CDATA[0]]></E2AssemblyErrors><StageType type='string'><![CDATA[XMLStage]]></StageType><SecurityInfo type='protectedstring'><![CDATA[HMID89VIM9:L0FFM<JJ<2KI6B<<MM3U5CUB?kOI`O2U?3TG:LL2dO65N4A0LN<<iH5L<K<90C5=>3CL@54NBm=KRK<mD2QDD40BD0;RIM=;?4NEM58NEBO@7BD?ME@U53UBMkOIdGBQ72PGKHEB`G71FFE1MN=>iH5LLJ<82C5L>30HH50GAi<JVB?m4CQ<E40@@1;V@?9;<0OGI=:J<0KADF=LIL@U4@UJMkFKdF2QOAPOJHM2`G71FGE1<N4=m@5H4H813G4>>2@LHF4FAi4KV;Nm<2Q<F4@1@9;VA=93M4NDM5:J5AKH5B<NM5@U43UC>kN:dN2Q>APGKLD2dO65GFA1?N=LiH5L48<H3C5<>20LAF4F@i5JVCNi51U5D4H3@0JVA>93?0OFIL:J41KI5B4?MMAU52UK<oGI`NCU6ATNHHEC`F61OEE8NN4=i97L<9<81C5L>:3L@74FAm=HRBNm<3Q=G4HA@1HVA=9;L07FI<;J42KIFB<OMD@U<2QJ>oF;`G1U71TFKLL3`GF1OEE8=N<OiH7L<9<H3C5<>20LAF4F@i5JVCNi51U5D4@B@0:VA>9;<0OFIL:J41KI5B4?MMAU52UK<oGI`NCU>CTG;LD0dFE1NDE1<N=>iIFL48<H3C5<>20LAF4F@i5JVCNi51U5D4A@@09VA?9;N07FI<;J42KIFB<OMD@U<2QJ>oF;`O3U>BPNKHL3`FD1NEE@<N<<iI5L<I<02C4=>:2HH50GAi<9VCNm4AQ=54AB@19V0=9;L0GDI<KJ<1KH7B<NILBQ=2QB?kF8dN3Q73PN:HL2`GE1>FE0=N<?iIFL49<93C==:;0HH74N3i5IVJMm=3Q<E4@1@08V0=9;L0GDI<KJ<1KH7B<NILBU40UCMkOKdN@Q?@TFKLL3`G41OEE1?N==iI6L<I<91CE=>23LA54N0i<KVJNm43U5F0I@@1:V@<9;>0F7I=;J4AKH7BDNMEAU40UCMkFJdG3Q7ATFILE@dNF5OEE0<N<<iIDL=I<92C5L>32L174N@i4HVK?m42Q=D4H@D88RI=9:<0FDI4:J41KI4B4OMM2UD2UC=kNIdFBQ7@PNKHE0dND5F6A9<J=>iHFL=:<03C5<>21LA64F3iDJVKOm<1Q<54HA@0:VH==2O4NFI<:J4AKA7B4OM=@U5CUB=kNJd63Q?@POIHMA`OG1OFE8<J5?mAFH5I800G=M:33HIG0F0m5KRC>i4BQDD0H0D9JRIO=3=4O6M5HN<@OAGF=NIDCU42UCMkFKdF2QGAPN:HL1`GG1>FE0=N<?iIFL49<93C==:;0HH74NAi<KVC<m<BQ4D4A1@09VA?9KM0GGI<8J4AKA6B5NMM@Q=0U;LoF;d?BU71P>JLE@`7F16FA8LNMMmAGLM980CCMN:;2H@44NAi<KVC<m<BQ4D4A1@09VA?9KM0GGI<8J4AKA6B5NMM@Q=0QJ<kN9dFBQ72POJLE2dOF1>4E1MN=?iIFL4J<1BCE=>23LA54N0i<KVJNm43U5F0I@D09V@O9;<0O5I<;N<2OA7BD<MD1U50UCMkF9dOBQOAPOJHM2`G71FGE1<N4=m@5H58<9CC5<>;BL1E4O0i5HVK?m4AQ5540@@1;V@?9;<0OGI=:J<0O@5F=NIDCU5BUC=kG;d6AQ>0PNIHMA`O41G7E@<N<<iI5L<I<02C4=>:2HH50GAi=:VJOm=3QLD4@A@18V@L93L0FFI4:N=2O@7F5MML0U53UB<k>KdF2Q?CPO:HE1`FF1FFA9>J5=mH4L48<1BC=M>23L174N@i4HVK?m42Q=D4H@@9IRI?=2M0F7I4:J41KH6BDNMEAU40U3OkOHdG1Q?CPN:HM3dG61OGE0MN5Mi96L5H<0CC5L>30LA74N@i4JV:Lm=0Q<D4@A@9IRI<=;?4OGM4JN<@OIEF4>MM3U<2UKNkO:dF@Q7AP>JHMA`N61>GE9LN4MiIFL=:<83C5<>22L054OBi4JVKOm4@U5E0@2D9HRHM=3=4O6M<HN53O@5F=NM4AU4CUKLkF;dGBQ>CPOHH5C`OG1NEE0?N<<iADL48<9BC4>>30L1D4OBi5HVKLm=BQ<G4HA@9HV@L93M0F7I=9J52K9EB4OME1U50QCLkFJdN@Q?@P?KHM1`O51N5E8NN=LiAGL48<9BC4>>30L154O0i4KVJNm<3U5E0@2@9:VHO93L0GGM<HN4@KIFB5NMD@U51UK?kNJdF3QO2PNHHL2`OD1NGE8NN4NiHFL=;<91CEL>2ALAD4F@i<8VK?m<@Q550IAD1HV1=9JN0?5IDIJMAOIEF4>ME1U<3UK<kOHdG2Q?0PGKHM1`6E1F6E8<N=LiH4L=:<8BC4=>J0LA64N2i<JVJMm4AQ470IAD1HVH=93?0OGI<;N4BOIGB4?MMAU<2UB?kOJdFBQ7APOJH<3`O61FFE1MN=>iH5L<I<93CMN>2ALAF4OAi4;VC<m4@U5E0@2@9:VHO93L0GGM<HN4@KAEB4OMM@U<3UKNkOIdF2Q?AP79HM1`O51FGE1<N4=iADH5988AG=<:2@HH50GAi49VJMm=2Q=E4AC@08V1N9;L0N7IMKJD0O@5B5=MEAU=CQJ<oOHdF@Q>BPNJHL1`FE1ODEAON<<i@FLMI<H3G<?:;2LAD4OBi5KVJOm=0Q=F413@1;VIL9J<07FM58J5AKI7F=NIDCU4AUB?kOJdG2Q>BPNIH<C`GG1G7EAMNL=m@5H58890CD<>2CLIG4F1i5;VJLm<0QD74HA@19V@>9;L0O5I4:J5AKH4B5LM53U51UB>kNIdGBQ?BPGJHEB`G71FFE1MN=>iH5LLJ<82C5L>30HH50GAm5IV;?m<3Q=E4A1@08VAL93>0OFI4HJ4AKA7B5?MDCU50U3NkNJdFBQ>CTFI]]></SecurityInfo><ColumnProperties type='string'><![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\"?><extendedAttributesList/>]]></ColumnProperties><Params type='string'><![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE properties SYSTEM \"http://java.sun.com/dtd/properties.dtd\"><properties><entry key=\"DSProjectName\">#DSProjectName#</entry><entry key=\"DSJobWaveNo\">#DSJobWaveNo#</entry><entry key=\"DSJobInvocationId\">#DSJobInvocationId#</entry><entry key=\"xml_example_root_folder\">#xml_example_root_folder#</entry><entry key=\"DSJobController\">#DSJobController#</entry><entry key=\"DSHostName\">#DSHostName#</entry><entry key=\"DSJobName\">#DSJobName#</entry><entry key=\"DSJobStartTime\">#DSJobStartTime#</entry><entry key=\"DSJobStartDate\">#DSJobStartDate#</entry><entry key=\"DSJobStartTimestamp\">#DSJobStartTimestamp#</entry></properties>]]></Params><DebugTestData type='string'><![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\"?><DebugTestValues><jobParams paramName=\"xml_example_root_folder\"/><testData operatorID=\"Op-1#DSLink2\">H4sIAAAAAAAAAH2OvQrCMBSFn6DvEOLqkDb9W6sIDoJDFUeJ9qKFNinJrdi392RwcHG53z2Hy8ddCRnYE7Fcy3vPCxDYMMXoZss+NpNDN2xdF+vp6SzZebyRT39jhmi6zlMIV14mkonMtErFzgQWBzMaLzbDq8NV44fePthZ7Cd6mwCe2wazqnWpwTTTOVCUVQ0co0pBdSGo2u/DfzVKgbnO4pMFCOxl8gHGLQV58AAAAA==</testData></DebugTestValues>]]></DebugTestData></Usage></Properties >"
+      END DSSUBRECORD
+      NextRecordID "0"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "V0S0P1"
+      OLEType "CCustomInput"
+      Readonly "0"
+      Name "Address"
+      Partner "V0S1|V0S1P1"
+      LinkType "1"
+      ConditionNotMet "fail"
+      LookupFail "fail"
+      Properties "CCustomProperty"
+      BEGIN DSSUBRECORD
+         Name "VariantName"
+         Value "1.0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "VariantLibrary"
+         Value "\"java:com.ibm.e2.connector.datastage.cc.CC_E2ConnectorLibrary\""
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "VariantVersion"
+         Value "1.0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectFromLink"
+         Value "-1"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectThreshold"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectNumber"
+         Value "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "RejectUsesPercentage"
+         Value "false"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "ConnectorName"
+         Value "XMLStage"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "XMLProperties"
+         Value "<?xml version='1.0' encoding='UTF-16'?><Properties version='1.1'><Common><Context type='int'>2</Context><Variant type='string'></Variant><DescriptorVersion type='string'>1.0</DescriptorVersion><PartitionType type='int'>-1</PartitionType><RCP type='int'>0</RCP><Reject></Reject></Common><Usage></Usage></Properties >"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "Context"
+         Value "target"
+      END DSSUBRECORD
+      MetaBag "CMetaProperty"
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "RTColumnProp"
+         Value "0"
+      END DSSUBRECORD
+      TransactionSize "0"
+      TXNBehaviour "40"
+      EnableTxGroup "0"
+      LinkMinimised "0"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "V0S1"
+      OLEType "CCustomStage"
+      Readonly "0"
+      Name "Address_file"
+      NextID "2"
+      OutputPins "V0S1P1"
+      StageType "PxSequentialFile"
+      AllowColumnMapping "0"
+      NextRecordID "0"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "V0S1P1"
+      OLEType "CCustomOutput"
+      Readonly "0"
+      Name "Address"
+      Partner "V0S0|V0S0P1"
+      Properties "CCustomProperty"
+      BEGIN DSSUBRECORD
+         Name "schema"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "selection"
+         Value "file"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "file "
+         Value "\(2)\(2)0\(1)\(3)file \(2)#xml_example_root_folder#/xml_examples/hpivot_step/example1/input_files/address.txt\(2)0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "keepPartitions"
+         Value " "
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "missingFile"
+         Value " "
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "rejects"
+         Value "continue"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "reportProgress"
+         Value "yes"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "firstLineColumnNames"
+         Value " "
+      END DSSUBRECORD
+      Columns "COutputColumn"
+      BEGIN DSSUBRECORD
+         Name "street"
+         SqlType "12"
+         Precision "0"
+         Scale "0"
+         Nullable "0"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         AllowCRLF "0"
+         LevelNo "0"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "city"
+         SqlType "12"
+         Precision "0"
+         Scale "0"
+         Nullable "0"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         AllowCRLF "0"
+         LevelNo "0"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "state"
+         SqlType "12"
+         Precision "0"
+         Scale "0"
+         Nullable "0"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         AllowCRLF "0"
+         LevelNo "0"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "country"
+         SqlType "12"
+         Precision "0"
+         Scale "0"
+         Nullable "0"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         AllowCRLF "0"
+         LevelNo "0"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "postalCode"
+         SqlType "12"
+         Precision "0"
+         Scale "0"
+         Nullable "0"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         AllowCRLF "0"
+         LevelNo "0"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "phonenumber1"
+         SqlType "12"
+         Precision "0"
+         Scale "0"
+         Nullable "0"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         AllowCRLF "0"
+         LevelNo "0"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "phonenumber2"
+         SqlType "12"
+         Precision "0"
+         Scale "0"
+         Nullable "0"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         AllowCRLF "0"
+         LevelNo "0"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Name "address_type"
+         SqlType "12"
+         Precision "0"
+         Scale "0"
+         Nullable "0"
+         KeyPosition "0"
+         DisplaySize "0"
+         Group "0"
+         SortKey "0"
+         SortType "0"
+         AllowCRLF "0"
+         LevelNo "0"
+         Occurs "0"
+         PadNulls "0"
+         SignOption "0"
+         SortingOrder "0"
+         ArrayHandling "0"
+         SyncIndicator "0"
+         PadChar ""
+         ExtendedPrecision "0"
+         TaggedSubrec "0"
+         OccursVarying "0"
+         PKeyIsCaseless "0"
+         SCDPurpose "0"
+      END DSSUBRECORD
+      MetaBag "CMetaProperty"
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "SchemaFormat"
+         Value "final_delim=end, delim=',', quote=double"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "DiskWriteInc"
+         Value "1048576"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "BufFreeRun"
+         Value "50"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "MaxMemBufSize"
+         Value "3145728"
+      END DSSUBRECORD
+      BEGIN DSSUBRECORD
+         Owner "APT"
+         Name "QueueUpperSize"
+         Value "0"
+      END DSSUBRECORD
+      LeftTextPos "240"
+      TopTextPos "216"
+      LinkMinimised "0"
+   END DSRECORD
+END DSJOB
+BEGIN DSEXECJOB
+   Identifier "xml_hpivot_example"
+   DateModified "1899-12-30"
+   TimeModified "00.00.01"
+   BEGIN DSRECORD
+      Identifier "xml_hpivot_example"
+      F1 "JOB"
+      F3 "8.7///55/C"
+      F5 "xml_example_root_folder"
+      F6 "Root of example folder tree"
+      F8 "Point to the root of the file tree folder"
+      F9 "0"
+      F10 "V0"
+      F15 "PxSequentialFile\VXMLStagePX"
+      F21 "1"
+      F24 ",,,,"
+      F28 "\\Jobs\\XML_Examples"
+      F29 "0"
+      F30 "0"
+      F31 "2011-10-31 16:36:13"
+      F32 "3"
+      F34 "0\V1\VLINUX\V0\V\V#DSProjectARTOptions#\V1252\V\V\V\V\V\V0\V0"
+      F35 "Address_file\VAddress_compose"
+      F36 "99R0367"
+      F37 "ANALYZERPROJECT"
+      F38 "0"
+      F39 "xml_hpivot_example.Address_compose\Vxml_hpivot_example.Address_file"
+      F41 "0"
+      F43 ",,,,"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "xml_hpivot_example.Address_compose"
+      F1 "STAGE"
+      F2 "CUSTOM"
+      F3 "8.7///55/C"
+      F4 "xml_hpivot_example"
+      F9 "xml_hpivot_example.Address_file.Address"
+      F13 "VariantName\VVariantLibrary\VVariantVersion\VSupportedVariants\VSupportedVariantsLibraries\VSupportedVariantsVersions\VOrientation\VRejectFromLink\VRejectThreshold\VRejectNumber\VRejectUsesPercentage\VConnectorName\VEngine\VContext\VXMLProperties"
+      F14 "1.0\V\"java:com/ibm/e2/connector/datastage/cc/CC_E2ConnectorLibrary\"\V1.0\V1.0\V\"java:com.ibm.e2.connector.datastage.cc.CC_E2ConnectorLibrary\"\V1.0\Vstage\V-1\V0\V0\Vfalse\VXMLStage\VEE\Vtarget\V<?xml version='1.0' encoding='UTF-16'?><Properties version='1.1'><Common><Context type='int'>2</Context><Variant type='string'>1.0</Variant><DescriptorVersion type='string'>1.0</DescriptorVersion><PartitionType type='int'>-1</PartitionType><RCP type='int'>0</RCP></Common><Usage><Java><HeapSize modified='1' type='int'><![CDATA[256]]></HeapSize><MaximumStackSize modified='1' type='int'><![CDATA[256]]></MaximumStackSize><ConnectorOtherOptions type='string'><![CDATA[-Dcom.ibm.tools.attach.enable=no -Djava.ext.dirs=$(DSHOME)/../DSComponents/bin;$(DSHOME)/../../ASBNode/apps/jre/lib/ext;$(DSHOME)/../StagingArea/Installed/XMLStage/Server/Shared/;$(DSHOME)/../../ASBNode/eclipse/plugins/com.ibm.isf.client_8.5.0.0;$(DSHOME)/../../ASBNode/lib/java]]></ConnectorOtherOptions><ConnectorClasspath type='string'><![CDATA[$(DSHOME)/../StagingArea/Installed/XMLStage/Server/Shared/e2-connector.jar]]></ConnectorClasspath></Java><EnableDiskBased modified='1' type='bool'><![CDATA[1]]></EnableDiskBased><NumAssemblyThreads modified='1' type='int'><![CDATA[4]]></NumAssemblyThreads><LimitOutputRows collapsed='1' type='bool'><![CDATA[0]]></LimitOutputRows><EnableLogging collapsed='1' type='bool'><![CDATA[0]]></EnableLogging><LastModified modified='1' type='string'><![CDATA[2011-10-31T16:36:06.380 +0530]]></LastModified><E2Assembly type='string'><![CDATA[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]]></E2Assembly><E2AssemblyErrors type='int'><![CDATA[0]]></E2AssemblyErrors><StageType type='string'><![CDATA[XMLStage]]></StageType><SecurityInfo type='protectedstring'><![CDATA[HMID89VIM9:L0FFM<JJ<2KI6B<<MM3U5CUB?kOI`O2U?3TG:LL2dO65N4A0LN<<iH5L<K<90C5=>3CL@54NBm=KRK<mD2QDD40BD0;RIM=;?4NEM58NEBO@7BD?ME@U53UBMkOIdGBQ72PGKHEB`G71FFE1MN=>iH5LLJ<82C5L>30HH50GAi<JVB?m4CQ<E40@@1;V@?9;<0OGI=:J<0KADF=LIL@U4@UJMkFKdF2QOAPOJHM2`G71FGE1<N4=m@5H4H813G4>>2@LHF4FAi4KV;Nm<2Q<F4@1@9;VA=93M4NDM5:J5AKH5B<NM5@U43UC>kN:dN2Q>APGKLD2dO65GFA1?N=LiH5L48<H3C5<>20LAF4F@i5JVCNi51U5D4H3@0JVA>93?0OFIL:J41KI5B4?MMAU52UK<oGI`NCU6ATNHHEC`F61OEE8NN4=i97L<9<81C5L>:3L@74FAm=HRBNm<3Q=G4HA@1HVA=9;L07FI<;J42KIFB<OMD@U<2QJ>oF;`G1U71TFKLL3`GF1OEE8=N<OiH7L<9<H3C5<>20LAF4F@i5JVCNi51U5D4@B@0:VA>9;<0OFIL:J41KI5B4?MMAU52UK<oGI`NCU>CTG;LD0dFE1NDE1<N=>iIFL48<H3C5<>20LAF4F@i5JVCNi51U5D4A@@09VA?9;N07FI<;J42KIFB<OMD@U<2QJ>oF;`O3U>BPNKHL3`FD1NEE@<N<<iI5L<I<02C4=>:2HH50GAi<9VCNm4AQ=54AB@19V0=9;L0GDI<KJ<1KH7B<NILBQ=2QB?kF8dN3Q73PN:HL2`GE1>FE0=N<?iIFL49<93C==:;0HH74N3i5IVJMm=3Q<E4@1@08V0=9;L0GDI<KJ<1KH7B<NILBU40UCMkOKdN@Q?@TFKLL3`G41OEE1?N==iI6L<I<91CE=>23LA54N0i<KVJNm43U5F0I@@1:V@<9;>0F7I=;J4AKH7BDNMEAU40UCMkFJdG3Q7ATFILE@dNF5OEE0<N<<iIDL=I<92C5L>32L174N@i4HVK?m42Q=D4H@D88RI=9:<0FDI4:J41KI4B4OMM2UD2UC=kNIdFBQ7@PNKHE0dND5F6A9<J=>iHFL=:<03C5<>21LA64F3iDJVKOm<1Q<54HA@0:VH==2O4NFI<:J4AKA7B4OM=@U5CUB=kNJd63Q?@POIHMA`OG1OFE8<J5?mAFH5I800G=M:33HIG0F0m5KRC>i4BQDD0H0D9JRIO=3=4O6M5HN<@OAGF=NIDCU42UCMkFKdF2QGAPN:HL1`GG1>FE0=N<?iIFL49<93C==:;0HH74NAi<KVC<m<BQ4D4A1@09VA?9KM0GGI<8J4AKA6B5NMM@Q=0U;LoF;d?BU71P>JLE@`7F16FA8LNMMmAGLM980CCMN:;2H@44NAi<KVC<m<BQ4D4A1@09VA?9KM0GGI<8J4AKA6B5NMM@Q=0QJ<kN9dFBQ72POJLE2dOF1>4E1MN=?iIFL4J<1BCE=>23LA54N0i<KVJNm43U5F0I@D09V@O9;<0O5I<;N<2OA7BD<MD1U50UCMkF9dOBQOAPOJHM2`G71FGE1<N4=m@5H58<9CC5<>;BL1E4O0i5HVK?m4AQ5540@@1;V@?9;<0OGI=:J<0O@5F=NIDCU5BUC=kG;d6AQ>0PNIHMA`O41G7E@<N<<iI5L<I<02C4=>:2HH50GAi=:VJOm=3QLD4@A@18V@L93L0FFI4:N=2O@7F5MML0U53UB<k>KdF2Q?CPO:HE1`FF1FFA9>J5=mH4L48<1BC=M>23L174N@i4HVK?m42Q=D4H@@9IRI?=2M0F7I4:J41KH6BDNMEAU40U3OkOHdG1Q?CPN:HM3dG61OGE0MN5Mi96L5H<0CC5L>30LA74N@i4JV:Lm=0Q<D4@A@9IRI<=;?4OGM4JN<@OIEF4>MM3U<2UKNkO:dF@Q7AP>JHMA`N61>GE9LN4MiIFL=:<83C5<>22L054OBi4JVKOm4@U5E0@2D9HRHM=3=4O6M<HN53O@5F=NM4AU4CUKLkF;dGBQ>CPOHH5C`OG1NEE0?N<<iADL48<9BC4>>30L1D4OBi5HVKLm=BQ<G4HA@9HV@L93M0F7I=9J52K9EB4OME1U50QCLkFJdN@Q?@P?KHM1`O51N5E8NN=LiAGL48<9BC4>>30L154O0i4KVJNm<3U5E0@2@9:VHO93L0GGM<HN4@KIFB5NMD@U51UK?kNJdF3QO2PNHHL2`OD1NGE8NN4NiHFL=;<91CEL>2ALAD4F@i<8VK?m<@Q550IAD1HV1=9JN0?5IDIJMAOIEF4>ME1U<3UK<kOHdG2Q?0PGKHM1`6E1F6E8<N=LiH4L=:<8BC4=>J0LA64N2i<JVJMm4AQ470IAD1HVH=93?0OGI<;N4BOIGB4?MMAU<2UB?kOJdFBQ7APOJH<3`O61FFE1MN=>iH5L<I<93CMN>2ALAF4OAi4;VC<m4@U5E0@2@9:VHO93L0GGM<HN4@KAEB4OMM@U<3UKNkOIdF2Q?AP79HM1`O51FGE1<N4=iADH5988AG=<:2@HH50GAi49VJMm=2Q=E4AC@08V1N9;L0N7IMKJD0O@5B5=MEAU=CQJ<oOHdF@Q>BPNJHL1`FE1ODEAON<<i@FLMI<H3G<?:;2LAD4OBi5KVJOm=0Q=F413@1;VIL9J<07FM58J5AKI7F=NIDCU4AUB?kOJdG2Q>BPNIH<C`GG1G7EAMNL=m@5H58890CD<>2CLIG4F1i5;VJLm<0QD74HA@19V@>9;L0O5I4:J5AKH4B5LM53U51UB>kNIdGBQ?BPGJHEB`G71FFE1MN=>iH5LLJ<82C5L>30HH50GAm5IV;?m<3Q=E4A1@08VAL93>0OFI4HJ4AKA7B5?MDCU50U3NkNJdFBQ>CTFI]]></SecurityInfo><ColumnProperties type='string'><![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\"?><extendedAttributesList/>]]></ColumnProperties><Params type='string'><![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE properties SYSTEM \"http://java.sun.com/dtd/properties.dtd\"><properties><entry key=\"DSProjectName\">#DSProjectName#</entry><entry key=\"DSJobWaveNo\">#DSJobWaveNo#</entry><entry key=\"DSJobInvocationId\">#DSJobInvocationId#</entry><entry key=\"xml_example_root_folder\">#xml_example_root_folder#</entry><entry key=\"DSJobController\">#DSJobController#</entry><entry key=\"DSHostName\">#DSHostName#</entry><entry key=\"DSJobName\">#DSJobName#</entry><entry key=\"DSJobStartTime\">#DSJobStartTime#</entry><entry key=\"DSJobStartDate\">#DSJobStartDate#</entry><entry key=\"DSJobStartTimestamp\">#DSJobStartTimestamp#</entry></properties>]]></Params><DebugTestData type='string'><![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\"?><DebugTestValues><jobParams paramName=\"xml_example_root_folder\"/><testData operatorID=\"Op-1#DSLink2\">H4sIAAAAAAAAAH2OvQrCMBSFn6DvEOLqkDb9W6sIDoJDFUeJ9qKFNinJrdi392RwcHG53z2Hy8ddCRnYE7Fcy3vPCxDYMMXoZss+NpNDN2xdF+vp6SzZebyRT39jhmi6zlMIV14mkonMtErFzgQWBzMaLzbDq8NV44fePthZ7Cd6mwCe2wazqnWpwTTTOVCUVQ0co0pBdSGo2u/DfzVKgbnO4pMFCOxl8gHGLQV58AAAAA==</testData></DebugTestValues>]]></DebugTestData></Usage></Properties >"
+      F16 "XMLStagePX"
+      F23 "0\V0\V0\V0\V0\V0\V0\V2\V2\V2\V11\V0\V0\V0\V0"
+      F31 "xml_hpivot_example.Address_compose"
+      F32 "-1.-1"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "xml_hpivot_example.Address_file"
+      F1 "STAGE"
+      F2 "CUSTOM"
+      F3 "8.7///55/C"
+      F4 "xml_hpivot_example"
+      F10 "xml_hpivot_example.Address_file.Address"
+      F16 "PxSequentialFile"
+      F31 "xml_hpivot_example.Address_file"
+      F32 "-1.-1"
+   END DSRECORD
+   BEGIN DSRECORD
+      Identifier "xml_hpivot_example.Address_file.Address"
+      F1 "INPIN"
+      F3 "8.7///55/C"
+      F5 "8"
+      F16 "xml_hpivot_example.Address_file\Vxml_hpivot_example.Address_compose"
+      F21 "street\Vcity\Vstate\Vcountry\VpostalCode\Vphonenumber1\Vphonenumber2\Vaddress_type"
+      F22 "0\V0\V0\V0\V0\V0\V0\V0"
+      F25 "12\V12\V12\V12\V12\V12\V12\V12"
+      F26 "0\V0\V0\V0\V0\V0\V0\V0"
+      F27 "0\V0\V0\V0\V0\V0\V0\V0"
+      F28 "0\V0\V0\V0\V0\V0\V0\V0"
+      F39 "Address"
+      F40 "0\V0\V0\V0\V0\V0\V0\V0"
+      F50 "\V"
+   END DSRECORD
+   COMMENT No program sources in executable job
+   COMMENT No program binaries in executable job
+   BEGIN DSSCRIPT
+      Identifier "OshExecuter.sh"
+      TERMINATOR =+=+=+=
+#!/bin/sh
+# Shell script for Datastage to execute an osh script, generated at 2011-10-31 16:36:13
+# Compiler runtime stamp 8.7///55/C
+#
+# Parameters:
+# $1 - Run indicator: R=normal run, P=performance wrappered run
+# $2 - Environment variable file name - dummy
+# $3... - Osh / performance checker command line arguments
+RunIndicator=$1
+DummyEnv=$2
+shift
+shift
+if test ! -x "$APT_ORCHHOME/bin/osh"
+  then echo '##OSHRETVAL NOOSH'
+  exit 1
+fi
+# Test for resource estimation option.
+if test $RunIndicator = P
+  then $APT_ORCHHOME/bin/orchresest "$@" 2>&1 &
+  else $APT_ORCHHOME/bin/osh "$@" 2>&1 &
+fi
+oshpid=$!
+# Write the pid of the conductor process
+echo '##OSHPID' $oshpid
+wait $oshpid
+oshcode=$?
+oshdir=`dirname $0`
+# Write the terminating string
+echo '##OSHRETVAL' $oshcode > $oshdir/../RT_SCTEMP/$oshpid.retval
+echo '##OSHRETVAL' $oshcode
+# end of script
+=+=+=+=
+   END DSSCRIPT
+   BEGIN DSSCRIPT
+      Identifier "OshScript.osh"
+      TERMINATOR =+=+=+=
+# OSH / orchestrate script for Job xml_hpivot_example compiled at 16:36:13 31 OCT 2011
+#################################################################
+#### STAGE: Address_compose
+## Operator
+pxbridge
+## Operator options
+-Orientation stage
+-XMLProperties '<?xml version=\\'1.0\\' encoding=\\'UTF-16\\'?><Properties version=\\'1.1\\'><Common><Context type=\\'int\\'>2</Context><Variant type=\\'string\\'>1.0</Variant><DescriptorVersion type=\\'string\\'>1.0</DescriptorVersion><PartitionType type=\\'int\\'>-1</PartitionType><RCP type=\\'int\\'>0</RCP></Common><Usage><Java><HeapSize modified=\\'1\\' type=\\'int\\'><![CDATA[256]]></HeapSize><MaximumStackSize modified=\\'1\\' type=\\'int\\'><![CDATA[256]]></MaximumStackSize><ConnectorOtherOptions type=\\'string\\'><![CDATA[-Dcom.ibm.tools.attach.enable=no -Djava.ext.dirs=$(DSHOME)/../DSComponents/bin;$(DSHOME)/../../ASBNode/apps/jre/lib/ext;$(DSHOME)/../StagingArea/Installed/XMLStage/Server/Shared/;$(DSHOME)/../../ASBNode/eclipse/plugins/com.ibm.isf.client_8.5.0.0;$(DSHOME)/../../ASBNode/lib/java]]></ConnectorOtherOptions><ConnectorClasspath type=\\'string\\'><![CDATA[$(DSHOME)/../StagingArea/Installed/XMLStage/Server/Shared/e2-connector.jar]]></ConnectorClasspath></Java><EnableDiskBased modified=\\'1\\' type=\\'bool\\'><![CDATA[1]]></EnableDiskBased><NumAssemblyThreads modified=\\'1\\' type=\\'int\\'><![CDATA[4]]></NumAssemblyThreads><LimitOutputRows collapsed=\\'1\\' type=\\'bool\\'><![CDATA[0]]></LimitOutputRows><EnableLogging collapsed=\\'1\\' type=\\'bool\\'><![CDATA[0]]></EnableLogging><LastModified modified=\\'1\\' type=\\'string\\'><![CDATA[2011-10-31T16:36:06.380 +0530]]></LastModified><E2Assembly type=\\'string\\'><![CDATA[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]]></E2Assembly><E2AssemblyErrors type=\\'int\\'><![CDATA[0]]></E2AssemblyErrors><StageType type=\\'string\\'><![CDATA[XMLStage]]></StageType><SecurityInfo type=\\'protectedstring\\'><![CDATA[HMID89VIM9:L0FFM<JJ<2KI6B<<MM3U5CUB?kOI`O2U?3TG:LL2dO65N4A0LN<<iH5L<K<90C5=>3CL@54NBm=KRK<mD2QDD40BD0;RIM=;?4NEM58NEBO@7BD?ME@U53UBMkOIdGBQ72PGKHEB`G71FFE1MN=>iH5LLJ<82C5L>30HH50GAi<JVB?m4CQ<E40@@1;V@?9;<0OGI=:J<0KADF=LIL@U4@UJMkFKdF2QOAPOJHM2`G71FGE1<N4=m@5H4H813G4>>2@LHF4FAi4KV;Nm<2Q<F4@1@9;VA=93M4NDM5:J5AKH5B<NM5@U43UC>kN:dN2Q>APGKLD2dO65GFA1?N=LiH5L48<H3C5<>20LAF4F@i5JVCNi51U5D4H3@0JVA>93?0OFIL:J41KI5B4?MMAU52UK<oGI`NCU6ATNHHEC`F61OEE8NN4=i97L<9<81C5L>:3L@74FAm=HRBNm<3Q=G4HA@1HVA=9;L07FI<;J42KIFB<OMD@U<2QJ>oF;`G1U71TFKLL3`GF1OEE8=N<OiH7L<9<H3C5<>20LAF4F@i5JVCNi51U5D4@B@0:VA>9;<0OFIL:J41KI5B4?MMAU52UK<oGI`NCU>CTG;LD0dFE1NDE1<N=>iIFL48<H3C5<>20LAF4F@i5JVCNi51U5D4A@@09VA?9;N07FI<;J42KIFB<OMD@U<2QJ>oF;`O3U>BPNKHL3`FD1NEE@<N<<iI5L<I<02C4=>:2HH50GAi<9VCNm4AQ=54AB@19V0=9;L0GDI<KJ<1KH7B<NILBQ=2QB?kF8dN3Q73PN:HL2`GE1>FE0=N<?iIFL49<93C==:;0HH74N3i5IVJMm=3Q<E4@1@08V0=9;L0GDI<KJ<1KH7B<NILBU40UCMkOKdN@Q?@TFKLL3`G41OEE1?N==iI6L<I<91CE=>23LA54N0i<KVJNm43U5F0I@@1:V@<9;>0F7I=;J4AKH7BDNMEAU40UCMkFJdG3Q7ATFILE@dNF5OEE0<N<<iIDL=I<92C5L>32L174N@i4HVK?m42Q=D4H@D88RI=9:<0FDI4:J41KI4B4OMM2UD2UC=kNIdFBQ7@PNKHE0dND5F6A9<J=>iHFL=:<03C5<>21LA64F3iDJVKOm<1Q<54HA@0:VH==2O4NFI<:J4AKA7B4OM=@U5CUB=kNJd63Q?@POIHMA`OG1OFE8<J5?mAFH5I800G=M:33HIG0F0m5KRC>i4BQDD0H0D9JRIO=3=4O6M5HN<@OAGF=NIDCU42UCMkFKdF2QGAPN:HL1`GG1>FE0=N<?iIFL49<93C==:;0HH74NAi<KVC<m<BQ4D4A1@09VA?9KM0GGI<8J4AKA6B5NMM@Q=0U;LoF;d?BU71P>JLE@`7F16FA8LNMMmAGLM980CCMN:;2H@44NAi<KVC<m<BQ4D4A1@09VA?9KM0GGI<8J4AKA6B5NMM@Q=0QJ<kN9dFBQ72POJLE2dOF1>4E1MN=?iIFL4J<1BCE=>23LA54N0i<KVJNm43U5F0I@D09V@O9;<0O5I<;N<2OA7BD<MD1U50UCMkF9dOBQOAPOJHM2`G71FGE1<N4=m@5H58<9CC5<>;BL1E4O0i5HVK?m4AQ5540@@1;V@?9;<0OGI=:J<0O@5F=NIDCU5BUC=kG;d6AQ>0PNIHMA`O41G7E@<N<<iI5L<I<02C4=>:2HH50GAi=:VJOm=3QLD4@A@18V@L93L0FFI4:N=2O@7F5MML0U53UB<k>KdF2Q?CPO:HE1`FF1FFA9>J5=mH4L48<1BC=M>23L174N@i4HVK?m42Q=D4H@@9IRI?=2M0F7I4:J41KH6BDNMEAU40U3OkOHdG1Q?CPN:HM3dG61OGE0MN5Mi96L5H<0CC5L>30LA74N@i4JV:Lm=0Q<D4@A@9IRI<=;?4OGM4JN<@OIEF4>MM3U<2UKNkO:dF@Q7AP>JHMA`N61>GE9LN4MiIFL=:<83C5<>22L054OBi4JVKOm4@U5E0@2D9HRHM=3=4O6M<HN53O@5F=NM4AU4CUKLkF;dGBQ>CPOHH5C`OG1NEE0?N<<iADL48<9BC4>>30L1D4OBi5HVKLm=BQ<G4HA@9HV@L93M0F7I=9J52K9EB4OME1U50QCLkFJdN@Q?@P?KHM1`O51N5E8NN=LiAGL48<9BC4>>30L154O0i4KVJNm<3U5E0@2@9:VHO93L0GGM<HN4@KIFB5NMD@U51UK?kNJdF3QO2PNHHL2`OD1NGE8NN4NiHFL=;<91CEL>2ALAD4F@i<8VK?m<@Q550IAD1HV1=9JN0?5IDIJMAOIEF4>ME1U<3UK<kOHdG2Q?0PGKHM1`6E1F6E8<N=LiH4L=:<8BC4=>J0LA64N2i<JVJMm4AQ470IAD1HVH=93?0OGI<;N4BOIGB4?MMAU<2UB?kOJdFBQ7APOJH<3`O61FFE1MN=>iH5L<I<93CMN>2ALAF4OAi4;VC<m4@U5E0@2@9:VHO93L0GGM<HN4@KAEB4OMM@U<3UKNkOIdF2Q?AP79HM1`O51FGE1<N4=iADH5988AG=<:2@HH50GAi49VJMm=2Q=E4AC@08V1N9;L0N7IMKJD0O@5B5=MEAU=CQJ<oOHdF@Q>BPNJHL1`FE1ODEAON<<i@FLMI<H3G<?:;2LAD4OBi5KVJOm=0Q=F413@1;VIL9J<07FM58J5AKI7F=NIDCU4AUB?kOJdG2Q>BPNIH<C`GG1G7EAMNL=m@5H58890CD<>2CLIG4F1i5;VJLm<0QD74HA@19V@>9;L0O5I4:J5AKH4B5LM53U51UB>kNIdGBQ?BPGJHEB`G71FFE1MN=>iH5LLJ<82C5L>30HH50GAm5IV;?m<3Q=E4A1@08VAL93>0OFI4HJ4AKA7B5?MDCU50U3NkNJdFBQ>CTFI]]></SecurityInfo><ColumnProperties type=\\'string\\'><![CDATA[<?xml version="1.0" encoding="UTF-8"?><extendedAttributesList/>]]></ColumnProperties><Params type=\\'string\\'><![CDATA[<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"><properties><entry key="DSProjectName">[&"DSProjectName"]</entry><entry key="DSJobWaveNo">[&"DSJobWaveNo"]</entry><entry key="DSJobInvocationId">[&"DSJobInvocationId"]</entry><entry key="xml_example_root_folder">[&"xml_example_root_folder"]</entry><entry key="DSJobController">[&"DSJobController"]</entry><entry key="DSHostName">[&"DSHostName"]</entry><entry key="DSJobName">[&"DSJobName"]</entry><entry key="DSJobStartTime">[&"DSJobStartTime"]</entry><entry key="DSJobStartDate">[&"DSJobStartDate"]</entry><entry key="DSJobStartTimestamp">[&"DSJobStartTimestamp"]</entry></properties>]]></Params><DebugTestData type=\\'string\\'><![CDATA[<?xml version="1.0" encoding="UTF-8"?><DebugTestValues><jobParams paramName="xml_example_root_folder"/><testData operatorID="Op-1#DSLink2">H4sIAAAAAAAAAH2OvQrCMBSFn6DvEOLqkDb9W6sIDoJDFUeJ9qKFNinJrdi392RwcHG53z2Hy8ddCRnYE7Fcy3vPCxDYMMXoZss+NpNDN2xdF+vp6SzZebyRT39jhmi6zlMIV14mkonMtErFzgQWBzMaLzbDq8NV44fePthZ7Cd6mwCe2wazqnWpwTTTOVCUVQ0co0pBdSGo2u/DfzVKgbnO4pMFCOxl8gHGLQV58AAAAA==</testData></DebugTestValues>]]></DebugTestData></Usage></Properties >'
+-connector '{
+   variant='1.0', 
+   library="java:com/ibm/e2/connector/datastage/cc/CC_E2ConnectorLibrary", 
+   version=1.0, 
+   variantlist='1.0', 
+   versionlist='1.0', 
+   name=XMLStage
+}'
+-linkXMLProperties target 0 '<?xml version=\\'1.0\\' encoding=\\'UTF-16\\'?><Properties version=\\'1.1\\'><Common><Context type=\\'int\\'>2</Context><Variant type=\\'string\\'></Variant><DescriptorVersion type=\\'string\\'>1.0</DescriptorVersion><PartitionType type=\\'int\\'>-1</PartitionType><RCP type=\\'int\\'>0</RCP><Reject></Reject></Common><Usage></Usage></Properties >'
+-target 0 '{
+      DSSQLType={street=12, city=12, state=12, country=12, postalCode=12, phonenumber1=12, phonenumber2=12, address_type=12}, 
+      DSSchema=\\'record
+         (
+           street\\:string\\[\\]\\;
+           city\\:string\\[\\]\\;
+           state\\:string\\[\\]\\;
+           country\\:string\\[\\]\\;
+           postalCode\\:string\\[\\]\\;
+           phonenumber1\\:string\\[\\]\\;
+           phonenumber2\\:string\\[\\]\\;
+           address_type\\:string\\[\\]\\;
+         )\\'
+}'
+   
+## General options
+[ident('Address_compose'); jobmon_ident('Address_compose'); seq]
+## Inputs
+0< [] 'Address_file:Address.v'
+;
+#################################################################
+#### STAGE: Address_file
+## Operator
+import
+## Operator options
+-schema record
+  {final_delim=end, delim=',', quote=double}
+(
+  street:string[];
+  city:string[];
+  state:string[];
+  country:string[];
+  postalCode:string[];
+  phonenumber1:string[];
+  phonenumber2:string[];
+  address_type:string[];
+)
+-file  '[&"xml_example_root_folder"]/xml_examples/hpivot_step/example1/input_files/address.txt'
+-rejects continue
+-reportProgress yes
+## General options
+[ident('Address_file'); jobmon_ident('Address_file')]
+## Outputs
+0> [] 'Address_file:Address.v'
+;
+# End of OSH code
+=+=+=+=
+   END DSSCRIPT
+END DSEXECJOB

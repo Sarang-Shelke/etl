@@ -1,0 +1,3778 @@
+{
+  "job_name": "DIM_TEST_CONTRACT_AECB_I",
+  "job_parameters": [
+    {
+      "name": "BUSINESS_DATE",
+      "prompt": "BUSINESS_DATE",
+      "default": "2021-06-10"
+    },
+    {
+      "name": "TEST_Param",
+      "prompt": "TEST_Param parameters",
+      "default": "(As pre-defined)"
+    },
+    {
+      "name": "$APT_DISABLE_TFXR0017",
+      "prompt": "APT_DISABLE_TFXR0017",
+      "default": "$PROJDEF"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "V0S323",
+      "name": "value",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxChangeCapture"
+      },
+      "pins": [
+        {
+          "id": "V0S323P5",
+          "name": "DSLink347",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S323P4",
+          "name": "Subject_cdc",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S323P6",
+          "name": "Subj_cdc",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "ProviderSubjectNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.ProviderSubjectNo"
+            },
+            {
+              "name": "DateOfLastUpdate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.DateOfLastUpdate"
+            },
+            {
+              "name": "FirstNameEN",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.FirstNameEN"
+            },
+            {
+              "name": "LastNameEN",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.LastNameEN"
+            },
+            {
+              "name": "FullNameEN",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.FullNameEN"
+            },
+            {
+              "name": "FirstNameAR",
+              "type": "NVARCHAR",
+              "sql_type_code": "-9",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.FirstNameAR"
+            },
+            {
+              "name": "LastNameAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.LastNameAR"
+            },
+            {
+              "name": "FullNameAR",
+              "type": "NVARCHAR",
+              "sql_type_code": "-9",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.FullNameAR"
+            },
+            {
+              "name": "DOB",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.DOB"
+            },
+            {
+              "name": "Gender",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.Gender"
+            },
+            {
+              "name": "Title",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.Title"
+            },
+            {
+              "name": "ResidentFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.ResidentFlag"
+            },
+            {
+              "name": "Nationality",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.Nationality"
+            },
+            {
+              "name": "PassprtNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.PassprtNo"
+            },
+            {
+              "name": "PassportExpiryDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.PassportExpiryDate"
+            },
+            {
+              "name": "DrivingLicenseNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.DrivingLicenseNo"
+            },
+            {
+              "name": "EmiratesId",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.EmiratesId"
+            },
+            {
+              "name": "Address",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.Address"
+            },
+            {
+              "name": "Emirate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.Emirate"
+            },
+            {
+              "name": "PlotNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.PlotNo"
+            },
+            {
+              "name": "POBox",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.POBox"
+            },
+            {
+              "name": "PhoneNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.PhoneNo"
+            },
+            {
+              "name": "PrimaryMobileNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.PrimaryMobileNo"
+            },
+            {
+              "name": "AdditionalMobileNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.AdditionalMobileNo"
+            },
+            {
+              "name": "Email",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.Email"
+            },
+            {
+              "name": "EmployerName",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.EmployerName"
+            },
+            {
+              "name": "DateOfEmployment",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.DateOfEmployment"
+            },
+            {
+              "name": "DateOfTermination",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.DateOfTermination"
+            },
+            {
+              "name": "GrossAnnualIncome",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.GrossAnnualIncome"
+            },
+            {
+              "name": "EmploymentType",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.EmploymentType"
+            },
+            {
+              "name": "Source",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.Source"
+            },
+            {
+              "name": "GrossAnnualAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.GrossAnnualAmount"
+            },
+            {
+              "name": "SourceType",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_cdc.SourceType"
+            },
+            {
+              "name": "change_code",
+              "type": "TINYINT",
+              "sql_type_code": "-6",
+              "length": "0",
+              "scale": "0",
+              "nullable": false,
+              "derivation": "ChangeCode()"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "V0S332",
+      "name": "Xfm_Befr_Dim",
+      "type": "CTransformerStage",
+      "properties": {
+        "stage_type": "CTransformerStage"
+      },
+      "pins": [
+        {
+          "id": "V0S332P3",
+          "name": "Before_cdc",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S332P1",
+          "name": "Before",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "ProviderSubjectNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.ProviderSubjectNo"
+            },
+            {
+              "name": "OriginalCurrency",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.OriginalCurrency"
+            },
+            {
+              "name": "ReferenceDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.ReferenceDate"
+            },
+            {
+              "name": "ContractType",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.ContractType"
+            },
+            {
+              "name": "ActiveFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.ActiveFlag"
+            },
+            {
+              "name": "OpenDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.OpenDate"
+            },
+            {
+              "name": "ClosedDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.ClosedDate"
+            },
+            {
+              "name": "ContractStatus",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.ContractStatus"
+            },
+            {
+              "name": "ContractStatusDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.ContractStatusDate"
+            },
+            {
+              "name": "TotalAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.TotalAmount"
+            },
+            {
+              "name": "PAYMENTAMOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.PAYMENTAMOUNT"
+            },
+            {
+              "name": "NOOFINSTALMENTS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.NOOFINSTALMENTS"
+            },
+            {
+              "name": "NOOFREMAININGINSTALMENTS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.NOOFREMAININGINSTALMENTS"
+            },
+            {
+              "name": "MethodOfPayment",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.MethodOfPayment"
+            },
+            {
+              "name": "PaymentFrequency",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.PaymentFrequency"
+            },
+            {
+              "name": "Balance",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.Balance"
+            },
+            {
+              "name": "OverdueAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.OverdueAmount"
+            },
+            {
+              "name": "DaysPaymentDelay",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.DaysPaymentDelay"
+            },
+            {
+              "name": "IslamicContractFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.IslamicContractFlag"
+            },
+            {
+              "name": "SecuredContractFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.SecuredContractFlag"
+            },
+            {
+              "name": "SecurityTypeFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.SecurityTypeFlag"
+            },
+            {
+              "name": "SourceSystem",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.SourceSystem"
+            },
+            {
+              "name": "EconomicActivityCode",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.EconomicActivityCode"
+            }
+          ]
+        },
+        {
+          "id": "V0S332P2",
+          "name": "before_subj_cdc",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "ProviderSubjectNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.ProviderSubjectNo"
+            },
+            {
+              "name": "ProviderContractNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Before_cdc.ProviderContractNo"
+            },
+            {
+              "name": "OpenDate",
+              "type": "DATE",
+              "sql_type_code": "9",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "StringToDate(Before_cdc.OpenDate, \\"
+            },
+            {
+              "name": "FullNameEN",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Before_cdc.FullNameEN)) THEN (Before_cdc.FullNameEN) ELSE (''))"
+            },
+            {
+              "name": "DOB",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Before_cdc.DOB)) THEN (Before_cdc.DOB) ELSE (''))"
+            },
+            {
+              "name": "Gender",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Before_cdc.Gender)) THEN (Before_cdc.Gender) ELSE (''))"
+            },
+            {
+              "name": "ResidentFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Before_cdc.ResidentFlag)) THEN (Before_cdc.ResidentFlag) ELSE (''))"
+            },
+            {
+              "name": "Nationality",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Before_cdc.Nationality)) THEN (Before_cdc.Nationality) ELSE (''))"
+            },
+            {
+              "name": "PassprtNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Before_cdc.PassprtNo)) THEN (Before_cdc.PassprtNo) ELSE (''))"
+            },
+            {
+              "name": "EmiratesId",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Before_cdc.EmiratesId)) THEN (Before_cdc.EmiratesId) ELSE (''))"
+            },
+            {
+              "name": "Emirate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Before_cdc.Emirate)) THEN (Before_cdc.Emirate) ELSE (''))"
+            },
+            {
+              "name": "PrimaryMobileNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Before_cdc.PrimaryMobileNo)) THEN (Before_cdc.PrimaryMobileNo) ELSE (''))"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "V0S333",
+      "name": "Xfm_Contract",
+      "type": "CTransformerStage",
+      "properties": {
+        "stage_type": "CTransformerStage"
+      },
+      "pins": [
+        {
+          "id": "V0S333P3",
+          "name": "Subject_Ext",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S333P2",
+          "name": "Subject_cdc",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "V_CUSTOMER_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.V_CUSTOMER_CODE"
+            },
+            {
+              "name": "ProviderSubjectNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.V_CUSTOMER_CODE"
+            },
+            {
+              "name": "DateOfLastUpdate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.DateOfLastUpdate"
+            },
+            {
+              "name": "FirstNameEN",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.FirstNameEN"
+            },
+            {
+              "name": "LastNameEN",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.LastNameEN"
+            },
+            {
+              "name": "FullNameEN",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Trim(( IF IsNotNull((Subject_Ext.FullNameEN)) THEN (Subject_Ext.FullNameEN) ELSE ('')))"
+            },
+            {
+              "name": "FirstNameAR",
+              "type": "NVARCHAR",
+              "sql_type_code": "-9",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.FirstNameAR"
+            },
+            {
+              "name": "LastNameAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.LastNameAR"
+            },
+            {
+              "name": "FullNameAR",
+              "type": "NVARCHAR",
+              "sql_type_code": "-9",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Subject_Ext.FullNameAR)) THEN (Subject_Ext.FullNameAR) ELSE (''))"
+            },
+            {
+              "name": "DOB",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Subject_Ext.DOB)) THEN (Subject_Ext.DOB) ELSE (''))"
+            },
+            {
+              "name": "Gender",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Subject_Ext.Gender)) THEN (Subject_Ext.Gender) ELSE (''))"
+            },
+            {
+              "name": "Title",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.Title"
+            },
+            {
+              "name": "ResidentFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Subject_Ext.ResidentFlag)) THEN (Subject_Ext.ResidentFlag) ELSE (''))"
+            },
+            {
+              "name": "Nationality",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": " If Trim(( IF IsNotNull((Subject_Ext.Nationality)) THEN (Subject_Ext.Nationality) ELSE (''))) = 'UK' Then 'GB' ELSE Trim(( IF IsNotNull((Subject_Ext.Nationality)) THEN (Subject_Ext.Nationality) ELSE ('')))"
+            },
+            {
+              "name": "PassprtNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Subject_Ext.PassprtNo)) THEN (Subject_Ext.PassprtNo) ELSE (''))"
+            },
+            {
+              "name": "PassportExpiryDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.PassportExpiryDate"
+            },
+            {
+              "name": "DrivingLicenseNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.DrivingLicenseNo"
+            },
+            {
+              "name": "EmiratesId",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Subject_Ext.EmiratesId)) THEN (Subject_Ext.EmiratesId) ELSE (''))"
+            },
+            {
+              "name": "Address",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.Address"
+            },
+            {
+              "name": "Emirate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Subject_Ext.Emirate)) THEN (Subject_Ext.Emirate) ELSE (''))"
+            },
+            {
+              "name": "PlotNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.PlotNo"
+            },
+            {
+              "name": "POBox",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.POBox"
+            },
+            {
+              "name": "PhoneNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.PhoneNo"
+            },
+            {
+              "name": "PrimaryMobileNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((Subject_Ext.PrimaryMobileNo)) THEN (Subject_Ext.PrimaryMobileNo) ELSE (''))"
+            },
+            {
+              "name": "AdditionalMobileNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.AdditionalMobileNo"
+            },
+            {
+              "name": "Email",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.Email"
+            },
+            {
+              "name": "EmployerName",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.EmployerName"
+            },
+            {
+              "name": "DateOfEmployment",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.DateOfEmployment"
+            },
+            {
+              "name": "DateOfTermination",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.DateOfTermination"
+            },
+            {
+              "name": "GrossAnnualIncome",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.GrossAnnualIncome"
+            },
+            {
+              "name": "EmploymentType",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.EmploymentType"
+            },
+            {
+              "name": "Source",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.Source"
+            },
+            {
+              "name": "GrossAnnualAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.GrossAnnualAmount"
+            },
+            {
+              "name": "SourceType",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subject_Ext.SourceType"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "V0S339",
+      "name": "selection",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxPeek"
+      },
+      "pins": [
+        {
+          "id": "V0S339P1",
+          "name": "DSLink338",
+          "direction": "input",
+          "schema": []
+        }
+      ]
+    },
+    {
+      "id": "V0S341",
+      "name": "Xfm_Contratc",
+      "type": "CTransformerStage",
+      "properties": {
+        "stage_type": "CTransformerStage"
+      },
+      "pins": [
+        {
+          "id": "V0S341P1",
+          "name": "Read_Chgs",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S341P2",
+          "name": "Contct_Cdc",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "V_CUSTOMER_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.V_CUSTOMER_CODE"
+            },
+            {
+              "name": "ProviderSubjectNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.ProviderSubjectNo"
+            },
+            {
+              "name": "OriginalCurrency",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.OriginalCurrency"
+            },
+            {
+              "name": "ReferenceDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.ReferenceDate"
+            },
+            {
+              "name": "ContractType",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.ContractType"
+            },
+            {
+              "name": "ActiveFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.ActiveFlag"
+            },
+            {
+              "name": "OpenDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.OpenDate"
+            },
+            {
+              "name": "ClosedDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.ClosedDate"
+            },
+            {
+              "name": "ContractStatus",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.ContractStatus"
+            },
+            {
+              "name": "ContractStatusDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.ContractStatusDate"
+            },
+            {
+              "name": "TotalAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.TotalAmount"
+            },
+            {
+              "name": "PAYMENTAMOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.PAYMENTAMOUNT"
+            },
+            {
+              "name": "NOOFINSTALMENTS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.NOOFINSTALMENTS"
+            },
+            {
+              "name": "NOOFREMAININGINSTALMENTS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.NOOFREMAININGINSTALMENTS"
+            },
+            {
+              "name": "MethodOfPayment",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.MethodOfPayment"
+            },
+            {
+              "name": "PaymentFrequency",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.PaymentFrequency"
+            },
+            {
+              "name": "Balance",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.Balance"
+            },
+            {
+              "name": "OverdueAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.OverdueAmount"
+            },
+            {
+              "name": "DaysPaymentDelay",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.DaysPaymentDelay"
+            },
+            {
+              "name": "IslamicContractFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.IslamicContractFlag"
+            },
+            {
+              "name": "SecuredContractFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.SecuredContractFlag"
+            },
+            {
+              "name": "SecurityTypeFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.SecurityTypeFlag"
+            },
+            {
+              "name": "SourceSystem",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.SourceSystem"
+            },
+            {
+              "name": "EconomicActivityCode",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.EconomicActivityCode"
+            },
+            {
+              "name": "Contract_change_code",
+              "type": "TINYINT",
+              "sql_type_code": "-6",
+              "length": "0",
+              "scale": "0",
+              "nullable": false,
+              "derivation": "Read_Chgs.Contract_change_code"
+            },
+            {
+              "name": "PROVIDERAPPLICATIONNO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.PROVIDERAPPLICATIONNO"
+            },
+            {
+              "name": "Gross_Income",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.Gross_Income"
+            },
+            {
+              "name": "Source",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.Source"
+            },
+            {
+              "name": "Gross_Amount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.Gross_Amount"
+            },
+            {
+              "name": "EMPLOYERNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.EMPLOYERNAME"
+            }
+          ]
+        },
+        {
+          "id": "V0S341P3",
+          "name": "Insrt_Contrc",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "ProviderSubjectNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Read_Chgs.ProviderSubjectNo"
+            },
+            {
+              "name": "OpenDate",
+              "type": "DATE",
+              "sql_type_code": "9",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "'1900-12-31'"
+            },
+            {
+              "name": "FullNameEN",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "''"
+            },
+            {
+              "name": "DOB",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "''"
+            },
+            {
+              "name": "Gender",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "''"
+            },
+            {
+              "name": "ResidentFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "''"
+            },
+            {
+              "name": "Nationality",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "''"
+            },
+            {
+              "name": "PassprtNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "''"
+            },
+            {
+              "name": "EmiratesId",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "''"
+            },
+            {
+              "name": "Emirate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "''"
+            },
+            {
+              "name": "PrimaryMobileNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "''"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "V0S346",
+      "name": "operator",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxFunnel"
+      },
+      "pins": [
+        {
+          "id": "V0S346P1",
+          "name": "before_subj_cdc",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S346P2",
+          "name": "Insrt_Contrc",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S346P4",
+          "name": "DSLink356",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "ProviderSubjectNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "ProviderSubjectNo"
+            },
+            {
+              "name": "OpenDate",
+              "type": "DATE",
+              "sql_type_code": "9",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "OpenDate"
+            },
+            {
+              "name": "FullNameEN",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "FullNameEN"
+            },
+            {
+              "name": "DOB",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DOB"
+            },
+            {
+              "name": "Gender",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Gender"
+            },
+            {
+              "name": "ResidentFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "ResidentFlag"
+            },
+            {
+              "name": "Nationality",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Nationality"
+            },
+            {
+              "name": "PassprtNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "PassprtNo"
+            },
+            {
+              "name": "EmiratesId",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "EmiratesId"
+            },
+            {
+              "name": "Emirate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Emirate"
+            },
+            {
+              "name": "PrimaryMobileNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "PrimaryMobileNo"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "V0S348",
+      "name": "key",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxJoin"
+      },
+      "pins": [
+        {
+          "id": "V0S348P1",
+          "name": "Contct_Cdc",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S348P3",
+          "name": "Subj_cdc",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S348P4",
+          "name": "Jn_Subject_SRC",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "V_CUSTOMER_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.V_CUSTOMER_CODE"
+            },
+            {
+              "name": "ProviderSubjectNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.ProviderSubjectNo"
+            },
+            {
+              "name": "OriginalCurrency",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.OriginalCurrency"
+            },
+            {
+              "name": "ReferenceDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.ReferenceDate"
+            },
+            {
+              "name": "ContractType",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.ContractType"
+            },
+            {
+              "name": "ActiveFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.ActiveFlag"
+            },
+            {
+              "name": "OpenDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.OpenDate"
+            },
+            {
+              "name": "ClosedDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.ClosedDate"
+            },
+            {
+              "name": "ContractStatus",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.ContractStatus"
+            },
+            {
+              "name": "ContractStatusDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.ContractStatusDate"
+            },
+            {
+              "name": "TotalAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.TotalAmount"
+            },
+            {
+              "name": "PAYMENTAMOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.PAYMENTAMOUNT"
+            },
+            {
+              "name": "NOOFINSTALMENTS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.NOOFINSTALMENTS"
+            },
+            {
+              "name": "NOOFREMAININGINSTALMENTS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.NOOFREMAININGINSTALMENTS"
+            },
+            {
+              "name": "MethodOfPayment",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.MethodOfPayment"
+            },
+            {
+              "name": "PaymentFrequency",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.PaymentFrequency"
+            },
+            {
+              "name": "Balance",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.Balance"
+            },
+            {
+              "name": "OverdueAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.OverdueAmount"
+            },
+            {
+              "name": "DaysPaymentDelay",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.DaysPaymentDelay"
+            },
+            {
+              "name": "IslamicContractFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.IslamicContractFlag"
+            },
+            {
+              "name": "SecuredContractFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.SecuredContractFlag"
+            },
+            {
+              "name": "SecurityTypeFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.SecurityTypeFlag"
+            },
+            {
+              "name": "SourceSystem",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.SourceSystem"
+            },
+            {
+              "name": "EconomicActivityCode",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.EconomicActivityCode"
+            },
+            {
+              "name": "DateOfLastUpdate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.DateOfLastUpdate"
+            },
+            {
+              "name": "FirstNameEN",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.FirstNameEN"
+            },
+            {
+              "name": "LastNameEN",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.LastNameEN"
+            },
+            {
+              "name": "FullNameEN",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.FullNameEN"
+            },
+            {
+              "name": "FirstNameAR",
+              "type": "NVARCHAR",
+              "sql_type_code": "-9",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.FirstNameAR"
+            },
+            {
+              "name": "LastNameAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.LastNameAR"
+            },
+            {
+              "name": "FullNameAR",
+              "type": "NVARCHAR",
+              "sql_type_code": "-9",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.FullNameAR"
+            },
+            {
+              "name": "DOB",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.DOB"
+            },
+            {
+              "name": "Gender",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.Gender"
+            },
+            {
+              "name": "Title",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.Title"
+            },
+            {
+              "name": "ResidentFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.ResidentFlag"
+            },
+            {
+              "name": "Nationality",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.Nationality"
+            },
+            {
+              "name": "PassprtNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.PassprtNo"
+            },
+            {
+              "name": "PassportExpiryDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.PassportExpiryDate"
+            },
+            {
+              "name": "DrivingLicenseNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.DrivingLicenseNo"
+            },
+            {
+              "name": "EmiratesId",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.EmiratesId"
+            },
+            {
+              "name": "Address",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.Address"
+            },
+            {
+              "name": "Emirate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.Emirate"
+            },
+            {
+              "name": "PlotNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.PlotNo"
+            },
+            {
+              "name": "POBox",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.POBox"
+            },
+            {
+              "name": "PhoneNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.PhoneNo"
+            },
+            {
+              "name": "PrimaryMobileNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.PrimaryMobileNo"
+            },
+            {
+              "name": "AdditionalMobileNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.AdditionalMobileNo"
+            },
+            {
+              "name": "Email",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.Email"
+            },
+            {
+              "name": "EmployerName",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.EMPLOYERNAME"
+            },
+            {
+              "name": "DateOfEmployment",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.DateOfEmployment"
+            },
+            {
+              "name": "DateOfTermination",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.DateOfTermination"
+            },
+            {
+              "name": "GrossAnnualIncome",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.GrossAnnualIncome"
+            },
+            {
+              "name": "EmploymentType",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.EmploymentType"
+            },
+            {
+              "name": "Source",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.Source"
+            },
+            {
+              "name": "GrossAnnualAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.GrossAnnualAmount"
+            },
+            {
+              "name": "SourceType",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Subj_cdc.SourceType"
+            },
+            {
+              "name": "Contract_change_code",
+              "type": "TINYINT",
+              "sql_type_code": "-6",
+              "length": "0",
+              "scale": "0",
+              "nullable": false,
+              "derivation": "Contct_Cdc.Contract_change_code"
+            },
+            {
+              "name": "PROVIDERAPPLICATIONNO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.PROVIDERAPPLICATIONNO"
+            },
+            {
+              "name": "Gross_Income",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.Gross_Income"
+            },
+            {
+              "name": "Gross_Amount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Contct_Cdc.Gross_Amount"
+            },
+            {
+              "name": "Subject_change_code",
+              "type": "TINYINT",
+              "sql_type_code": "-6",
+              "length": "0",
+              "scale": "0",
+              "nullable": false,
+              "derivation": "Subj_cdc.change_code"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "V0S355",
+      "name": "key",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxRemDup"
+      },
+      "pins": [
+        {
+          "id": "V0S355P2",
+          "name": "DSLink356",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S355P1",
+          "name": "DSLink347",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "ProviderSubjectNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink356.ProviderSubjectNo"
+            },
+            {
+              "name": "FullNameEN",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink356.FullNameEN"
+            },
+            {
+              "name": "DOB",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink356.DOB"
+            },
+            {
+              "name": "Gender",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink356.Gender"
+            },
+            {
+              "name": "ResidentFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink356.ResidentFlag"
+            },
+            {
+              "name": "Nationality",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink356.Nationality"
+            },
+            {
+              "name": "PassprtNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink356.PassprtNo"
+            },
+            {
+              "name": "EmiratesId",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink356.EmiratesId"
+            },
+            {
+              "name": "Emirate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink356.Emirate"
+            },
+            {
+              "name": "PrimaryMobileNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink356.PrimaryMobileNo"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "V0S357",
+      "name": "key",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxRemDup"
+      },
+      "pins": [
+        {
+          "id": "V0S357P3",
+          "name": "DSLink371",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S357P2",
+          "name": "After",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "V_CUSTOMER_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.V_CUSTOMER_CODE"
+            },
+            {
+              "name": "ProviderSubjectNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.ProviderSubjectNo"
+            },
+            {
+              "name": "OriginalCurrency",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.OriginalCurrency"
+            },
+            {
+              "name": "ReferenceDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.ReferenceDate"
+            },
+            {
+              "name": "ContractType",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.ContractType"
+            },
+            {
+              "name": "ActiveFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.ActiveFlag"
+            },
+            {
+              "name": "OpenDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.OpenDate"
+            },
+            {
+              "name": "ClosedDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.ClosedDate"
+            },
+            {
+              "name": "ContractStatus",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.ContractStatus"
+            },
+            {
+              "name": "ContractStatusDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.ContractStatusDate"
+            },
+            {
+              "name": "TotalAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.TotalAmount"
+            },
+            {
+              "name": "PAYMENTAMOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.PAYMENTAMOUNT"
+            },
+            {
+              "name": "NOOFINSTALMENTS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.NOOFINSTALMENTS"
+            },
+            {
+              "name": "NOOFREMAININGINSTALMENTS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.NOOFREMAININGINSTALMENTS"
+            },
+            {
+              "name": "MethodOfPayment",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.MethodOfPayment"
+            },
+            {
+              "name": "PaymentFrequency",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.PaymentFrequency"
+            },
+            {
+              "name": "Balance",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.Balance"
+            },
+            {
+              "name": "OverdueAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.OverdueAmount"
+            },
+            {
+              "name": "DaysPaymentDelay",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.DaysPaymentDelay"
+            },
+            {
+              "name": "IslamicContractFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.IslamicContractFlag"
+            },
+            {
+              "name": "SecuredContractFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.SecuredContractFlag"
+            },
+            {
+              "name": "SecurityTypeFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.SecurityTypeFlag"
+            },
+            {
+              "name": "SourceSystem",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.SourceSystem"
+            },
+            {
+              "name": "EconomicActivityCode",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.EconomicActivityCode"
+            },
+            {
+              "name": "PROVIDERAPPLICATIONNO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.PROVIDERAPPLICATIONNO"
+            },
+            {
+              "name": "Gross_Income",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.Gross_Income"
+            },
+            {
+              "name": "Source",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.Source"
+            },
+            {
+              "name": "Gross_Amount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.Gross_Amount"
+            },
+            {
+              "name": "EMPLOYERNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink371.EMPLOYERNAME"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "V0S370",
+      "name": "svPAYMENTAMOUNT",
+      "type": "CTransformerStage",
+      "properties": {
+        "stage_type": "CTransformerStage"
+      },
+      "pins": [
+        {
+          "id": "V0S370P1",
+          "name": "LNK_TFM",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S370P2",
+          "name": "DSLink371",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "V_CUSTOMER_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.V_CUSTOMER_CODE"
+            },
+            {
+              "name": "ProviderSubjectNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.ProviderSubjectNo"
+            },
+            {
+              "name": "OriginalCurrency",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.OriginalCurrency"
+            },
+            {
+              "name": "ReferenceDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.ReferenceDate"
+            },
+            {
+              "name": "ContractType",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.ContractType"
+            },
+            {
+              "name": "ActiveFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.ActiveFlag"
+            },
+            {
+              "name": "OpenDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.OpenDate"
+            },
+            {
+              "name": "ClosedDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": " If LNK_TFM.V_CONTRACT_STATUS = 'V' Then (BUSINESS_DATE[9, 2] : BUSINESS_DATE[6, 2] : BUSINESS_DATE[1, 4]) Else LNK_TFM.ClosedDate"
+            },
+            {
+              "name": "ContractStatus",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.ContractStatus"
+            },
+            {
+              "name": "ContractStatusDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((LNK_TFM.CONTRACTSTATUSDATE_DM)) THEN (LNK_TFM.CONTRACTSTATUSDATE_DM) ELSE ((BUSINESS_DATE[9, 2] : BUSINESS_DATE[6, 2] : BUSINESS_DATE[1, 4])))"
+            },
+            {
+              "name": "TotalAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": " If LNK_TFM.HF_CONTRACT = 'Y' AND ( IF IsNotNull((LNK_TFM.TOTALAMOUNT_LD)) THEN (LNK_TFM.TOTALAMOUNT_LD) ELSE \\"
+            },
+            {
+              "name": "PAYMENTAMOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((svPAYMENTAMOUNT)) THEN (svPAYMENTAMOUNT) ELSE ('1'))"
+            },
+            {
+              "name": "MethodOfPayment",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.MethodOfPayment"
+            },
+            {
+              "name": "PaymentFrequency",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.PaymentFrequency"
+            },
+            {
+              "name": "Balance",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": " if LNK_TFM.V_CONTRACT_STATUS = 'A' and LNK_TFM.Balance < 0 then '1' else LNK_TFM.Balance"
+            },
+            {
+              "name": "OverdueAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": " IF ( IF IsNotNull((LNK_TFM.RM6_FLG)) THEN (LNK_TFM.RM6_FLG) ELSE \\"
+            },
+            {
+              "name": "DaysPaymentDelay",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": " IF ( IF IsNotNull((LNK_TFM.RM6_FLG)) THEN (LNK_TFM.RM6_FLG) ELSE \\"
+            },
+            {
+              "name": "IslamicContractFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.IslamicContractFlag"
+            },
+            {
+              "name": "SecuredContractFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": " If LNK_TFM.SecuredContractFlag = '0' Then ( If LNK_TFM.V_LAA_LPP_PRODCAT_C = 'PERSONAL' AND LNK_TFM.V_SEGMENT_DESC = 'AGAINST INVESTMENT DEPOSITS' THEN '1' Else  If LNK_TFM.V_PRODUCT_CODE = 'MO29' THEN '1' Else '0') Else LNK_TFM.SecuredContractFlag"
+            },
+            {
+              "name": "SecurityTypeFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": " If LNK_TFM.SecurityTypeFlag = '' Then ( If (LNK_TFM.V_LAA_LPP_PRODCAT_C = 'AUTO' AND LNK_TFM.V_SEGMENT_DESC = 'AGAINST FIXED DEPOSIT') THEN 'TS1' Else  If (LNK_TFM.V_LAA_LPP_PRODCAT_C = 'PERSONAL' AND LNK_TFM.V_SEGMENT_DESC = 'AGAINST INVESTMENT DEPOSITS') THEN 'TS1' Else  If LNK_TFM.V_PRODUCT_CODE = 'MO29' THEN 'TS2' ELSE '') Else LNK_TFM.SecurityTypeFlag"
+            },
+            {
+              "name": "SourceSystem",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.SourceSystem"
+            },
+            {
+              "name": "EconomicActivityCode",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.EconomicActivityCode"
+            },
+            {
+              "name": "PROVIDERAPPLICATIONNO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.PROVIDERAPPLICATIONNO"
+            },
+            {
+              "name": "Gross_Income",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.Gross_Income"
+            },
+            {
+              "name": "Source",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.Source"
+            },
+            {
+              "name": "Gross_Amount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.Gross_Amount"
+            },
+            {
+              "name": "EMPLOYERNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_TFM.EMPLOYERNAME"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "V0S373",
+      "name": "Lookup_373",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxLookup"
+      },
+      "pins": [
+        {
+          "id": "V0S373P1",
+          "name": "LNK_LKP",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S373P2",
+          "name": "LNK_REF",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S373P5",
+          "name": "RM_DPD",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S373P6",
+          "name": "RM_DPD2",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S373P7",
+          "name": "RM_DPD3",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S373P8",
+          "name": "RM_DPD4",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S373P9",
+          "name": "RM_DPD5",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S373P10",
+          "name": "RM_DPD6",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S373P3",
+          "name": "LNK_TFM",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "V_CUSTOMER_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.V_CUSTOMER_CODE"
+            },
+            {
+              "name": "ProviderSubjectNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.ProviderSubjectNo"
+            },
+            {
+              "name": "OriginalCurrency",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.OriginalCurrency"
+            },
+            {
+              "name": "ReferenceDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.ReferenceDate"
+            },
+            {
+              "name": "ContractType",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.ContractType"
+            },
+            {
+              "name": "ActiveFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.ActiveFlag"
+            },
+            {
+              "name": "OpenDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.OpenDate"
+            },
+            {
+              "name": "ClosedDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.ClosedDate"
+            },
+            {
+              "name": "ContractStatus",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.ContractStatus"
+            },
+            {
+              "name": "V_CONTRACT_STATUS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.V_CONTRACT_STATUS"
+            },
+            {
+              "name": "ContractStatusDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.ContractStatusDate"
+            },
+            {
+              "name": "TotalAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.TotalAmount"
+            },
+            {
+              "name": "PAYMENTAMOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.PAYMENTAMOUNT"
+            },
+            {
+              "name": "NOOFINSTALMENTS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.NOOFINSTALMENTS"
+            },
+            {
+              "name": "NOOFREMAININGINSTALMENTS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.NOOFREMAININGINSTALMENTS"
+            },
+            {
+              "name": "MethodOfPayment",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.MethodOfPayment"
+            },
+            {
+              "name": "PaymentFrequency",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.PaymentFrequency"
+            },
+            {
+              "name": "Balance",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.Balance"
+            },
+            {
+              "name": "OverdueAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.OverdueAmount"
+            },
+            {
+              "name": "DaysPaymentDelay",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.DaysPaymentDelay"
+            },
+            {
+              "name": "IslamicContractFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.IslamicContractFlag"
+            },
+            {
+              "name": "SecuredContractFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.SecuredContractFlag"
+            },
+            {
+              "name": "SecurityTypeFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.SecurityTypeFlag"
+            },
+            {
+              "name": "SourceSystem",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.SourceSystem"
+            },
+            {
+              "name": "EconomicActivityCode",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.EconomicActivityCode"
+            },
+            {
+              "name": "PROVIDERAPPLICATIONNO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.PROVIDERAPPLICATIONNO"
+            },
+            {
+              "name": "Gross_Income",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.Gross_Income"
+            },
+            {
+              "name": "Source",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.Source"
+            },
+            {
+              "name": "Gross_Amount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.Gross_Amount"
+            },
+            {
+              "name": "EMPLOYERNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.EMPLOYERNAME"
+            },
+            {
+              "name": "HF_CONTRACT",
+              "type": "CHAR",
+              "sql_type_code": "1",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.HF_CONTRACT"
+            },
+            {
+              "name": "V_LAA_LPP_PRODCAT_C",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.V_LAA_LPP_PRODCAT_C"
+            },
+            {
+              "name": "TOTALAMOUNT_LD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.TOTALAMOUNT_LD"
+            },
+            {
+              "name": "PAYMENTAMOUNT_A",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.PAYMENTAMOUNT_A"
+            },
+            {
+              "name": "NOOFINSTALMENTS_V",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.NOOFINSTALMENTS_V"
+            },
+            {
+              "name": "NOOFREMAININGINSTALMENTS_DUE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.NOOFREMAININGINSTALMENTS_DUE"
+            },
+            {
+              "name": "CONTRACTSTATUSDATE_DM",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.CONTRACTSTATUSDATE_DM"
+            },
+            {
+              "name": "PAYMENTAMOUNT_EMI",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.PAYMENTAMOUNT_EMI"
+            },
+            {
+              "name": "V_SEGMENT_DESC",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.V_SEGMENT_DESC"
+            },
+            {
+              "name": "V_PRODUCT_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.V_PRODUCT_CODE"
+            },
+            {
+              "name": "EMI",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_REF.EMI"
+            },
+            {
+              "name": "RM_DPD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD.RM_DPD"
+            },
+            {
+              "name": "RM_OVRD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD.RM_OVRD"
+            },
+            {
+              "name": "RM_FLG",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD.RM_FLG"
+            },
+            {
+              "name": "NEW_DPD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD2.NEW_DPD"
+            },
+            {
+              "name": "NEW_OD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD2.NEW_OD"
+            },
+            {
+              "name": "RM2_FLG",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD2.RM2_FLG"
+            },
+            {
+              "name": "RM3_DPD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD3.RM3_DPD"
+            },
+            {
+              "name": "RM3_OVRD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD3.RM3_OVRD"
+            },
+            {
+              "name": "RM3_FLG",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD3.RM3_FLG"
+            },
+            {
+              "name": "RM4_DPD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD4.RM4_DPD"
+            },
+            {
+              "name": "RM4_OVRD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD4.RM4_OVRD"
+            },
+            {
+              "name": "RM4_FLG",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD4.RM4_FLG"
+            },
+            {
+              "name": "RM5_DPD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD5.RM5_DPD"
+            },
+            {
+              "name": "RM5_OVRD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD5.RM5_OVRD"
+            },
+            {
+              "name": "RM5_FLG",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD5.RM5_FLG"
+            },
+            {
+              "name": "RM6_FLG",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "RM_DPD6.RM6_FLG"
+            },
+            {
+              "name": "TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LKP.TENOR"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "V0S379",
+      "name": "key",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxJoin"
+      },
+      "pins": [
+        {
+          "id": "V0S379P2",
+          "name": "LNK_SRC",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S379P1",
+          "name": "LNK_LD",
+          "direction": "input",
+          "schema": []
+        },
+        {
+          "id": "V0S379P6",
+          "name": "LNK_01",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "V_CUSTOMER_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.V_CUSTOMER_CODE"
+            },
+            {
+              "name": "ProviderSubjectNo",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.ProviderSubjectNo"
+            },
+            {
+              "name": "OriginalCurrency",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.OriginalCurrency"
+            },
+            {
+              "name": "ReferenceDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.ReferenceDate"
+            },
+            {
+              "name": "ContractType",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.ContractType"
+            },
+            {
+              "name": "ActiveFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.ActiveFlag"
+            },
+            {
+              "name": "OpenDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.OpenDate"
+            },
+            {
+              "name": "ClosedDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.ClosedDate"
+            },
+            {
+              "name": "ContractStatus",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.ContractStatus"
+            },
+            {
+              "name": "V_CONTRACT_STATUS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.V_CONTRACT_STATUS"
+            },
+            {
+              "name": "ContractStatusDate",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.ContractStatusDate"
+            },
+            {
+              "name": "TotalAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.TotalAmount"
+            },
+            {
+              "name": "PAYMENTAMOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.PAYMENTAMOUNT"
+            },
+            {
+              "name": "NOOFINSTALMENTS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.NOOFINSTALMENTS"
+            },
+            {
+              "name": "NOOFREMAININGINSTALMENTS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.NOOFREMAININGINSTALMENTS"
+            },
+            {
+              "name": "MethodOfPayment",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.MethodOfPayment"
+            },
+            {
+              "name": "PaymentFrequency",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.PaymentFrequency"
+            },
+            {
+              "name": "Balance",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.Balance"
+            },
+            {
+              "name": "OverdueAmount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.OverdueAmount"
+            },
+            {
+              "name": "DaysPaymentDelay",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.DaysPaymentDelay"
+            },
+            {
+              "name": "IslamicContractFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.IslamicContractFlag"
+            },
+            {
+              "name": "SecuredContractFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.SecuredContractFlag"
+            },
+            {
+              "name": "SecurityTypeFlag",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.SecurityTypeFlag"
+            },
+            {
+              "name": "SourceSystem",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.SourceSystem"
+            },
+            {
+              "name": "EconomicActivityCode",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.EconomicActivityCode"
+            },
+            {
+              "name": "PROVIDERAPPLICATIONNO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.PROVIDERAPPLICATIONNO"
+            },
+            {
+              "name": "Gross_Income",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.Gross_Income"
+            },
+            {
+              "name": "Source",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.Source"
+            },
+            {
+              "name": "Gross_Amount",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.Gross_Amount"
+            },
+            {
+              "name": "EMPLOYERNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.EMPLOYERNAME"
+            },
+            {
+              "name": "HF_CONTRACT",
+              "type": "CHAR",
+              "sql_type_code": "1",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.HF_CONTRACT"
+            },
+            {
+              "name": "V_LAA_LPP_PRODCAT_C",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_SRC.V_LAA_LPP_PRODCAT_C"
+            },
+            {
+              "name": "TOTALAMOUNT_LD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "LNK_LD.TOTALAMOUNT_LD"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from_node": "V0S332",
+      "from_pin": "V0S332P1",
+      "from_pin_name": "Before",
+      "to_node": "V71S1",
+      "to_pin": "V71S1P5",
+      "to_pin_name": ""
+    },
+    {
+      "from_node": "V0S332",
+      "from_pin": "V0S332P2",
+      "from_pin_name": "before_subj_cdc",
+      "to_node": "V0S346",
+      "to_pin": "V0S346P1",
+      "to_pin_name": "before_subj_cdc"
+    },
+    {
+      "from_node": "V0S333",
+      "from_pin": "V0S333P2",
+      "from_pin_name": "Subject_cdc",
+      "to_node": "V0S323",
+      "to_pin": "V0S323P4",
+      "to_pin_name": "Subject_cdc"
+    },
+    {
+      "from_node": "V0S341",
+      "from_pin": "V0S341P2",
+      "from_pin_name": "Contct_Cdc",
+      "to_node": "V0S348",
+      "to_pin": "V0S348P1",
+      "to_pin_name": "Contct_Cdc"
+    },
+    {
+      "from_node": "V0S341",
+      "from_pin": "V0S341P3",
+      "from_pin_name": "Insrt_Contrc",
+      "to_node": "V0S346",
+      "to_pin": "V0S346P2",
+      "to_pin_name": "Insrt_Contrc"
+    },
+    {
+      "from_node": "V0S370",
+      "from_pin": "V0S370P2",
+      "from_pin_name": "DSLink371",
+      "to_node": "V0S357",
+      "to_pin": "V0S357P3",
+      "to_pin_name": "DSLink371"
+    }
+  ]
+}

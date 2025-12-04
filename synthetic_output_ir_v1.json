@@ -1,0 +1,157 @@
+{
+  "irVersion": "1.0",
+  "generatedAt": "2025-11-30T23:53:53.442660Z",
+  "job": {
+    "id": "job-28c772bc",
+    "name": "DIM_TEST_CONTRACT_AECB_I"
+  },
+  "nodes": [
+    {
+      "id": "n0",
+      "type": "Transform",
+      "subtype": "Custom",
+      "name": "schema",
+      "props": {
+        "customType": "CCustomStage",
+        "description": "DataStage CCustomStage component"
+      },
+      "schemaRef": "s_V0S0",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    },
+    {
+      "id": "n1",
+      "type": "Transform",
+      "subtype": "Map",
+      "name": "TRF_Filter_01",
+      "props": {},
+      "schemaRef": "s_V0S1",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    },
+    {
+      "id": "n2",
+      "type": "Transform",
+      "subtype": "Custom",
+      "name": "aggregations",
+      "props": {
+        "customType": "CCustomStage",
+        "description": "DataStage CCustomStage component"
+      },
+      "schemaRef": "s_V0S2",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    },
+    {
+      "id": "n3",
+      "type": "Transform",
+      "subtype": "Custom",
+      "name": "delimiter",
+      "props": {
+        "customType": "CCustomStage",
+        "description": "DataStage CCustomStage component"
+      },
+      "schemaRef": "s_V0S3",
+      "provenance": {
+        "source": "dsx",
+        "location": "file://jobs/DIM_TEST_CONTRACT_AECB_I.dsx",
+        "lineStart": 100,
+        "lineEnd": 200
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "nodeId": "n981",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n329",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S1"
+    }
+  ],
+  "schemas": {
+    "s_V0S0": [
+      {
+        "name": "CustomerID",
+        "type": "integer",
+        "nullable": true
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "State",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Country",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Age",
+        "type": "integer",
+        "nullable": true
+      }
+    ],
+    "s_V0S1": [
+      {
+        "name": "CustomerID",
+        "type": "integer",
+        "nullable": true
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "State",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Country",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Age",
+        "type": "integer",
+        "nullable": true
+      }
+    ],
+    "s_V0S2": [
+      {
+        "name": "State",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "MetricValue",
+        "type": "integer",
+        "nullable": true
+      }
+    ]
+  }
+}

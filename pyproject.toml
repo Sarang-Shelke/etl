@@ -1,0 +1,22 @@
+[project]
+name = "etl-migrator"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Sarang-Shelke",email = "sarang.shelke@edgematics.ai"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi (>=0.121.2,<0.122.0)",
+    "networkx (>=3.5,<4.0)",
+    "matplotlib (>=3.10.7,<4.0.0)",
+    "sqlalchemy (>=2.0.44,<3.0.0)",
+    "asyncpg (>=0.31.0,<0.32.0)",
+    "jinja2 (>=3.1.6,<4.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

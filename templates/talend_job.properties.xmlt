@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:TalendProperties="http://www.talend.org/properties">
+  <TalendProperties:Property 
+    xmi:id="{{ uuid1 }}" 
+    id="{{ uuid2 }}" 
+    label="{{ label }}" 
+    {% if version %}version="{{ version }}"{% else %}version=""{% endif %}
+    statusCode="" 
+    item="{{ uuid3 }}" 
+    displayName="{{ display_name }}">
+    
+    <!-- From process/DataStage/*.properties back to project-level talend.project -->
+    <author href="../../talend.project#{{ user_id }}"/>
+    
+    <additionalProperties xmi:id="{{ uuid4 }}" key="created_product_fullname" value="Talend Cloud Data Fabric"/>
+    <additionalProperties xmi:id="{{ uuid5 }}" key="created_product_version" value="{{ product_version }}"/>
+    <additionalProperties xmi:id="{{ uuid6 }}" key="created_date" value="{{ created_date }}"/>
+    
+    <additionalProperties xmi:id="{{ uuid7 }}" key="modified_product_fullname" value="Talend Cloud Data Fabric"/>
+    <additionalProperties xmi:id="{{ uuid8 }}" key="modified_product_version" value="{{ product_version }}"/>
+    <additionalProperties xmi:id="{{ uuid9 }}" key="modified_date" value="{{ modified_date }}"/>
+    <additionalProperties xmi:id="{{ uuid10 }}" key="item_key" value="{{ item_key }}"/>
+  </TalendProperties:Property>
+
+  <TalendProperties:ItemState 
+  xmi:id="{{ uuid11 }}" 
+  path="DataStage"/>
+    
+  <TalendProperties:ProcessItem 
+    xmi:id="{{ uuid3 }}" 
+    property="{{ uuid1 }}" 
+    state="{{ uuid11 }}">
+    
+    <process href="{{ process_href }}"/>
+  </TalendProperties:ProcessItem>
+</xmi:XMI>
+
+

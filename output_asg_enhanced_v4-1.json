@@ -1,0 +1,1372 @@
+{
+  "job_name": "DIM_TEST_CONTRACT_AECB_I",
+  "job_parameters": [
+    {
+      "name": "BUSINESS_DATE",
+      "prompt": "BUSINESS_DATE"
+    },
+    {
+      "name": "Test_Param",
+      "prompt": "TEST_Param parameters",
+      "default": "(As pre-defined)"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "V0S16",
+      "name": "operator",
+      "type": "CCustomStage",
+      "enhanced_type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxFunnel"
+      },
+      "enhanced_properties": {
+        "input_pins": [
+          "V0S16P1",
+          "V0S16P4"
+        ],
+        "output_pins": [
+          "V0S16P5"
+        ],
+        "partner_refs": [],
+        "xml_properties": [],
+        "descriptor_properties": []
+      },
+      "transactional_properties": {
+        "isolation_level": null,
+        "autocommit_mode": null,
+        "array_size": null,
+        "transaction_size": null,
+        "enable_partitioning": null,
+        "connection_string": null,
+        "has_transaction_control": false
+      },
+      "pins": [
+        {
+          "id": "V0S16P1",
+          "name": "DSLink3_taweel",
+          "direction": "input",
+          "schema": [],
+          "enhanced_schema": []
+        },
+        {
+          "id": "V0S16P4",
+          "name": "DSLink3_takaful",
+          "direction": "input",
+          "schema": [],
+          "enhanced_schema": []
+        },
+        {
+          "id": "V0S16P5",
+          "name": "DSLink3",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "INSTRUCTION_CODE",
+              "type": "CHAR",
+              "sql_type_code": "1",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "INSTRUCTION_CODE"
+            },
+            {
+              "name": "OIC_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "OIC_CODE"
+            },
+            {
+              "name": "DDA_REFERENCE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DDA_REFERENCE"
+            },
+            {
+              "name": "CCY_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "CCY_CODE"
+            },
+            {
+              "name": "CLAIMED_AMOUNT",
+              "type": "DECIMAL",
+              "sql_type_code": "3",
+              "length": "0",
+              "scale": "2",
+              "nullable": true,
+              "derivation": "CLAIMED_AMOUNT"
+            },
+            {
+              "name": "ORIGINATION_ACCOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "ORIGINATION_ACCOUNT"
+            },
+            {
+              "name": "PAYING_BANK",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "PAYING_BANK"
+            },
+            {
+              "name": "PAYER_ACCOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "PAYER_ACCOUNT"
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "APPLICATIONID"
+            },
+            {
+              "name": "DUMMY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DUMMY"
+            }
+          ],
+          "enhanced_schema": [
+            {
+              "name": "INSTRUCTION_CODE",
+              "type": "CHAR",
+              "sql_type_code": "1",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "INSTRUCTION_CODE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "INSTRUCTION_CODE"
+                ],
+                "functions": [],
+                "complexity_score": 0.9375,
+                "expression": "INSTRUCTION_CODE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.9375
+            },
+            {
+              "name": "OIC_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "OIC_CODE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "OIC_CODE"
+                ],
+                "functions": [],
+                "complexity_score": 0.875,
+                "expression": "OIC_CODE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.875
+            },
+            {
+              "name": "DDA_REFERENCE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DDA_REFERENCE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DDA_REFERENCE"
+                ],
+                "functions": [],
+                "complexity_score": 0.9230769230769231,
+                "expression": "DDA_REFERENCE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.9230769230769231
+            },
+            {
+              "name": "CCY_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "CCY_CODE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CCY_CODE"
+                ],
+                "functions": [],
+                "complexity_score": 0.875,
+                "expression": "CCY_CODE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.875
+            },
+            {
+              "name": "CLAIMED_AMOUNT",
+              "type": "DECIMAL",
+              "sql_type_code": "3",
+              "length": "0",
+              "scale": "2",
+              "nullable": true,
+              "derivation": "CLAIMED_AMOUNT",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CLAIMED_AMOUNT"
+                ],
+                "functions": [],
+                "complexity_score": 0.9285714285714286,
+                "expression": "CLAIMED_AMOUNT"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.9285714285714286
+            },
+            {
+              "name": "ORIGINATION_ACCOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "ORIGINATION_ACCOUNT",
+              "transformation_logic": {
+                "type": "aggregation",
+                "source_columns": [
+                  "ORIGINATION_ACCOUNT"
+                ],
+                "functions": [],
+                "complexity_score": 0.9473684210526315,
+                "expression": "ORIGINATION_ACCOUNT"
+              },
+              "has_transformation": true,
+              "transformation_classification": "aggregation",
+              "complexity_score": 0.9473684210526315
+            },
+            {
+              "name": "PAYING_BANK",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "PAYING_BANK",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PAYING_BANK"
+                ],
+                "functions": [],
+                "complexity_score": 0.9090909090909091,
+                "expression": "PAYING_BANK"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.9090909090909091
+            },
+            {
+              "name": "PAYER_ACCOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "PAYER_ACCOUNT",
+              "transformation_logic": {
+                "type": "aggregation",
+                "source_columns": [
+                  "PAYER_ACCOUNT"
+                ],
+                "functions": [],
+                "complexity_score": 0.9230769230769231,
+                "expression": "PAYER_ACCOUNT"
+              },
+              "has_transformation": true,
+              "transformation_classification": "aggregation",
+              "complexity_score": 0.9230769230769231
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "APPLICATIONID",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "APPLICATIONID"
+                ],
+                "functions": [],
+                "complexity_score": 1.0,
+                "expression": "APPLICATIONID"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 1.0
+            },
+            {
+              "name": "DUMMY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DUMMY",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DUMMY"
+                ],
+                "functions": [],
+                "complexity_score": 1.0,
+                "expression": "DUMMY"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 1.0
+            }
+          ]
+        }
+      ],
+      "schema_lineage": {}
+    },
+    {
+      "id": "V0S2",
+      "name": "VarAmount",
+      "type": "CTransformerStage",
+      "enhanced_type": "CTransformerStage",
+      "properties": {
+        "stage_type": "CTransformerStage"
+      },
+      "enhanced_properties": {
+        "input_pins": [
+          "V0S2P5"
+        ],
+        "output_pins": [
+          "V0S2P2",
+          "V0S2P9"
+        ],
+        "partner_refs": [],
+        "xml_properties": [],
+        "descriptor_properties": []
+      },
+      "transactional_properties": {
+        "isolation_level": null,
+        "autocommit_mode": null,
+        "array_size": null,
+        "transaction_size": null,
+        "enable_partitioning": null,
+        "connection_string": null,
+        "has_transaction_control": false
+      },
+      "pins": [
+        {
+          "id": "V0S2P5",
+          "name": "DSLink3",
+          "direction": "input",
+          "schema": [],
+          "enhanced_schema": []
+        },
+        {
+          "id": "V0S2P2",
+          "name": "FILE_BKP",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "INSTRUCTION_CODE",
+              "type": "CHAR",
+              "sql_type_code": "1",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.INSTRUCTION_CODE"
+            },
+            {
+              "name": "OIC_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.OIC_CODE"
+            },
+            {
+              "name": "DDA_REFERENCE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.DDA_REFERENCE"
+            },
+            {
+              "name": "CCY_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.CCY_CODE"
+            },
+            {
+              "name": "CLAIMED_AMOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Field(VarAmount, '.', 1) : '.' : Left(Field(VarAmount, '.', 2) : '00', 2)"
+            },
+            {
+              "name": "ORIGINATION_ACCOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.ORIGINATION_ACCOUNT"
+            },
+            {
+              "name": "PAYING_BANK",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.PAYING_BANK"
+            },
+            {
+              "name": "PAYER_ACCOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.PAYER_ACCOUNT"
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.APPLICATIONID"
+            },
+            {
+              "name": "DUMMY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.DUMMY"
+            },
+            {
+              "name": "LOAD_DT",
+              "type": "DATE",
+              "sql_type_code": "9",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "CurrentDate()"
+            },
+            {
+              "name": "BUSINESS_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": false,
+              "derivation": "BUSINESS_DATE"
+            }
+          ],
+          "enhanced_schema": [
+            {
+              "name": "INSTRUCTION_CODE",
+              "type": "CHAR",
+              "sql_type_code": "1",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.INSTRUCTION_CODE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DSLink3",
+                  "INSTRUCTION_CODE",
+                  "DSLink3.INSTRUCTION_CODE"
+                ],
+                "functions": [],
+                "complexity_score": 0.75,
+                "expression": "DSLink3.INSTRUCTION_CODE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.75
+            },
+            {
+              "name": "OIC_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.OIC_CODE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DSLink3",
+                  "DSLink3.OIC_CODE",
+                  "OIC_CODE"
+                ],
+                "functions": [],
+                "complexity_score": 0.625,
+                "expression": "DSLink3.OIC_CODE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.625
+            },
+            {
+              "name": "DDA_REFERENCE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.DDA_REFERENCE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DSLink3.DDA_REFERENCE",
+                  "DSLink3",
+                  "DDA_REFERENCE"
+                ],
+                "functions": [],
+                "complexity_score": 0.7142857142857143,
+                "expression": "DSLink3.DDA_REFERENCE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.7142857142857143
+            },
+            {
+              "name": "CCY_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.CCY_CODE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DSLink3.CCY_CODE",
+                  "DSLink3",
+                  "CCY_CODE"
+                ],
+                "functions": [],
+                "complexity_score": 0.625,
+                "expression": "DSLink3.CCY_CODE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.625
+            },
+            {
+              "name": "CLAIMED_AMOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Field(VarAmount, '.', 1) : '.' : Left(Field(VarAmount, '.', 2) : '00', 2)",
+              "transformation_logic": {
+                "type": "simple",
+                "source_columns": [
+                  "VarAmount"
+                ],
+                "functions": [
+                  "Left",
+                  "Field"
+                ],
+                "complexity_score": 14.095890410958905,
+                "expression": "Field(VarAmount, '.', 1) : '.' : Left(Field(VarAmount, '.', 2) : '00', 2)"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple",
+              "complexity_score": 14.095890410958905
+            },
+            {
+              "name": "ORIGINATION_ACCOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.ORIGINATION_ACCOUNT",
+              "transformation_logic": {
+                "type": "aggregation",
+                "source_columns": [
+                  "DSLink3.ORIGINATION_ACCOUNT",
+                  "ORIGINATION_ACCOUNT",
+                  "DSLink3"
+                ],
+                "functions": [],
+                "complexity_score": 0.7777777777777778,
+                "expression": "DSLink3.ORIGINATION_ACCOUNT"
+              },
+              "has_transformation": true,
+              "transformation_classification": "aggregation",
+              "complexity_score": 0.7777777777777778
+            },
+            {
+              "name": "PAYING_BANK",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.PAYING_BANK",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DSLink3.PAYING_BANK",
+                  "PAYING_BANK",
+                  "DSLink3"
+                ],
+                "functions": [],
+                "complexity_score": 0.6842105263157895,
+                "expression": "DSLink3.PAYING_BANK"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.6842105263157895
+            },
+            {
+              "name": "PAYER_ACCOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.PAYER_ACCOUNT",
+              "transformation_logic": {
+                "type": "aggregation",
+                "source_columns": [
+                  "DSLink3.PAYER_ACCOUNT",
+                  "DSLink3",
+                  "PAYER_ACCOUNT"
+                ],
+                "functions": [],
+                "complexity_score": 0.7142857142857143,
+                "expression": "DSLink3.PAYER_ACCOUNT"
+              },
+              "has_transformation": true,
+              "transformation_classification": "aggregation",
+              "complexity_score": 0.7142857142857143
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.APPLICATIONID",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DSLink3",
+                  "DSLink3.APPLICATIONID",
+                  "APPLICATIONID"
+                ],
+                "functions": [],
+                "complexity_score": 0.7619047619047619,
+                "expression": "DSLink3.APPLICATIONID"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.7619047619047619
+            },
+            {
+              "name": "DUMMY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.DUMMY",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DSLink3",
+                  "DSLink3.DUMMY",
+                  "DUMMY"
+                ],
+                "functions": [],
+                "complexity_score": 0.6153846153846154,
+                "expression": "DSLink3.DUMMY"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.6153846153846154
+            },
+            {
+              "name": "LOAD_DT",
+              "type": "DATE",
+              "sql_type_code": "9",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "CurrentDate()",
+              "transformation_logic": {
+                "type": "simple",
+                "source_columns": [],
+                "functions": [
+                  "CurrentDate"
+                ],
+                "complexity_score": 3.1538461538461537,
+                "expression": "CurrentDate()"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple",
+              "complexity_score": 3.1538461538461537
+            },
+            {
+              "name": "BUSINESS_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": false,
+              "derivation": "BUSINESS_DATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "BUSINESS_DATE"
+                ],
+                "functions": [],
+                "complexity_score": 0.9230769230769231,
+                "expression": "BUSINESS_DATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.9230769230769231
+            }
+          ]
+        },
+        {
+          "id": "V0S2P9",
+          "name": "FILE",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "INSTRUCTION_CODE",
+              "type": "CHAR",
+              "sql_type_code": "1",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.INSTRUCTION_CODE"
+            },
+            {
+              "name": "OIC_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.OIC_CODE"
+            },
+            {
+              "name": "DDA_REFERENCE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.DDA_REFERENCE"
+            },
+            {
+              "name": "CCY_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.CCY_CODE"
+            },
+            {
+              "name": "CLAIMED_AMOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Field(VarAmount, '.', 1) : '.' : Left(Field(VarAmount, '.', 2) : '00', 2)"
+            },
+            {
+              "name": "ORIGINATION_ACCOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.ORIGINATION_ACCOUNT"
+            },
+            {
+              "name": "PAYING_BANK",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.PAYING_BANK"
+            },
+            {
+              "name": "PAYER_ACCOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.PAYER_ACCOUNT"
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.APPLICATIONID"
+            },
+            {
+              "name": "DUMMY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.DUMMY"
+            }
+          ],
+          "enhanced_schema": [
+            {
+              "name": "INSTRUCTION_CODE",
+              "type": "CHAR",
+              "sql_type_code": "1",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.INSTRUCTION_CODE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DSLink3",
+                  "INSTRUCTION_CODE",
+                  "DSLink3.INSTRUCTION_CODE"
+                ],
+                "functions": [],
+                "complexity_score": 0.75,
+                "expression": "DSLink3.INSTRUCTION_CODE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.75
+            },
+            {
+              "name": "OIC_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.OIC_CODE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DSLink3",
+                  "DSLink3.OIC_CODE",
+                  "OIC_CODE"
+                ],
+                "functions": [],
+                "complexity_score": 0.625,
+                "expression": "DSLink3.OIC_CODE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.625
+            },
+            {
+              "name": "DDA_REFERENCE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.DDA_REFERENCE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DSLink3.DDA_REFERENCE",
+                  "DSLink3",
+                  "DDA_REFERENCE"
+                ],
+                "functions": [],
+                "complexity_score": 0.7142857142857143,
+                "expression": "DSLink3.DDA_REFERENCE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.7142857142857143
+            },
+            {
+              "name": "CCY_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.CCY_CODE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DSLink3.CCY_CODE",
+                  "DSLink3",
+                  "CCY_CODE"
+                ],
+                "functions": [],
+                "complexity_score": 0.625,
+                "expression": "DSLink3.CCY_CODE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.625
+            },
+            {
+              "name": "CLAIMED_AMOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Field(VarAmount, '.', 1) : '.' : Left(Field(VarAmount, '.', 2) : '00', 2)",
+              "transformation_logic": {
+                "type": "simple",
+                "source_columns": [
+                  "VarAmount"
+                ],
+                "functions": [
+                  "Left",
+                  "Field"
+                ],
+                "complexity_score": 14.095890410958905,
+                "expression": "Field(VarAmount, '.', 1) : '.' : Left(Field(VarAmount, '.', 2) : '00', 2)"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple",
+              "complexity_score": 14.095890410958905
+            },
+            {
+              "name": "ORIGINATION_ACCOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.ORIGINATION_ACCOUNT",
+              "transformation_logic": {
+                "type": "aggregation",
+                "source_columns": [
+                  "DSLink3.ORIGINATION_ACCOUNT",
+                  "ORIGINATION_ACCOUNT",
+                  "DSLink3"
+                ],
+                "functions": [],
+                "complexity_score": 0.7777777777777778,
+                "expression": "DSLink3.ORIGINATION_ACCOUNT"
+              },
+              "has_transformation": true,
+              "transformation_classification": "aggregation",
+              "complexity_score": 0.7777777777777778
+            },
+            {
+              "name": "PAYING_BANK",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.PAYING_BANK",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DSLink3.PAYING_BANK",
+                  "PAYING_BANK",
+                  "DSLink3"
+                ],
+                "functions": [],
+                "complexity_score": 0.6842105263157895,
+                "expression": "DSLink3.PAYING_BANK"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.6842105263157895
+            },
+            {
+              "name": "PAYER_ACCOUNT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.PAYER_ACCOUNT",
+              "transformation_logic": {
+                "type": "aggregation",
+                "source_columns": [
+                  "DSLink3.PAYER_ACCOUNT",
+                  "DSLink3",
+                  "PAYER_ACCOUNT"
+                ],
+                "functions": [],
+                "complexity_score": 0.7142857142857143,
+                "expression": "DSLink3.PAYER_ACCOUNT"
+              },
+              "has_transformation": true,
+              "transformation_classification": "aggregation",
+              "complexity_score": 0.7142857142857143
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.APPLICATIONID",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DSLink3",
+                  "DSLink3.APPLICATIONID",
+                  "APPLICATIONID"
+                ],
+                "functions": [],
+                "complexity_score": 0.7619047619047619,
+                "expression": "DSLink3.APPLICATIONID"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.7619047619047619
+            },
+            {
+              "name": "DUMMY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "DSLink3.DUMMY",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "DSLink3",
+                  "DSLink3.DUMMY",
+                  "DUMMY"
+                ],
+                "functions": [],
+                "complexity_score": 0.6153846153846154,
+                "expression": "DSLink3.DUMMY"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.6153846153846154
+            }
+          ]
+        }
+      ],
+      "schema_lineage": {}
+    }
+  ],
+  "edges": [
+    {
+      "from_node": "V0S2",
+      "from_pin": "V0S2P2",
+      "from_pin_name": "FILE_BKP",
+      "to_node": "V211S0",
+      "to_pin": "V211S0P2",
+      "to_pin_name": "",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V0S2",
+      "from_pin": "V0S2P9",
+      "from_pin_name": "FILE",
+      "to_node": "V213S0",
+      "to_pin": "V213S0P1",
+      "to_pin_name": "",
+      "join_type": "unknown"
+    }
+  ],
+  "schema_lineage": {
+    "evolution_events": [
+      {
+        "node_id": "V0S16",
+        "input_columns": 0,
+        "output_columns": 10,
+        "transformations": [
+          {
+            "column": "INSTRUCTION_CODE",
+            "type": "simple_column",
+            "complexity": 0.9375
+          },
+          {
+            "column": "OIC_CODE",
+            "type": "simple_column",
+            "complexity": 0.875
+          },
+          {
+            "column": "DDA_REFERENCE",
+            "type": "simple_column",
+            "complexity": 0.9230769230769231
+          },
+          {
+            "column": "CCY_CODE",
+            "type": "simple_column",
+            "complexity": 0.875
+          },
+          {
+            "column": "CLAIMED_AMOUNT",
+            "type": "simple_column",
+            "complexity": 0.9285714285714286
+          },
+          {
+            "column": "ORIGINATION_ACCOUNT",
+            "type": "aggregation",
+            "complexity": 0.9473684210526315
+          },
+          {
+            "column": "PAYING_BANK",
+            "type": "simple_column",
+            "complexity": 0.9090909090909091
+          },
+          {
+            "column": "PAYER_ACCOUNT",
+            "type": "aggregation",
+            "complexity": 0.9230769230769231
+          },
+          {
+            "column": "APPLICATIONID",
+            "type": "simple_column",
+            "complexity": 1.0
+          },
+          {
+            "column": "DUMMY",
+            "type": "simple_column",
+            "complexity": 1.0
+          }
+        ],
+        "schema_changes": {
+          "added": [
+            "DDA_REFERENCE",
+            "APPLICATIONID",
+            "ORIGINATION_ACCOUNT",
+            "DUMMY",
+            "INSTRUCTION_CODE",
+            "PAYING_BANK",
+            "PAYER_ACCOUNT",
+            "OIC_CODE",
+            "CLAIMED_AMOUNT",
+            "CCY_CODE"
+          ],
+          "removed": [],
+          "modified": []
+        }
+      },
+      {
+        "node_id": "V0S2",
+        "input_columns": 0,
+        "output_columns": 22,
+        "transformations": [
+          {
+            "column": "INSTRUCTION_CODE",
+            "type": "simple_column",
+            "complexity": 0.75
+          },
+          {
+            "column": "OIC_CODE",
+            "type": "simple_column",
+            "complexity": 0.625
+          },
+          {
+            "column": "DDA_REFERENCE",
+            "type": "simple_column",
+            "complexity": 0.7142857142857143
+          },
+          {
+            "column": "CCY_CODE",
+            "type": "simple_column",
+            "complexity": 0.625
+          },
+          {
+            "column": "CLAIMED_AMOUNT",
+            "type": "simple",
+            "complexity": 14.095890410958905
+          },
+          {
+            "column": "ORIGINATION_ACCOUNT",
+            "type": "aggregation",
+            "complexity": 0.7777777777777778
+          },
+          {
+            "column": "PAYING_BANK",
+            "type": "simple_column",
+            "complexity": 0.6842105263157895
+          },
+          {
+            "column": "PAYER_ACCOUNT",
+            "type": "aggregation",
+            "complexity": 0.7142857142857143
+          },
+          {
+            "column": "APPLICATIONID",
+            "type": "simple_column",
+            "complexity": 0.7619047619047619
+          },
+          {
+            "column": "DUMMY",
+            "type": "simple_column",
+            "complexity": 0.6153846153846154
+          },
+          {
+            "column": "LOAD_DT",
+            "type": "simple",
+            "complexity": 3.1538461538461537
+          },
+          {
+            "column": "BUSINESS_DATE",
+            "type": "simple_column",
+            "complexity": 0.9230769230769231
+          },
+          {
+            "column": "INSTRUCTION_CODE",
+            "type": "simple_column",
+            "complexity": 0.75
+          },
+          {
+            "column": "OIC_CODE",
+            "type": "simple_column",
+            "complexity": 0.625
+          },
+          {
+            "column": "DDA_REFERENCE",
+            "type": "simple_column",
+            "complexity": 0.7142857142857143
+          },
+          {
+            "column": "CCY_CODE",
+            "type": "simple_column",
+            "complexity": 0.625
+          },
+          {
+            "column": "CLAIMED_AMOUNT",
+            "type": "simple",
+            "complexity": 14.095890410958905
+          },
+          {
+            "column": "ORIGINATION_ACCOUNT",
+            "type": "aggregation",
+            "complexity": 0.7777777777777778
+          },
+          {
+            "column": "PAYING_BANK",
+            "type": "simple_column",
+            "complexity": 0.6842105263157895
+          },
+          {
+            "column": "PAYER_ACCOUNT",
+            "type": "aggregation",
+            "complexity": 0.7142857142857143
+          },
+          {
+            "column": "APPLICATIONID",
+            "type": "simple_column",
+            "complexity": 0.7619047619047619
+          },
+          {
+            "column": "DUMMY",
+            "type": "simple_column",
+            "complexity": 0.6153846153846154
+          }
+        ],
+        "schema_changes": {
+          "added": [
+            "DDA_REFERENCE",
+            "APPLICATIONID",
+            "ORIGINATION_ACCOUNT",
+            "DUMMY",
+            "LOAD_DT",
+            "INSTRUCTION_CODE",
+            "PAYING_BANK",
+            "PAYER_ACCOUNT",
+            "OIC_CODE",
+            "CLAIMED_AMOUNT",
+            "CCY_CODE",
+            "BUSINESS_DATE"
+          ],
+          "removed": [],
+          "modified": []
+        }
+      }
+    ],
+    "summary": {
+      "stages_analyzed": 2,
+      "total_input_columns": 0,
+      "total_output_columns": 32,
+      "net_column_change": 32,
+      "stages_with_enrichment": 2,
+      "stages_with_filtering": 0
+    }
+  }
+}

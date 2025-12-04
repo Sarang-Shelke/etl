@@ -1,0 +1,239 @@
+{
+  "irVersion": "1.0",
+  "generatedAt": "2025-12-01T00:24:49.621496Z",
+  "job": {
+    "id": "job-cff2e63d",
+    "name": "J_DEMO_001"
+  },
+  "nodes": [
+    {
+      "id": "n0",
+      "type": "Transform",
+      "subtype": "Custom",
+      "name": "SRC_File_01",
+      "props": {
+        "customType": "CCustomStage",
+        "description": "DataStage CCustomStage component",
+        "configuration": {
+          "file": "input/demo_source_01.csv",
+          "firstLineColumnNames": "true",
+          "delimiter": ",",
+          "schema": null
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "schemaRef": "s_V0S0",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--"
+      }
+    },
+    {
+      "id": "n1",
+      "type": "Transform",
+      "subtype": "Map",
+      "name": "TRF_Filter_01",
+      "props": {},
+      "schemaRef": "s_V0S1",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--"
+      }
+    },
+    {
+      "id": "n2",
+      "type": "Transform",
+      "subtype": "Custom",
+      "name": "AGG_01",
+      "props": {
+        "customType": "CCustomStage",
+        "description": "DataStage CCustomStage component",
+        "configuration": {
+          "keys": "State",
+          "aggregations": "Min(Age) as MetricValue"
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "schemaRef": "s_V0S2",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--"
+      }
+    },
+    {
+      "id": "n3",
+      "type": "Transform",
+      "subtype": "Custom",
+      "name": "TGT_File_01",
+      "props": {
+        "customType": "CCustomStage",
+        "description": "DataStage CCustomStage component",
+        "configuration": {
+          "file": "out/demo_output_01.csv",
+          "firstLineColumnNames": "true",
+          "delimiter": ","
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "schemaRef": "s_V0S3",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "nodeId": "n0",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n1",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S0"
+    },
+    {
+      "id": "l2",
+      "from": {
+        "nodeId": "n1",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n0",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S1"
+    },
+    {
+      "id": "l3",
+      "from": {
+        "nodeId": "n1",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n2",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S1"
+    },
+    {
+      "id": "l4",
+      "from": {
+        "nodeId": "n2",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n1",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S2"
+    },
+    {
+      "id": "l5",
+      "from": {
+        "nodeId": "n2",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n3",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S2"
+    },
+    {
+      "id": "l6",
+      "from": {
+        "nodeId": "n3",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n2",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S3"
+    }
+  ],
+  "schemas": {
+    "s_V0S0": [
+      {
+        "name": "CustomerID",
+        "type": "integer",
+        "nullable": true
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "State",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Country",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Age",
+        "type": "integer",
+        "nullable": true
+      }
+    ],
+    "s_V0S1": [
+      {
+        "name": "CustomerID",
+        "type": "integer",
+        "nullable": true
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "State",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Country",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Age",
+        "type": "integer",
+        "nullable": true
+      }
+    ],
+    "s_V0S2": [
+      {
+        "name": "State",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "MetricValue",
+        "type": "integer",
+        "nullable": true
+      }
+    ],
+    "s_V0S3": []
+  }
+}

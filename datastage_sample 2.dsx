@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataStageJob>
+  <JobName>Customer_Transformation</JobName>
+  <Description>Job to concatenate first name and last name into a full name.</Description>
+  
+  <Stages>
+    <!-- Sequential File Input -->
+    <Stage>
+      <StageType>SequentialFile</StageType>
+      <Name>Customer_Input</Name>
+      <Properties>
+        <FilePath>D:/PoC/migration/customer.csv</FilePath>
+        <FieldDefinitions>
+          <Field>
+            <Name>id</Name>
+            <DataType>Integer</DataType>
+          </Field>
+          <Field>
+            <Name>first name</Name>
+            <DataType>Varchar</DataType>
+            <Length>20</Length>
+          </Field>
+          <Field>
+            <Name>last name</Name>
+            <DataType>Varchar</DataType>
+            <Length>20</Length>
+          </Field>
+          <Field>
+            <Name>phone number</Name>
+            <DataType>Varchar</DataType>
+            <Length>20</Length>
+          </Field>
+        </FieldDefinitions>
+      </Properties>
+    </Stage>
+
+    <!-- Transformer Stage -->
+    <Stage>
+      <StageType>Transformer</StageType>
+      <Name>Customer_Transformation</Name>
+      <Properties>
+        <InputFields>
+          <Field>id</Field>
+          <Field>first name</Field>
+          <Field>last name</Field>
+          <Field>phone number</Field>
+        </InputFields>
+        <OutputFields>
+          <Field>id</Field>
+          <Field>name</Field>
+          <Field>phone number</Field>
+        </OutputFields>
+        <Transformations>
+          <Transformation>
+            <OutputField>name</OutputField>
+            <Expression>first name : ' ' : last name</Expression>
+          </Transformation>
+        </Transformations>
+      </Properties>
+    </Stage>
+
+    <!-- Sequential File Output -->
+    <Stage>
+      <StageType>SequentialFile</StageType>
+      <Name>Customer_Output</Name>
+      <Properties>
+        <FilePath>D:/PoC/migration/customer_out.csv</FilePath>
+        <FieldDefinitions>
+          <Field>
+            <Name>id</Name>
+            <DataType>Integer</DataType>
+          </Field>
+          <Field>
+            <Name>name</Name>
+            <DataType>Varchar</DataType>
+            <Length>40</Length>
+          </Field>
+          <Field>
+            <Name>phone number</Name>
+            <DataType>Varchar</DataType>
+            <Length>20</Length>
+          </Field>
+        </FieldDefinitions>
+      </Properties>
+    </Stage>
+  </Stages>
+  
+  <Links>
+    <Link>
+      <From>Customer_Input</From>
+      <To>Customer_Transformation</To>
+    </Link>
+    <Link>
+      <From>Customer_Transformation</From>
+      <To>Customer_Output</To>
+    </Link>
+  </Links>
+</DataStageJob>
+

@@ -1,0 +1,581 @@
+{
+  "job_name": "DIM_TEST_CONTRACT_AECB_I",
+  "job_parameters": [],
+  "nodes": [
+    {
+      "id": "V0S0",
+      "name": "schema",
+      "type": "CCustomStage",
+      "enhanced_type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxSequentialFile"
+      },
+      "enhanced_properties": {
+        "input_pins": [
+          "0"
+        ],
+        "output_pins": [
+          "V0S0P1"
+        ],
+        "partner_refs": [],
+        "xml_properties": [],
+        "descriptor_properties": []
+      },
+      "transactional_properties": {
+        "isolation_level": null,
+        "autocommit_mode": null,
+        "array_size": null,
+        "transaction_size": null,
+        "enable_partitioning": null,
+        "connection_string": null,
+        "has_transaction_control": false
+      },
+      "pins": [
+        {
+          "id": "V0S0P1",
+          "name": "Link1",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "CustomerID",
+              "type": "INTEGER",
+              "sql_type_code": "4",
+              "length": "0",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "Name",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "State",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "Country",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "Age",
+              "type": "INTEGER",
+              "sql_type_code": "4",
+              "length": "0",
+              "scale": "0",
+              "nullable": true
+            }
+          ],
+          "enhanced_schema": [
+            {
+              "name": "CustomerID",
+              "type": "INTEGER",
+              "sql_type_code": "4",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none",
+              "complexity_score": 0
+            },
+            {
+              "name": "Name",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none",
+              "complexity_score": 0
+            },
+            {
+              "name": "State",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none",
+              "complexity_score": 0
+            },
+            {
+              "name": "Country",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none",
+              "complexity_score": 0
+            },
+            {
+              "name": "Age",
+              "type": "INTEGER",
+              "sql_type_code": "4",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none",
+              "complexity_score": 0
+            }
+          ]
+        }
+      ],
+      "schema_lineage": {}
+    },
+    {
+      "id": "V0S1",
+      "name": "TRF_Filter_01",
+      "type": "CTransformerStage",
+      "enhanced_type": "CTransformerStage",
+      "properties": {
+        "stage_type": "CTransformerStage"
+      },
+      "enhanced_properties": {
+        "input_pins": [
+          "V0S1P1"
+        ],
+        "output_pins": [
+          "V0S1P2"
+        ],
+        "partner_refs": [],
+        "xml_properties": [],
+        "descriptor_properties": []
+      },
+      "transactional_properties": {
+        "isolation_level": null,
+        "autocommit_mode": null,
+        "array_size": null,
+        "transaction_size": null,
+        "enable_partitioning": null,
+        "connection_string": null,
+        "has_transaction_control": false
+      },
+      "pins": [
+        {
+          "id": "V0S1P1",
+          "name": "Link1",
+          "direction": "input",
+          "schema": [],
+          "enhanced_schema": []
+        },
+        {
+          "id": "V0S1P2",
+          "name": "Link2",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "CustomerID",
+              "type": "INTEGER",
+              "sql_type_code": "4",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Link1.CustomerID"
+            },
+            {
+              "name": "Name",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Link1.Name"
+            },
+            {
+              "name": "State",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Link1.State"
+            },
+            {
+              "name": "Country",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Link1.Country"
+            },
+            {
+              "name": "Age",
+              "type": "INTEGER",
+              "sql_type_code": "4",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Link1.Age"
+            }
+          ],
+          "enhanced_schema": [
+            {
+              "name": "CustomerID",
+              "type": "INTEGER",
+              "sql_type_code": "4",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Link1.CustomerID",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CustomerID",
+                  "Link1.CustomerID",
+                  "Link1"
+                ],
+                "functions": [],
+                "complexity_score": 0.25,
+                "expression": "Link1.CustomerID"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.25
+            },
+            {
+              "name": "Name",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Link1.Name",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "Name",
+                  "Link1",
+                  "Link1.Name"
+                ],
+                "functions": [],
+                "complexity_score": 0.2,
+                "expression": "Link1.Name"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.2
+            },
+            {
+              "name": "State",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Link1.State",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "State",
+                  "Link1",
+                  "Link1.State"
+                ],
+                "functions": [],
+                "complexity_score": 0.18181818181818182,
+                "expression": "Link1.State"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.18181818181818182
+            },
+            {
+              "name": "Country",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Link1.Country",
+              "transformation_logic": {
+                "type": "aggregation",
+                "source_columns": [
+                  "Country",
+                  "Link1.Country",
+                  "Link1"
+                ],
+                "functions": [],
+                "complexity_score": 0.15384615384615385,
+                "expression": "Link1.Country"
+              },
+              "has_transformation": true,
+              "transformation_classification": "aggregation",
+              "complexity_score": 0.15384615384615385
+            },
+            {
+              "name": "Age",
+              "type": "INTEGER",
+              "sql_type_code": "4",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "Link1.Age",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "Link1",
+                  "Link1.Age",
+                  "Age"
+                ],
+                "functions": [],
+                "complexity_score": 0.2222222222222222,
+                "expression": "Link1.Age"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column",
+              "complexity_score": 0.2222222222222222
+            }
+          ]
+        }
+      ],
+      "schema_lineage": {}
+    },
+    {
+      "id": "V0S2",
+      "name": "aggregations",
+      "type": "CCustomStage",
+      "enhanced_type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxAggregator"
+      },
+      "enhanced_properties": {
+        "input_pins": [
+          "V0S2P1"
+        ],
+        "output_pins": [
+          "V0S2P2"
+        ],
+        "partner_refs": [],
+        "xml_properties": [],
+        "descriptor_properties": []
+      },
+      "transactional_properties": {
+        "isolation_level": null,
+        "autocommit_mode": null,
+        "array_size": null,
+        "transaction_size": null,
+        "enable_partitioning": null,
+        "connection_string": null,
+        "has_transaction_control": false
+      },
+      "pins": [
+        {
+          "id": "V0S2P1",
+          "name": "Link2",
+          "direction": "input",
+          "schema": [],
+          "enhanced_schema": []
+        },
+        {
+          "id": "V0S2P2",
+          "name": "Link3",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "State",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "MetricValue",
+              "type": "INTEGER",
+              "sql_type_code": "4",
+              "length": "0",
+              "scale": "0",
+              "nullable": true
+            }
+          ],
+          "enhanced_schema": [
+            {
+              "name": "State",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none",
+              "complexity_score": 0
+            },
+            {
+              "name": "MetricValue",
+              "type": "INTEGER",
+              "sql_type_code": "4",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none",
+              "complexity_score": 0
+            }
+          ]
+        }
+      ],
+      "schema_lineage": {}
+    },
+    {
+      "id": "V0S3",
+      "name": "delimiter",
+      "type": "CCustomStage",
+      "enhanced_type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxSequentialFile"
+      },
+      "enhanced_properties": {
+        "input_pins": [
+          "V0S3P1"
+        ],
+        "output_pins": [],
+        "partner_refs": [],
+        "xml_properties": [],
+        "descriptor_properties": []
+      },
+      "transactional_properties": {
+        "isolation_level": null,
+        "autocommit_mode": null,
+        "array_size": null,
+        "transaction_size": null,
+        "enable_partitioning": null,
+        "connection_string": null,
+        "has_transaction_control": false
+      },
+      "pins": [
+        {
+          "id": "V0S3P1",
+          "name": "Link3",
+          "direction": "input",
+          "schema": [],
+          "enhanced_schema": []
+        }
+      ],
+      "schema_lineage": {}
+    }
+  ],
+  "edges": [
+    {
+      "from_node": "V0S1",
+      "from_pin": "V0S1P2",
+      "from_pin_name": "Link2",
+      "to_node": "V0S2",
+      "to_pin": "V0S2P1",
+      "to_pin_name": "Link2",
+      "join_type": "unknown"
+    }
+  ],
+  "schema_lineage": {
+    "evolution_events": [
+      {
+        "node_id": "V0S0",
+        "input_columns": 0,
+        "output_columns": 5,
+        "transformations": [],
+        "schema_changes": {
+          "added": [
+            "Country",
+            "Name",
+            "CustomerID",
+            "State",
+            "Age"
+          ],
+          "removed": [],
+          "modified": []
+        }
+      },
+      {
+        "node_id": "V0S1",
+        "input_columns": 0,
+        "output_columns": 5,
+        "transformations": [
+          {
+            "column": "CustomerID",
+            "type": "simple_column",
+            "complexity": 0.25
+          },
+          {
+            "column": "Name",
+            "type": "simple_column",
+            "complexity": 0.2
+          },
+          {
+            "column": "State",
+            "type": "simple_column",
+            "complexity": 0.18181818181818182
+          },
+          {
+            "column": "Country",
+            "type": "aggregation",
+            "complexity": 0.15384615384615385
+          },
+          {
+            "column": "Age",
+            "type": "simple_column",
+            "complexity": 0.2222222222222222
+          }
+        ],
+        "schema_changes": {
+          "added": [
+            "Country",
+            "Name",
+            "CustomerID",
+            "State",
+            "Age"
+          ],
+          "removed": [],
+          "modified": []
+        }
+      },
+      {
+        "node_id": "V0S2",
+        "input_columns": 0,
+        "output_columns": 2,
+        "transformations": [],
+        "schema_changes": {
+          "added": [
+            "State",
+            "MetricValue"
+          ],
+          "removed": [],
+          "modified": []
+        }
+      },
+      {
+        "node_id": "V0S3",
+        "input_columns": 0,
+        "output_columns": 0,
+        "transformations": [],
+        "schema_changes": {
+          "added": [],
+          "removed": [],
+          "modified": []
+        }
+      }
+    ],
+    "summary": {
+      "stages_analyzed": 4,
+      "total_input_columns": 0,
+      "total_output_columns": 12,
+      "net_column_change": 12,
+      "stages_with_enrichment": 3,
+      "stages_with_filtering": 0
+    }
+  }
+}

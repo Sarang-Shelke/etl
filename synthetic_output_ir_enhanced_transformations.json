@@ -1,0 +1,432 @@
+{
+  "irVersion": "2.0",
+  "generatedAt": "2025-12-01T00:40:40.905936Z",
+  "job": {
+    "id": "job-J_DEMO_001-202512010040",
+    "name": "J_DEMO_001"
+  },
+  "nodes": [
+    {
+      "id": "n0",
+      "type": "Source",
+      "subtype": "Custom",
+      "name": "SRC_File_01",
+      "props": {
+        "customType": "CCustomStage",
+        "description": "DataStage CCustomStage component",
+        "configuration": {
+          "file": "input/demo_source_01.csv",
+          "firstLineColumnNames": "true",
+          "delimiter": ",",
+          "schema": null
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transformationDetails": {
+        "hasTransformations": false,
+        "transformationType": "none",
+        "complexityScore": 0.0,
+        "transformationCount": 0
+      },
+      "schemaRef": "s_V0S0",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "J_DEMO_001.dsx"
+      }
+    },
+    {
+      "id": "n1",
+      "type": "Transform",
+      "subtype": "Map",
+      "name": "TRF_Filter_01",
+      "props": {},
+      "transformationDetails": {
+        "hasTransformations": true,
+        "transformationType": "mixed",
+        "complexityScore": 0.20157731157731157,
+        "transformationCount": 5
+      },
+      "schemaRef": "s_V0S1",
+      "trxgenCode": "//\n// Generated file to implement the V0S1_J_DEMO_001_TRF_Filter_01 transform operator.\n//\n\n// define our input/output link names\ninputname 0 Link1;\noutputname 0 Link2;\n\nmainloop {\n\n// evaluate columns (no constraints) for link: Link2\nLink2.CustomerID = Link1.CustomerID;\nLink2.Name = Link1.Name;\nLink2.State = Link1.State;\nLink2.Country = Link1.Country;\nLink2.Age = Link1.Age;\nwriterecord 0;\n}\n\nfinish {\n}",
+      "trxClassName": "V0S1_J_DEMO_001_TRF_Filter_01",
+      "jobParameterNames": "",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "J_DEMO_001.dsx"
+      }
+    },
+    {
+      "id": "n2",
+      "type": "Transform",
+      "subtype": "Custom",
+      "name": "AGG_01",
+      "props": {
+        "customType": "CCustomStage",
+        "description": "DataStage CCustomStage component",
+        "configuration": {
+          "keys": "State",
+          "aggregations": "Min(Age) as MetricValue"
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transformationDetails": {
+        "hasTransformations": false,
+        "transformationType": "none",
+        "complexityScore": 0.0,
+        "transformationCount": 0
+      },
+      "schemaRef": "s_V0S2",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "J_DEMO_001.dsx"
+      }
+    },
+    {
+      "id": "n3",
+      "type": "Sink",
+      "subtype": "Custom",
+      "name": "TGT_File_01",
+      "props": {
+        "customType": "CCustomStage",
+        "description": "DataStage CCustomStage component",
+        "configuration": {
+          "file": "out/demo_output_01.csv",
+          "firstLineColumnNames": "true",
+          "delimiter": ","
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transformationDetails": {
+        "hasTransformations": false,
+        "transformationType": "none",
+        "complexityScore": 0.0,
+        "transformationCount": 0
+      },
+      "schemaRef": "s_V0S3",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "J_DEMO_001.dsx"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "nodeId": "n0",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n1",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S0"
+    },
+    {
+      "id": "l2",
+      "from": {
+        "nodeId": "n1",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n0",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S1"
+    },
+    {
+      "id": "l3",
+      "from": {
+        "nodeId": "n1",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n2",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S1"
+    },
+    {
+      "id": "l4",
+      "from": {
+        "nodeId": "n2",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n1",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S2"
+    },
+    {
+      "id": "l5",
+      "from": {
+        "nodeId": "n2",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n3",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S2"
+    },
+    {
+      "id": "l6",
+      "from": {
+        "nodeId": "n3",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n2",
+        "port": "in"
+      },
+      "schemaRef": "s_V0S3"
+    }
+  ],
+  "schemas": {
+    "s_V0S0": [
+      {
+        "name": "CustomerID",
+        "type": "integer",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "State",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "Country",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "Age",
+        "type": "integer",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      }
+    ],
+    "s_V0S1": [
+      {
+        "name": "CustomerID",
+        "type": "integer",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "Link1.CustomerID",
+            "CustomerID",
+            "Link1"
+          ],
+          "functions": [],
+          "complexity_score": 0.25,
+          "expression": "Link1.CustomerID"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.25,
+        "sourceColumns": [
+          "Link1.CustomerID",
+          "CustomerID",
+          "Link1"
+        ],
+        "expression": "Link1.CustomerID",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "Name",
+            "Link1",
+            "Link1.Name"
+          ],
+          "functions": [],
+          "complexity_score": 0.2,
+          "expression": "Link1.Name"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.2,
+        "sourceColumns": [
+          "Name",
+          "Link1",
+          "Link1.Name"
+        ],
+        "expression": "Link1.Name",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "State",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "State",
+            "Link1.State",
+            "Link1"
+          ],
+          "functions": [],
+          "complexity_score": 0.18181818181818182,
+          "expression": "Link1.State"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.18181818181818182,
+        "sourceColumns": [
+          "State",
+          "Link1.State",
+          "Link1"
+        ],
+        "expression": "Link1.State",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "Country",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "aggregation",
+          "source_columns": [
+            "Country",
+            "Link1.Country",
+            "Link1"
+          ],
+          "functions": [],
+          "complexity_score": 0.15384615384615385,
+          "expression": "Link1.Country"
+        },
+        "transformationClassification": "aggregation",
+        "complexityScore": 0.15384615384615385,
+        "sourceColumns": [
+          "Country",
+          "Link1.Country",
+          "Link1"
+        ],
+        "expression": "Link1.Country",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "Age",
+        "type": "integer",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "Age",
+            "Link1",
+            "Link1.Age"
+          ],
+          "functions": [],
+          "complexity_score": 0.2222222222222222,
+          "expression": "Link1.Age"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.2222222222222222,
+        "sourceColumns": [
+          "Age",
+          "Link1",
+          "Link1.Age"
+        ],
+        "expression": "Link1.Age",
+        "functions": [],
+        "hasTransformation": true
+      }
+    ],
+    "s_V0S2": [
+      {
+        "name": "State",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "MetricValue",
+        "type": "integer",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      }
+    ],
+    "s_V0S3": []
+  },
+  "transformationTracking": {
+    "totalTransformations": 5,
+    "transformationTypes": {
+      "simple_columns": 4,
+      "aggregations": 1,
+      "conditionals": 0,
+      "expressions": 0,
+      "constants": 0
+    },
+    "complexityDistribution": {
+      "simple": 4,
+      "aggregations": 1,
+      "complex": 0
+    }
+  }
+}

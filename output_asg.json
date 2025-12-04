@@ -1,0 +1,359 @@
+{
+  "job_name": "DIM_TEST_CONTRACT_AECB_I",
+  "job_parameters": [
+    {
+      "name": "BUSINESS_DATE",
+      "prompt": "BUSINESS_DATE",
+      "default": "2021-06-10"
+    },
+    {
+      "name": "TEST_Param",
+      "prompt": "TEST_Param parameters",
+      "default": "(As pre-defined)"
+    },
+    {
+      "name": "$APT_DISABLE_TFXR0017",
+      "prompt": "APT_DISABLE_TFXR0017",
+      "default": "$PROJDEF"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "V0S323",
+      "name": "value",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxChangeCapture"
+      },
+      "pins": [
+        {
+          "id": "V0S323P4",
+          "name": "Subject_cdc",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S323P5",
+          "name": "DSLink347",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S323P6",
+          "name": "change_code",
+          "direction": "",
+          "schema": []
+        }
+      ]
+    },
+    {
+      "id": "V0S332",
+      "name": "Xfm_Befr_Dim",
+      "type": "CTransformerStage",
+      "properties": {
+        "stage_type": "CTransformerStage"
+      },
+      "pins": [
+        {
+          "id": "V0S332P1",
+          "name": "EconomicActivityCode",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S332P2",
+          "name": "PrimaryMobileNo",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S332P3",
+          "name": "Before_cdc",
+          "direction": "",
+          "schema": []
+        }
+      ]
+    },
+    {
+      "id": "V0S333",
+      "name": "Xfm_Contract",
+      "type": "CTransformerStage",
+      "properties": {
+        "stage_type": "CTransformerStage"
+      },
+      "pins": [
+        {
+          "id": "V0S333P2",
+          "name": "SourceType",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S333P3",
+          "name": "Subject_Ext",
+          "direction": "",
+          "schema": []
+        }
+      ]
+    },
+    {
+      "id": "V0S339",
+      "name": "selection",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxPeek"
+      },
+      "pins": [
+        {
+          "id": "V0S339P1",
+          "name": "DSLink338",
+          "direction": "",
+          "schema": []
+        }
+      ]
+    },
+    {
+      "id": "V0S341",
+      "name": "Xfm_Contratc",
+      "type": "CTransformerStage",
+      "properties": {
+        "stage_type": "CTransformerStage"
+      },
+      "pins": [
+        {
+          "id": "V0S341P1",
+          "name": "Read_Chgs",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S341P2",
+          "name": "EMPLOYERNAME",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S341P3",
+          "name": "PrimaryMobileNo",
+          "direction": "",
+          "schema": []
+        }
+      ]
+    },
+    {
+      "id": "V0S346",
+      "name": "operator",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxFunnel"
+      },
+      "pins": [
+        {
+          "id": "V0S346P1",
+          "name": "before_subj_cdc",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S346P2",
+          "name": "Insrt_Contrc",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S346P4",
+          "name": "PrimaryMobileNo",
+          "direction": "",
+          "schema": []
+        }
+      ]
+    },
+    {
+      "id": "V0S348",
+      "name": "key",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxJoin"
+      },
+      "pins": [
+        {
+          "id": "V0S348P1",
+          "name": "Contct_Cdc",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S348P3",
+          "name": "Subj_cdc",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S348P4",
+          "name": "Subject_change_code",
+          "direction": "",
+          "schema": []
+        }
+      ]
+    },
+    {
+      "id": "V0S355",
+      "name": "key",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxRemDup"
+      },
+      "pins": [
+        {
+          "id": "V0S355P1",
+          "name": "PrimaryMobileNo",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S355P2",
+          "name": "DSLink356",
+          "direction": "",
+          "schema": []
+        }
+      ]
+    },
+    {
+      "id": "V0S357",
+      "name": "key",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxRemDup"
+      },
+      "pins": [
+        {
+          "id": "V0S357P2",
+          "name": "EMPLOYERNAME",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S357P3",
+          "name": "DSLink371",
+          "direction": "",
+          "schema": []
+        }
+      ]
+    },
+    {
+      "id": "V0S370",
+      "name": "svPAYMENTAMOUNT",
+      "type": "CTransformerStage",
+      "properties": {
+        "stage_type": "CTransformerStage"
+      },
+      "pins": [
+        {
+          "id": "V0S370P1",
+          "name": "LNK_TFM",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S370P2",
+          "name": "EMPLOYERNAME",
+          "direction": "",
+          "schema": []
+        }
+      ]
+    },
+    {
+      "id": "V0S373",
+      "name": "Lookup_373",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxLookup"
+      },
+      "pins": [
+        {
+          "id": "V0S373P1",
+          "name": "allow_dups",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S373P10",
+          "name": "allow_dups",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S373P2",
+          "name": "allow_dups",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S373P3",
+          "name": "TENOR",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S373P5",
+          "name": "allow_dups",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S373P6",
+          "name": "allow_dups",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S373P7",
+          "name": "allow_dups",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S373P8",
+          "name": "allow_dups",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S373P9",
+          "name": "allow_dups",
+          "direction": "",
+          "schema": []
+        }
+      ]
+    },
+    {
+      "id": "V0S379",
+      "name": "key",
+      "type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxJoin"
+      },
+      "pins": [
+        {
+          "id": "V0S379P1",
+          "name": "LNK_LD",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S379P2",
+          "name": "LNK_SRC",
+          "direction": "",
+          "schema": []
+        },
+        {
+          "id": "V0S379P6",
+          "name": "TOTALAMOUNT_LD",
+          "direction": "",
+          "schema": []
+        }
+      ]
+    }
+  ],
+  "edges": []
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI 
+    xmi:version="2.0" 
+    xmlns:xmi="http://www.omg.org/XMI" 
+    xmlns:TalendProperties="http://www.talend.org/properties">
+
+    <TalendProperties:Project 
+        xmi:id="_c0213c6db5314d65b756e2532f45a2d9" 
+        label="MigratedProject" 
+        description="" 
+        language="java" 
+        technicalLabel="MIGRATEDPROJECT" 
+        local="true" 
+        author="_c85f2159324f45cbb3a41240cb89b920" 
+        productVersion="8.0.1.20250218_0945-patch" 
+        type="DQ" 
+        itemsRelationVersion="1.3">
+
+        <migrationTask 
+            xmi:id="_2384455b450440b084559acb319e9827" 
+            id="org.talend.repository.model.migration.CheckProductVersionMigrationTask" 
+            breaks="7.1.0" 
+            version="7.1.1"/>
+            
+    </TalendProperties:Project>
+
+    <TalendProperties:User 
+        xmi:id="_c85f2159324f45cbb3a41240cb89b920" 
+        login="etl.migrator@local"/>
+
+</xmi:XMI>
