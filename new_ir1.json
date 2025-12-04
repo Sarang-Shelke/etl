@@ -1,0 +1,387 @@
+{
+  "irVersion": "2.0",
+  "generatedAt": "2025-12-01T00:00:00Z",
+  "job": {
+    "id": "job-SIMPLE-IR-001",
+    "name": "SIMPLE_IR_JOB"
+  },
+  "nodes": [
+    {
+      "id": "n0",
+      "type": "Source",
+      "subtype": "Database",
+      "name": "SRC_DB_01",
+      "props": {
+        "customType": "DatabaseSource",
+        "description": "Database table source",
+        "configuration": {
+          "table": "Customers"
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transformationDetails": {
+        "hasTransformations": false,
+        "transformationType": "none",
+        "complexityScore": 0.0,
+        "transformationCount": 0
+      },
+      "schemaRef": "s_src_db",
+      "provenance": {
+        "source": "dsx",
+        "location": "simple.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "simple.dsx"
+      }
+    },
+    {
+      "id": "n1",
+      "type": "Source",
+      "subtype": "File",
+      "name": "SRC_FILE_01",
+      "props": {
+        "customType": "FileSource",
+        "description": "Flat file source",
+        "configuration": {
+          "file": "D:/data/input/customers.csv",
+          "delimiter": ",",
+          "firstLineColumnNames": "true",
+          "rowSeparator": "\\n",
+          "encoding": "UTF-8"
+        },
+        "row_separator": "\"\\n\"",
+        "field_separator": "\",\"",
+        "header_lines": "1",
+        "footer_lines": "0",
+        "row_limit": "",
+        "encoding": "\"UTF-8\"",
+        "encoding_type": "UTF-8",
+        "csv_option": "false",
+        "remove_empty_row": "true",
+        "uncompress": "false",
+        "die_on_error": "false",
+        "trim_all": "false",
+        "advanced_separator": "false",
+        "check_fields_num": "false",
+        "check_date": "false",
+        "split_record": "false",
+        "enable_decode": "false",
+        "use_header_as_is": "false",
+        "escape_char": "\"\\\\\"",
+        "text_enclosure": "\"\\\"\"",
+        "thousands_separator": "\",\"",
+        "decimal_separator": "\".\"",
+        "temp_directory": "",
+        "csv_row_separator": "CRLF",
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transformationDetails": {
+        "hasTransformations": false,
+        "transformationType": "none",
+        "complexityScore": 0.0,
+        "transformationCount": 0
+      },
+      "schemaRef": "s_src_file",
+      "provenance": {
+        "source": "dsx",
+        "location": "simple.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "simple.dsx"
+      }
+    },
+    {
+      "id": "n2",
+      "type": "Transform",
+      "subtype": "Map",
+      "name": "TRF_MAP_01",
+      "props": {
+        "customType": "MapTransform",
+        "description": "Basic mapping transform",
+        "configuration": {
+          "expression": "UPPER(Name)"
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transformationDetails": {
+        "hasTransformations": true,
+        "transformationType": "map",
+        "complexityScore": 0.1,
+        "transformationCount": 1
+      },
+      "schemaRef": "s_map",
+      "trxgenCode": "// Map logic placeholder",
+      "trxClassName": "TRF_MAP_01_CLASS",
+      "jobParameterNames": "",
+      "provenance": {
+        "source": "dsx",
+        "location": "simple.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "simple.dsx"
+      }
+    },
+    {
+      "id": "n3",
+      "type": "Transform",
+      "subtype": "Filter",
+      "name": "TRF_FILTER_01",
+      "props": {
+        "customType": "FilterTransform",
+        "description": "Row filtering component",
+        "configuration": {
+          "condition": "Age > 18"
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transformationDetails": {
+        "hasTransformations": true,
+        "transformationType": "filter",
+        "complexityScore": 0.05,
+        "transformationCount": 1
+      },
+      "schemaRef": "s_filter",
+      "trxgenCode": "// Filter logic placeholder",
+      "trxClassName": "TRF_FILTER_01_CLASS",
+      "jobParameterNames": "",
+      "provenance": {
+        "source": "dsx",
+        "location": "simple.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "simple.dsx"
+      }
+    },
+    {
+      "id": "n4",
+      "type": "Transform",
+      "subtype": "Aggregate",
+      "name": "TRF_AGG_01",
+      "props": {
+        "customType": "AggregateTransform",
+        "description": "Aggregation component",
+        "configuration": {
+          "keys": [
+            "Country"
+          ],
+          "aggregations": {
+            "avg_age": "AVG(Age)"
+          }
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transformationDetails": {
+        "hasTransformations": true,
+        "transformationType": "aggregate",
+        "complexityScore": 0.2,
+        "transformationCount": 1
+      },
+      "schemaRef": "s_agg",
+      "trxgenCode": "// Aggregation logic placeholder",
+      "trxClassName": "TRF_AGG_01_CLASS",
+      "jobParameterNames": "",
+      "provenance": {
+        "source": "dsx",
+        "location": "simple.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "simple.dsx"
+      }
+    },
+    {
+      "id": "n5",
+      "type": "Sink",
+      "subtype": "Database",
+      "name": "SINK_DB_01",
+      "props": {
+        "customType": "DatabaseSink",
+        "description": "Target database table",
+        "configuration": {
+          "table": "Customer_Aggregates"
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transformationDetails": {
+        "hasTransformations": false,
+        "transformationType": "none",
+        "complexityScore": 0.0,
+        "transformationCount": 0
+      },
+      "schemaRef": "s_sink",
+      "provenance": {
+        "source": "dsx",
+        "location": "simple.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "simple.dsx"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "nodeId": "n0",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n2",
+        "port": "in"
+      },
+      "schemaRef": "s_src_db"
+    },
+    {
+      "id": "l2",
+      "from": {
+        "nodeId": "n2",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n3",
+        "port": "in"
+      },
+      "schemaRef": "s_map"
+    },
+    {
+      "id": "l3",
+      "from": {
+        "nodeId": "n3",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n4",
+        "port": "in"
+      },
+      "schemaRef": "s_filter"
+    },
+    {
+      "id": "l4",
+      "from": {
+        "nodeId": "n4",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n5",
+        "port": "in"
+      },
+      "schemaRef": "s_agg"
+    }
+  ],
+  "schemas": {
+    "s_src_db": [
+      {
+        "name": "CustomerID",
+        "type": "integer",
+        "nullable": true
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Age",
+        "type": "integer",
+        "nullable": true
+      },
+      {
+        "name": "Country",
+        "type": "string",
+        "nullable": true
+      }
+    ],
+    "s_src_file": [
+      {
+        "name": "CustomerID",
+        "type": "integer",
+        "nullable": true
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Age",
+        "type": "integer",
+        "nullable": true
+      }
+    ],
+    "s_map": [
+      {
+        "name": "CustomerID",
+        "type": "integer",
+        "nullable": true
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Age",
+        "type": "integer",
+        "nullable": true
+      },
+      {
+        "name": "Country",
+        "type": "string",
+        "nullable": true
+      }
+    ],
+    "s_filter": [
+      {
+        "name": "CustomerID",
+        "type": "integer",
+        "nullable": true
+      },
+      {
+        "name": "Name",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "Age",
+        "type": "integer",
+        "nullable": true
+      },
+      {
+        "name": "Country",
+        "type": "string",
+        "nullable": true
+      }
+    ],
+    "s_agg": [
+      {
+        "name": "Country",
+        "type": "string",
+        "nullable": true
+      },
+      {
+        "name": "avg_age",
+        "type": "number",
+        "nullable": true
+      }
+    ],
+    "s_sink": []
+  },
+  "transformationTracking": {
+    "totalTransformations": 3,
+    "transformationTypes": {
+      "map": 1,
+      "filter": 1,
+      "aggregate": 1
+    },
+    "complexityDistribution": {
+      "simple": 2,
+      "aggregations": 1,
+      "complex": 0
+    }
+  }
+}

@@ -1,43 +1,60 @@
-<node componentName="tFileInputDelimited" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="{{pos_x}}" posY="{{pos_y}}">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="{{unique_name}}" show="false"/>
+<node componentName="tFileInputDelimited" componentVersion="0.102" offsetLabelX="0" offsetLabelY="0" posX="{{ pos_x }}" posY="{{ pos_y }}">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="{{ unique_name }}" show="false"/>
     <elementParameter field="CHECK" name="USE_EXISTING_DYNAMIC" value="false"/>
     <elementParameter field="COMPONENT_LIST" name="DYNAMIC" value="" show="false"/>
     <elementParameter field="LABEL" name="FILENAMETEXT" value="&quot;When the input source is a stream or a zip file,footer and random shouldn't be bigger than 0.&quot;"/>
-    <elementParameter field="FILE" name="FILENAME" value="{{file_path}}"/>
-    <elementParameter field="CHECK" name="CSV_OPTION" value="{{csv_option}}"/>
-    <elementParameter field="TEXT" name="ROWSEPARATOR" value="{{row_separator}}"/>
-    <elementParameter field="OPENED_LIST" name="CSVROWSEPARATOR" value="{{csv_row_separator}}" show="false"/>
-    <elementParameter field="TEXT" name="FIELDSEPARATOR" value="{{field_separator}}"/>
-    <elementParameter field="TEXT" name="ESCAPE_CHAR" value="{{escape_char}}" show="false"/>
-    <elementParameter field="TEXT" name="TEXT_ENCLOSURE" value="{{text_enclosure}}" show="false"/>
-    <elementParameter field="TEXT" name="HEADER" value="{{header_lines}}"/>
-    <elementParameter field="TEXT" name="FOOTER" value="{{footer_lines}}"/>
-    <elementParameter field="TEXT" name="LIMIT" value="{{row_limit}}"/>
-    <elementParameter field="CHECK" name="REMOVE_EMPTY_ROW" value="{{remove_empty_row}}"/>
-    <elementParameter field="CHECK" name="UNCOMPRESS" value="{{uncompress}}"/>
-    <elementParameter field="CHECK" name="DIE_ON_ERROR" value="{{die_on_error}}"/>
-    <elementParameter field="DIRECTORY" name="TEMP_DIR" value="{{temp_directory}}" show="false"/>
-    <elementParameter field="CHECK" name="ADVANCED_SEPARATOR" value="{{advanced_separator}}"/>
-    <elementParameter field="TEXT" name="THOUSANDS_SEPARATOR" value="{{thousands_separator}}" show="false"/>
-    <elementParameter field="TEXT" name="DECIMAL_SEPARATOR" value="{{decimal_separator}}" show="false"/>
+    <elementParameter field="FILE" name="FILENAME" value="{{ file_path | default('&quot;&quot;') }}"/>
+    <elementParameter field="CHECK" name="CSV_OPTION" value="{{ csv_option | default('false') }}"/>
+    <elementParameter field="TEXT" name="ROWSEPARATOR" value="{{ row_separator | default('&quot;\\n&quot;') }}"/>
+    <elementParameter field="OPENED_LIST" name="CSVROWSEPARATOR" value="{{ csv_row_separator | default('CRLF') }}" show="false"/>
+    <elementParameter field="TEXT" name="FIELDSEPARATOR" value="{{ field_separator | default('&quot;,&quot;') }}"/>
+    <elementParameter field="TEXT" name="ESCAPE_CHAR" value="{{ escape_char | default('&quot;\\\\&quot;') }}" show="false"/>
+    <elementParameter field="TEXT" name="TEXT_ENCLOSURE" value="{{ text_enclosure | default('&quot;&quot;&quot;') }}" show="false"/>
+    <elementParameter field="TEXT" name="HEADER" value="{{ header_lines | default('1') }}"/>
+    <elementParameter field="TEXT" name="FOOTER" value="{{ footer_lines | default('0') }}"/>
+    <elementParameter field="TEXT" name="LIMIT" value="{{ row_limit | default('') }}"/>
+    <elementParameter field="CHECK" name="REMOVE_EMPTY_ROW" value="{{ remove_empty_row | default('true') }}"/>
+    <elementParameter field="CHECK" name="UNCOMPRESS" value="{{ uncompress | default('false') }}"/>
+    <elementParameter field="CHECK" name="DIE_ON_ERROR" value="{{ die_on_error | default('false') }}"/>
+    <elementParameter field="DIRECTORY" name="TEMP_DIR" value="{{ temp_directory | default('') }}" show="false"/>
+    <elementParameter field="CHECK" name="ADVANCED_SEPARATOR" value="{{ advanced_separator | default('false') }}"/>
+    <elementParameter field="TEXT" name="THOUSANDS_SEPARATOR" value="{{ thousands_separator | default('&quot;,&quot;') }}" show="false"/>
+    <elementParameter field="TEXT" name="DECIMAL_SEPARATOR" value="{{ decimal_separator | default('&quot;.&quot;') }}" show="false"/>
     <elementParameter field="CHECK" name="RANDOM" value="false"/>
     <elementParameter field="TEXT" name="NB_RANDOM" value="10" show="false"/>
-    <elementParameter field="CHECK" name="TRIMALL" value="{{trim_all}}"/>
-    <!-- TRIMSELECT: Generate dynamically based on schema columns -->
-    {{trim_select_table}}
-    <elementParameter field="CHECK" name="CHECK_FIELDS_NUM" value="{{check_fields_num}}"/>
-    <elementParameter field="CHECK" name="CHECK_DATE" value="{{check_date}}"/>
-    <elementParameter field="ENCODING_TYPE" name="ENCODING" value="{{encoding}}"/>
-    <elementParameter field="TECHNICAL" name="ENCODING:ENCODING_TYPE" value="{{encoding_type}}"/>
-    <elementParameter field="CHECK" name="SPLITRECORD" value="{{split_record}}"/>
-    <elementParameter field="CHECK" name="ENABLE_DECODE" value="{{enable_decode}}"/>
-    <!-- DECODE_COLS: Generate dynamically based on schema columns -->
-    {{decode_cols_table}}
+    <elementParameter field="CHECK" name="TRIMALL" value="{{ trim_all | default('false') }}"/>
+    <elementParameter field="TABLE" name="TRIMSELECT">
+{% for col in schema_columns %}
+      <elementValue elementRef="SCHEMA_COLUMN" value="{{ col.name }}" id="{{ loop.index0 * 2 }}"/>
+      <elementValue elementRef="TRIM" value="false" id="{{ loop.index0 * 2 + 1 }}"/>
+{% endfor %}
+    </elementParameter>
+    <elementParameter field="CHECK" name="CHECK_FIELDS_NUM" value="{{ check_fields_num | default('false') }}"/>
+    <elementParameter field="CHECK" name="CHECK_DATE" value="{{ check_date | default('false') }}"/>
+    <elementParameter field="ENCODING_TYPE" name="ENCODING" value="{{ encoding | default('&quot;ISO-8859-15&quot;') }}"/>
+    <elementParameter field="TECHNICAL" name="ENCODING:ENCODING_TYPE" value="{{ encoding_type | default('ISO-8859-15') }}"/>
+    <elementParameter field="CHECK" name="SPLITRECORD" value="{{ split_record | default('false') }}"/>
+    <elementParameter field="CHECK" name="ENABLE_DECODE" value="{{ enable_decode | default('false') }}"/>
+    <elementParameter field="TABLE" name="DECODE_COLS" show="false">
+{% for col in schema_columns %}
+      <elementValue elementRef="SCHEMA_COLUMN" value="{{ col.name }}" id="{{ loop.index0 * 2 }}"/>
+      <elementValue elementRef="DECODE" value="false" id="{{ loop.index0 * 2 + 1 }}"/>
+{% endfor %}
+    </elementParameter>
     <elementParameter field="TEXT" name="DESTINATION" value="" show="false"/>
-    <elementParameter field="CHECK" name="USE_HEADER_AS_IS" value="{{use_header_as_is}}"/>
+    <elementParameter field="CHECK" name="USE_HEADER_AS_IS" value="{{ use_header_as_is | default('false') }}"/>
     <elementParameter field="TEXT" name="SCHEMA_OPT_NUM" value="100" show="false"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
-    <!-- METADATA: Generate dynamically based on schema columns -->
-    {{metadata_flow}}
-    {{metadata_reject}}
+    <metadata connector="FLOW" name="{{ unique_name }}">
+{% for col in schema_columns %}
+      <column comment="" key="{{ col.key | default('false') }}" length="{{ col.length | default('-1') }}" name="{{ col.name }}" nullable="{{ col.nullable | default('true') }}" pattern="{{ col.pattern | default('') }}" precision="{{ col.precision | default('-1') }}" sourceType="{{ col.sourceType | default('') }}" type="{{ col.talend_type | default('id_String') }}" originalLength="{{ col.originalLength | default('-1') }}" usefulColumn="true"/>
+{% endfor %}
+    </metadata>
+    <metadata connector="REJECT" name="REJECT">
+{% for col in schema_columns %}
+      <column comment="" key="{{ col.key | default('false') }}" length="{{ col.length | default('-1') }}" name="{{ col.name }}" nullable="{{ col.nullable | default('true') }}" pattern="{{ col.pattern | default('') }}" precision="{{ col.precision | default('-1') }}" sourceType="{{ col.sourceType | default('') }}" type="{{ col.talend_type | default('id_String') }}" originalLength="{{ col.originalLength | default('-1') }}" usefulColumn="true"/>
+{% endfor %}
+      <column defaultValue="" key="false" length="255" name="errorCode" nullable="true" precision="0" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+      <column defaultValue="" key="false" length="255" name="errorMessage" nullable="true" precision="0" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>
+    </metadata>
 </node>

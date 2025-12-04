@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sess
 Base = declarative_base()
 
 db_url = "postgresql+asyncpg://postgres:Edgematics2025@axoma-dev-postgres.cd4keaaye6mk.eu-west-1.rds.amazonaws.com:5432/axoma-etl-migration-tool"
+# db_url = "postgresql+asyncpg://postgres:admin@localhost:5432/etl"
 
 async_engine = create_async_engine(db_url, echo=False)
 

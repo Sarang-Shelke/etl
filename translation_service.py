@@ -13,6 +13,7 @@ from sqlalchemy import select
 from translate import get_mappings
 from uuid import UUID
 from datetime import datetime
+from jinja2 import Template
 
 # --- Constants for Talend Versions (reused from ETL_Weaver) ---
 TALEND_PRODUCT_VERSION = "8.0.1.20250218_0945-patch"
@@ -109,7 +110,7 @@ class TranslationService:
         #     translated_logic=translated_logic
         # )
     
-    async def fill_jinja_templates(self, ir, mappings, output_base_dir: str = "new_generated_jobs_new", project_name: str = "NewMigratedProjectNew"):
+    async def fill_jinja_templates(self, ir, mappings, output_base_dir: str = "verynew_generated_jobs_new", project_name: str = "VeryNewMigratedProjectNew"):
         """Fill Jinja templates for Talend and create zip package (reused from ETL_Weaver structure)."""
         print("Filling templates and generating Talend artifacts")
         from jinja2 import Environment, FileSystemLoader
@@ -226,13 +227,16 @@ class TranslationService:
         talend_job = self._build_talend_job_from_ir(job_body, mappings)
         print(f"DEBUG: Built Talend job with {len(talend_job.get('nodes', []))} nodes and {len(talend_job.get('connections', []))} connections")
         
+        # Fetch tFileInputDelimited template from DB (once, outside loop)
+        tfileinputdelimited_template = await self._get_component_template("tFileInputDelimited")
+
         # Convert nodes to have raw_xml attribute for template
         nodes_with_xml = []
         for node in talend_job.get('nodes', []):
             if not node:
                 continue
             node_copy = node.copy()
-            raw_xml = self._node_to_xml(node)
+            raw_xml = self._node_to_xml(node, tfileinputdelimited_template)
             if not raw_xml or len(raw_xml.strip()) == 0:
                 print(f"Warning: Node {node.get('uniqueName', 'unknown')} generated empty XML, skipping")
                 continue
@@ -345,7 +349,7 @@ class TranslationService:
         uuid7 = f"_{uuid.uuid4().hex}"  # modified_product_fullname xmi:id
         uuid8 = f"_{uuid.uuid4().hex}"  # modified_product_version xmi:id
         uuid9 = f"_{uuid.uuid4().hex}"  # modified_date xmi:id
-        uuid10 = f"_{uuid.uuid4().hex}" # item_key xmi:id
+        # uuid10 = f"_{uuid.uuid4().hex}" # item_key xmi:id
         uuid11 = f"_{uuid.uuid4().hex}" # ItemState xmi:id
 
         if file_basename is None:
@@ -363,7 +367,7 @@ class TranslationService:
             "uuid7": uuid7,
             "uuid8": uuid8,
             "uuid9": uuid9,
-            "uuid10": uuid10,
+            # "uuid10": uuid10,
             "uuid11": uuid11,
             
             # Content variables
@@ -543,6 +547,9 @@ class TranslationService:
                 "posY": pos_y,
                 "parameters": params,
                 "metadata": metadata,
+                # Add schema_columns and props for template-based generation (tFileInputDelimited)
+                "schema_columns": schema_columns,
+                "props": node.get("props", {}),
             }
             
             # Add nodeData if present (for tMap, etc.)
@@ -730,16 +737,65 @@ class TranslationService:
         
         # Map common properties based on component type
         if component_type == "tFileInputDelimited":
-            if "filepath" in properties:
-                params.append({
-                    "field": "FILE", "name": "FILENAME",
-                    "value": properties["filepath"], "show": True
-                })
-            if "delimiter" in properties:
-                params.append({
-                    "field": "TEXT", "name": "FIELDSEPARATOR",
-                    "value": properties["delimiter"], "show": True
-                })
+            # Get configuration from props if available
+            config = properties.get("configuration", {})
+            
+            # File path - check multiple sources
+            file_path = config.get("file") or properties.get("filepath") or ""
+            if file_path and not file_path.startswith('"'):
+                file_path = f'"{file_path}"'
+            params.append({"field": "FILE", "name": "FILENAME", "value": file_path})
+            
+            # Delimiter
+            delimiter = config.get("delimiter") or properties.get("delimiter") or ","
+            if not delimiter.startswith('"'):
+                delimiter = f'"{delimiter}"'
+            params.append({"field": "TEXT", "name": "FIELDSEPARATOR", "value": delimiter})
+            
+            # Row separator
+            row_sep = properties.get("row_separator", '"\\n"')
+            params.append({"field": "TEXT", "name": "ROWSEPARATOR", "value": row_sep})
+            
+            # Header/Footer
+            first_line = config.get("firstLineColumnNames", "false")
+            header_lines = "1" if first_line.lower() == "true" else properties.get("header_lines", "0")
+            params.append({"field": "TEXT", "name": "HEADER", "value": header_lines})
+            params.append({"field": "TEXT", "name": "FOOTER", "value": properties.get("footer_lines", "0")})
+            params.append({"field": "TEXT", "name": "LIMIT", "value": properties.get("row_limit", "")})
+            
+            # Encoding
+            encoding = properties.get("encoding", '"ISO-8859-15"')
+            params.append({"field": "ENCODING_TYPE", "name": "ENCODING", "value": encoding})
+            params.append({"field": "TECHNICAL", "name": "ENCODING:ENCODING_TYPE", "value": properties.get("encoding_type", "ISO-8859-15")})
+            
+            # Boolean options
+            params.append({"field": "CHECK", "name": "CSV_OPTION", "value": properties.get("csv_option", "false")})
+            params.append({"field": "CHECK", "name": "REMOVE_EMPTY_ROW", "value": properties.get("remove_empty_row", "true")})
+            params.append({"field": "CHECK", "name": "UNCOMPRESS", "value": properties.get("uncompress", "false")})
+            params.append({"field": "CHECK", "name": "DIE_ON_ERROR", "value": properties.get("die_on_error", "false")})
+            params.append({"field": "CHECK", "name": "TRIMALL", "value": properties.get("trim_all", "false")})
+            params.append({"field": "CHECK", "name": "ADVANCED_SEPARATOR", "value": properties.get("advanced_separator", "false")})
+            params.append({"field": "CHECK", "name": "CHECK_FIELDS_NUM", "value": properties.get("check_fields_num", "false")})
+            params.append({"field": "CHECK", "name": "CHECK_DATE", "value": properties.get("check_date", "false")})
+            params.append({"field": "CHECK", "name": "SPLITRECORD", "value": properties.get("split_record", "false")})
+            params.append({"field": "CHECK", "name": "ENABLE_DECODE", "value": properties.get("enable_decode", "false")})
+            params.append({"field": "CHECK", "name": "USE_HEADER_AS_IS", "value": properties.get("use_header_as_is", "false")})
+            params.append({"field": "CHECK", "name": "USE_EXISTING_DYNAMIC", "value": "false"})
+            params.append({"field": "CHECK", "name": "RANDOM", "value": "false"})
+            
+            # Additional text fields
+            params.append({"field": "TEXT", "name": "ESCAPE_CHAR", "value": properties.get("escape_char", '"\\\\\"'), "show": False})
+            params.append({"field": "TEXT", "name": "TEXT_ENCLOSURE", "value": properties.get("text_enclosure", '"\\"\"'), "show": False})
+            params.append({"field": "TEXT", "name": "THOUSANDS_SEPARATOR", "value": properties.get("thousands_separator", '","'), "show": False})
+            params.append({"field": "TEXT", "name": "DECIMAL_SEPARATOR", "value": properties.get("decimal_separator", '"."'), "show": False})
+            params.append({"field": "TEXT", "name": "NB_RANDOM", "value": "10", "show": False})
+            params.append({"field": "TEXT", "name": "SCHEMA_OPT_NUM", "value": "100", "show": False})
+            params.append({"field": "TEXT", "name": "CONNECTION_FORMAT", "value": "row"})
+            params.append({"field": "DIRECTORY", "name": "TEMP_DIR", "value": properties.get("temp_directory", ""), "show": False})
+            params.append({"field": "OPENED_LIST", "name": "CSVROWSEPARATOR", "value": properties.get("csv_row_separator", "CRLF"), "show": False})
+            params.append({"field": "COMPONENT_LIST", "name": "DYNAMIC", "value": "", "show": False})
+            params.append({"field": "TEXT", "name": "DESTINATION", "value": "", "show": False})
+            params.append({"field": "LABEL", "name": "FILENAMETEXT", "value": "&quot;When the input source is a stream or a zip file,footer and random shouldn't be bigger than 0.&quot;"})
         elif component_type in ("tDBInput", "tDBOutput"):
             if "host" in properties:
                 params.append({
@@ -776,8 +832,23 @@ class TranslationService:
         
         return params
     
-    def _node_to_xml(self, node: Dict[str, Any]) -> str:
-        """Convert a Talend node to XML element with full support for metadata and nodeData."""
+    def _node_to_xml(self, node: Dict[str, Any], tfileinputdelimited_template: Optional[str] = None) -> str:
+        """Convert a Talend node to XML element with full support for metadata and nodeData.
+        
+        For tFileInputDelimited, uses template-based generation when template is available.
+        Falls back to hardcoded generation for other components or when template is not found.
+        """
+        # Check if this is a tFileInputDelimited with a template
+        if node.get("componentName") == "tFileInputDelimited" and tfileinputdelimited_template:
+            try:
+                schema_columns = node.get("schema_columns", [])
+                return self._generate_tfileinputdelimited_from_template(
+                    node, schema_columns, tfileinputdelimited_template
+                )
+            except Exception as e:
+                print(f"DEBUG: Template-based generation failed for tFileInputDelimited: {e}, falling back to hardcoded")
+        
+        # Default: hardcoded XML generation for all other components
         xml_lines = [
             f'  <node componentName="{node["componentName"]}" '
             f'componentVersion="{node.get("componentVersion", "0.102")}" '
@@ -802,11 +873,26 @@ class TranslationService:
                 show_attr = ' show="false"'
             elif "show" in param and param.get("show") is True:
                 show_attr = ' show="true"'
+        
+        # For tFileInputDelimited: Add TRIMSELECT and DECODE_COLS TABLE elements
+        if node.get("componentName") == "tFileInputDelimited":
+            schema_columns = node.get("schema_columns", [])
             
-            xml_lines.append(
-                f'    <elementParameter field="{param.get("field", "TEXT")}" '
-                f'name="{param.get("name", "")}" value="{value}"{show_attr}/>'
-            )
+            # TRIMSELECT table
+            xml_lines.append('    <elementParameter field="TABLE" name="TRIMSELECT">')
+            for i, col in enumerate(schema_columns):
+                col_name = col.get("name", "unknown")
+                xml_lines.append(f'      <elementValue elementRef="SCHEMA_COLUMN" value="{col_name}" id="{i * 2}"/>')
+                xml_lines.append(f'      <elementValue elementRef="TRIM" value="false" id="{i * 2 + 1}"/>')
+            xml_lines.append('    </elementParameter>')
+            
+            # DECODE_COLS table
+            xml_lines.append('    <elementParameter field="TABLE" name="DECODE_COLS" show="false">')
+            for i, col in enumerate(schema_columns):
+                col_name = col.get("name", "unknown")
+                xml_lines.append(f'      <elementValue elementRef="SCHEMA_COLUMN" value="{col_name}" id="{i * 2}"/>')
+                xml_lines.append(f'      <elementValue elementRef="DECODE" value="false" id="{i * 2 + 1}"/>')
+            xml_lines.append('    </elementParameter>')
         
         # Add metadata (for schema/column definitions)
         for metadata in node.get("metadata", []):
@@ -834,6 +920,25 @@ class TranslationService:
                     )
                 )
             xml_lines.append("    </metadata>")
+        
+        
+        # For tFileInputDelimited: Add REJECT metadata connector
+        if node.get("componentName") == "tFileInputDelimited":
+            schema_columns = node.get("schema_columns", [])
+            xml_lines.append('    <metadata connector="REJECT" name="REJECT">')
+            for col in schema_columns:
+                col_name = col.get("name", "unknown")
+                col_type = self._map_ir_type_to_talend(col.get("type", "string"))
+                nullable = "true" if col.get("nullable", True) else "false"
+                xml_lines.append(
+                    f'      <column comment="" key="false" length="-1" name="{col_name}" '
+                    f'nullable="{nullable}" pattern="" precision="-1" sourceType="" '
+                    f'type="{col_type}" originalLength="-1" usefulColumn="true"/>'
+                )
+            # Add errorCode and errorMessage columns
+            xml_lines.append('      <column defaultValue="" key="false" length="255" name="errorCode" nullable="true" precision="0" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>')
+            xml_lines.append('      <column defaultValue="" key="false" length="255" name="errorMessage" nullable="true" precision="0" sourceType="" type="id_String" originalLength="-1" usefulColumn="true"/>')
+            xml_lines.append('    </metadata>')
         
         # Add nodeData (for complex components like tMap)
         node_data = node.get("nodeData")
@@ -938,6 +1043,156 @@ class TranslationService:
         
         xml_lines.append("  </connection>")
         return "\n".join(xml_lines)
+    async def _get_component_template(self, component_type: str) -> Optional[str]:
+        """Fetch component template from target_component_templates table.
+        
+        Args:
+            component_type: The Talend component type (e.g., 'tFileInputDelimited')
+            
+        Returns:
+            Template content string if found, None otherwise.
+        """
+        try:
+            # Import the model here to avoid circular imports
+            from schemas.models import TargetComponentTemplate
+            
+            result = await self.db.execute(
+                select(TargetComponentTemplate)
+                .where(TargetComponentTemplate.component_type == component_type)
+                .where(TargetComponentTemplate.is_active == True)
+            )
+            template_record = result.scalar_one_or_none()
+            
+            if template_record:
+                print(f"DEBUG: Found template for {component_type} in database")
+                return template_record.template_content
+            else:
+                print(f"DEBUG: No template found for {component_type} in database, using fallback")
+                return None
+        except Exception as e:
+            print(f"DEBUG: Error fetching template for {component_type}: {e}")
+            return None
+    
+    def _generate_tfileinputdelimited_from_template(
+        self, 
+        node: Dict[str, Any], 
+        schema_columns: List[Dict[str, Any]], 
+        template_content: str
+    ) -> str:
+        """Generate tFileInputDelimited XML from Jinja2 template.
+        
+        Args:
+            node: The Talend node dictionary with properties
+            schema_columns: List of schema columns from IR
+            template_content: Jinja2 template string
+            
+        Returns:
+            Rendered XML string for the component.
+        """
+        # Prepare template context with all needed variables
+        props = node.get("props", {})
+        config = props.get("configuration", {})
+        
+        # Convert IR schema columns to template-friendly format with Talend types
+        processed_columns = []
+        for col in schema_columns:
+            processed_columns.append({
+                "name": col.get("name", "unknown"),
+                "talend_type": self._map_ir_type_to_talend(col.get("type", "string")),
+                "nullable": "true" if col.get("nullable", True) else "false",
+                "key": col.get("key", "false"),
+                "length": str(col.get("length", -1)),
+                "precision": str(col.get("precision", -1)),
+                "pattern": col.get("pattern", ""),
+                "sourceType": col.get("sourceType", ""),
+                "originalLength": str(col.get("originalLength", -1)),
+            })
+        
+        # If no schema columns provided, add a default column to ensure valid XML
+        if not processed_columns:
+            print("DEBUG: No schema columns found for tFileInputDelimited, adding default column")
+            processed_columns.append({
+                "name": "column1",
+                "talend_type": "id_String",
+                "nullable": "true",
+                "key": "false",
+                "length": "-1",
+                "precision": "-1",
+                "pattern": "",
+                "sourceType": "",
+                "originalLength": "-1",
+            })
+        
+        # Extract file path from props - handle different IR structures
+        file_path = config.get("file") or props.get("filepath") or ""
+        if file_path and not file_path.startswith('"'):
+            file_path = f'"{file_path}"'
+        
+        # Extract delimiter
+        delimiter = config.get("delimiter") or props.get("delimiter") or ","
+        if not delimiter.startswith('"'):
+            delimiter = f'"{delimiter}"'
+        
+        # Determine header lines from firstLineColumnNames
+        first_line_cols = config.get("firstLineColumnNames", "false")
+        header_lines = "1" if first_line_cols.lower() == "true" else "0"
+        
+        context = {
+            # Position
+            "pos_x": node.get("posX", 100),
+            "pos_y": node.get("posY", 100),
+            
+            # Identification
+            "unique_name": node.get("uniqueName", "tFileInputDelimited_1"),
+            
+            # File settings
+            "file_path": file_path,
+            "field_separator": delimiter,
+            "row_separator": props.get("row_separator", '"\\n"'),
+            "header_lines": header_lines,
+            "footer_lines": props.get("footer_lines", "0"),
+            "row_limit": props.get("row_limit", ""),
+            
+            # Encoding
+            "encoding": props.get("encoding", '"ISO-8859-15"'),
+            "encoding_type": props.get("encoding_type", "ISO-8859-15"),
+            
+            # Boolean options
+            "csv_option": props.get("csv_option", "false"),
+            "remove_empty_row": props.get("remove_empty_row", "true"),
+            "uncompress": props.get("uncompress", "false"),
+            "die_on_error": props.get("die_on_error", "false"),
+            "trim_all": props.get("trim_all", "false"),
+            "advanced_separator": props.get("advanced_separator", "false"),
+            "check_fields_num": props.get("check_fields_num", "false"),
+            "check_date": props.get("check_date", "false"),
+            "split_record": props.get("split_record", "false"),
+            "enable_decode": props.get("enable_decode", "false"),
+            "use_header_as_is": props.get("use_header_as_is", "false"),
+            
+            # Additional settings
+            "escape_char": props.get("escape_char", '"\\\\\"'),
+            "text_enclosure": props.get("text_enclosure", '"\\"\\"'),
+            "thousands_separator": props.get("thousands_separator", '","'),
+            "decimal_separator": props.get("decimal_separator", '"."'),
+            "temp_directory": props.get("temp_directory", ""),
+            "csv_row_separator": props.get("csv_row_separator", "CRLF"),
+            
+            # Schema columns for dynamic sections
+            "schema_columns": processed_columns,
+        }
+        
+        # Render the template
+        template = Template(template_content)
+        rendered_xml = template.render(**context)
+        
+        # Add proper indentation for embedding in the larger XML
+        lines = rendered_xml.split('\n')
+        indented_lines = ['  ' + line if line.strip() else line for line in lines]
+        
+        return '\n'.join(indented_lines)
+
+
     
 
     async def _get_talend_templates(self) -> Dict[str, Dict[str, Any]]:

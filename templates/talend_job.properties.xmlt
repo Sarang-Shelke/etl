@@ -19,7 +19,6 @@
     <additionalProperties xmi:id="{{ uuid7 }}" key="modified_product_fullname" value="Talend Cloud Data Fabric"/>
     <additionalProperties xmi:id="{{ uuid8 }}" key="modified_product_version" value="{{ product_version }}"/>
     <additionalProperties xmi:id="{{ uuid9 }}" key="modified_date" value="{{ modified_date }}"/>
-    <additionalProperties xmi:id="{{ uuid10 }}" key="item_key" value="{{ item_key }}"/>
   </TalendProperties:Property>
 
   <TalendProperties:ItemState 
