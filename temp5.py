@@ -377,7 +377,6 @@ def extract_transformation_logic(derivation: str) -> Dict[str, Any]:
             'type': 'empty',
             'source_columns': [],
             'functions': [],
-            'complexity_score': 0
         }
     
     # Basic classification
@@ -402,22 +401,12 @@ def extract_transformation_logic(derivation: str) -> Dict[str, Any]:
     
     # Extract function calls
     functions = re.findall(r'\b([A-Za-z_][A-Za-z0-9_]*)\s*\(', derivation)
-    
-    # Calculate complexity score
-    complexity_indicators = [
-        len(re.findall(r'[(){}[\]]', derivation)),  # Nesting level
-        derivation.count(','),  # Parameter count
-        len(functions),  # Function calls
-        len([c for c in derivation if c.isupper() and c.isalpha()]) / len(derivation) if derivation else 0  # Uppercase ratio
-    ]
-    
-    complexity_score = sum(complexity_indicators)
+
     
     return {
         'type': derivation_type,
         'source_columns': source_columns,
         'functions': list(set(functions)),
-        'complexity_score': complexity_score,
         'expression': derivation
     }
 
@@ -1141,7 +1130,6 @@ class ASGBuilder:
                     enhanced_column = column.copy()
                     enhanced_column['has_transformation'] = bool(column.get('derivation'))
                     enhanced_column['transformation_classification'] = transformation_logic.get('type', 'none')
-                    enhanced_column['complexity_score'] = transformation_logic.get('complexity_score', 0)
                     schemas.append(enhanced_column)
                 
                 i += len(sub_record)
@@ -1341,7 +1329,6 @@ class ASGBuilder:
                     transformations.append({
                         'column': col['name'],
                         'type': col.get('transformation_classification'),
-                        'complexity': col.get('complexity_score', 0)
                     })
             
             # Track lineage
@@ -1429,7 +1416,7 @@ class ASGBuilder:
 
 if __name__ == "__main__":
     # Load the DSX file
-    file_path = 'J_DEMO_001_ProperFormat.dsx'
+    file_path = 'simple_user_job.dsx'
     
     print("=" * 70)
     print("IBM DATASTAGE DSX PARSER - ENHANCED v5.0")
@@ -1540,7 +1527,7 @@ if __name__ == "__main__":
             print(f"  Filtering Stages: {evolution_summary.get('stages_with_filtering', 0)}")
         
         # Save enhanced ASG to file
-        output_file = 'synthetic_asg_fixed.json'
+        output_file = 'simple_user_job.json'
         builder.save_to_file(output_file)
         print(f"\n✓ Enhanced ASG saved to: {output_file}")
         

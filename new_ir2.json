@@ -1,0 +1,210 @@
+{
+    "irVersion": "2.0",
+    "generatedAt": "2025-12-05T00:00:00Z",
+    "job": {
+        "id": "job-SIMPLE-IR-002",
+        "name": "SIMPLE_IO_JOB"
+    },
+    "nodes": [
+        {
+            "id": "n1",
+            "type": "Source",
+            "subtype": "File",
+            "name": "SRC_FILE",
+            "props": {
+                "customType": "tFileInputDelimited",
+                "description": "Input CSV file",
+                "configuration": {
+                    "file": "D:/data/input/simple_input.csv",
+                    "delimiter": ",",
+                    "firstLineColumnNames": "true",
+                    "rowSeparator": "\\n",
+                    "encoding": "UTF-8"
+                },
+                "row_separator": "\"\\n\"",
+                "field_separator": "\",\"",
+                "header_lines": "1",
+                "footer_lines": "0",
+                "row_limit": "",
+                "encoding": "\"UTF-8\"",
+                "encoding_type": "UTF-8",
+                "csv_option": "false",
+                "remove_empty_row": "true",
+                "uncompress": "false",
+                "die_on_error": "false",
+                "trim_all": "true",
+                "advanced_separator": "false",
+                "check_fields_num": "false",
+                "check_date": "false",
+                "split_record": "false",
+                "enable_decode": "false",
+                "use_header_as_is": "false",
+                "escape_char": "\"\\\\\"",
+                "text_enclosure": "\"\\\"\"",
+                "thousands_separator": "\",\"",
+                "decimal_separator": "\".\"",
+                "temp_directory": "",
+                "csv_row_separator": "CRLF",
+                "apt_properties": {},
+                "metadata": {}
+            },
+            "transformationDetails": {
+                "hasTransformations": false,
+                "transformationType": "none",
+                "complexityScore": 0.0,
+                "transformationCount": 0
+            },
+            "schemaRef": "s_simple",
+            "provenance": {
+                "source": "manual",
+                "location": "none",
+                "lineStart": "0",
+                "lineEnd": "0",
+                "filePath": "none"
+            }
+        },
+        {
+            "id": "n2",
+            "type": "Transform",
+            "subtype": "Map",
+            "name": "TRF_MAP",
+            "props": {
+                "customType": "MapTransform",
+                "description": "Simple pass-through map",
+                "configuration": {
+                    "expression": "row1.Name"
+                },
+                "apt_properties": {},
+                "metadata": {}
+            },
+            "transformationDetails": {
+                "hasTransformations": true,
+                "transformationType": "map",
+                "complexityScore": 0.1,
+                "transformationCount": 1
+            },
+            "schemaRef": "s_simple",
+            "trxgenCode": "// Map logic",
+            "trxClassName": "TRF_MAP_CLASS",
+            "jobParameterNames": "",
+            "provenance": {
+                "source": "manual",
+                "location": "none",
+                "lineStart": "0",
+                "lineEnd": "0",
+                "filePath": "none"
+            }
+        },
+        {
+            "id": "n3",
+            "type": "Sink",
+            "subtype": "File",
+            "name": "TGT_FILE",
+            "props": {
+                "customType": "tFileOutputDelimited",
+                "description": "Output CSV file",
+                "configuration": {
+                    "file": "D:/data/output/simple_output.csv",
+                    "delimiter": ";",
+                    "rowSeparator": "\\n",
+                    "encoding": "UTF-8"
+                },
+                "row_separator": "\"\\n\"",
+                "field_separator": "\";\"",
+                "append": "false",
+                "include_header": "true",
+                "compress": "false",
+                "advanced_separator": "false",
+                "csv_option": "false",
+                "create_dir": "true",
+                "split": "false",
+                "flush_on_row": "false",
+                "row_mode": "false",
+                "delete_empty_file": "false",
+                "file_exist_exception": "false",
+                "encoding": "\"UTF-8\"",
+                "encoding_type": "UTF-8",
+                "escape_char": "\"\\\\\"",
+                "text_enclosure": "\"\\\"\"",
+                "thousands_separator": "\",\"",
+                "decimal_separator": "\".\"",
+                "apt_properties": {},
+                "metadata": {}
+            },
+            "transformationDetails": {
+                "hasTransformations": false,
+                "transformationType": "none",
+                "complexityScore": 0.0,
+                "transformationCount": 0
+            },
+            "schemaRef": "s_simple",
+            "provenance": {
+                "source": "manual",
+                "location": "none",
+                "lineStart": "0",
+                "lineEnd": "0",
+                "filePath": "none"
+            }
+        }
+    ],
+    "links": [
+        {
+            "id": "l1",
+            "from": {
+                "nodeId": "n1",
+                "port": "out"
+            },
+            "to": {
+                "nodeId": "n2",
+                "port": "in"
+            },
+            "schemaRef": "s_simple"
+        },
+        {
+            "id": "l2",
+            "from": {
+                "nodeId": "n2",
+                "port": "out"
+            },
+            "to": {
+                "nodeId": "n3",
+                "port": "in"
+            },
+            "schemaRef": "s_simple"
+        }
+    ],
+    "schemas": {
+        "s_simple": [
+            {
+                "name": "ID",
+                "type": "integer",
+                "nullable": true,
+                "key": true,
+                "length": 10
+            },
+            {
+                "name": "Name",
+                "type": "string",
+                "nullable": true,
+                "length": 100
+            },
+            {
+                "name": "Date",
+                "type": "date",
+                "nullable": true,
+                "pattern": "yyyy-MM-dd"
+            }
+        ]
+    },
+    "transformationTracking": {
+        "totalTransformations": 1,
+        "transformationTypes": {
+            "map": 1
+        },
+        "complexityDistribution": {
+            "simple": 1,
+            "aggregations": 0,
+            "complex": 0
+        }
+    }
+}

@@ -21,6 +21,12 @@ from datetime import datetime
 import uuid
 import os
 
+# Database connection for type mappings
+from sqlalchemy import create_engine, text
+
+# Sync DB URL for script execution (converted from async)
+SYNC_DB_URL = "postgresql://postgres:Edgematics2025@axoma-dev-postgres.cd4keaaye6mk.eu-west-1.rds.amazonaws.com:5432/axoma-etl-migration-tool"
+
 class IRNodeType(Enum):
     """IR Node Types for Migration"""
     SOURCE = "source"
@@ -159,6 +165,28 @@ class EnhancedASGToIRConverter:
             'expressions': 0,
             'constants': 0
         }
+        
+        # 🔧 NEW: DB-based type mappings cache
+        self.db_type_mappings = {}  # component -> (ir_type, ir_subtype)
+        self._load_type_mappings_from_db()
+    
+    def _load_type_mappings_from_db(self):
+        """Load component → (ir_type, ir_subtype) mappings from database."""
+        try:
+            engine = create_engine(SYNC_DB_URL)
+            with engine.connect() as conn:
+                result = conn.execute(text("""
+                    SELECT DISTINCT component, ir_type, ir_subtype
+                    FROM ir_property_mappings
+                    WHERE ir_type IS NOT NULL AND ir_subtype IS NOT NULL
+                """))
+                for row in result:
+                    component = row[0]
+                    if component not in self.db_type_mappings:
+                        self.db_type_mappings[component] = (row[1], row[2])
+            print(f"✅ Loaded {len(self.db_type_mappings)} type mappings from DB")
+        except Exception as e:
+            print(f"⚠️ Failed to load type mappings from DB: {e}")
         
     def load_asg(self, asg_file_path: str) -> Dict[str, Any]:
         """Load ASG data from file with improved error handling"""
@@ -417,7 +445,50 @@ class EnhancedASGToIRConverter:
         return ir_column
     
     def _map_stage_type_to_ir(self, enhanced_type: str, asg_node: Dict[str, Any]) -> tuple:
-        """Map DataStage stage types to IR node types."""
+        """Map DataStage stage types to IR node types using DB mappings."""
+        
+        # Get the actual stage_type from properties (e.g., PxSequentialFile)
+        properties = asg_node.get('properties', {})
+        stage_type = properties.get('stage_type', enhanced_type)
+        
+        # First, check DB mappings for the actual stage_type
+        if stage_type in self.db_type_mappings:
+            ir_type, ir_subtype = self.db_type_mappings[stage_type]
+            
+            # For components that can be Source OR Sink (like PxSequentialFile),
+            # determine direction based on pins or node name
+            if stage_type == 'PxSequentialFile':
+                ir_type = self._determine_source_or_sink(asg_node)
+            
+            return ir_type, ir_subtype
+        
+        # Check DB mappings for enhanced_type as fallback
+        if enhanced_type in self.db_type_mappings:
+            return self.db_type_mappings[enhanced_type]
+        
+        # Final fallback to legacy heuristics
+        return self._legacy_type_mapping(enhanced_type, asg_node)
+    
+    def _determine_source_or_sink(self, asg_node: Dict[str, Any]) -> str:
+        """Determine if a node is Source or Sink based on pins direction."""
+        pins = asg_node.get('pins', [])
+        
+        has_input = any(p.get('direction') == 'input' for p in pins)
+        has_output = any(p.get('direction') == 'output' for p in pins)
+        
+        if has_output and not has_input:
+            return "Source"
+        elif has_input and not has_output:
+            return "Sink"
+        
+        # Fallback to name heuristics
+        node_name = asg_node.get('name', '').upper()
+        if any(kw in node_name for kw in ['TGT', 'OUT', 'TARGET', 'SINK']):
+            return "Sink"
+        return "Source"
+    
+    def _legacy_type_mapping(self, enhanced_type: str, asg_node: Dict[str, Any]) -> tuple:
+        """Legacy fallback for type mapping when DB mapping not found."""
         
         # Database connector patterns
         if any(db in enhanced_type.upper() for db in ['DB2', 'ORACLE', 'SQL', 'CONNECTOR']):
@@ -427,9 +498,9 @@ class EnhancedASGToIRConverter:
         elif 'Sequential' in enhanced_type or 'File' in enhanced_type:
             node_name = asg_node.get('name', '').upper()
             if any(keyword in node_name for keyword in ['TGT', 'OUT', 'TARGET', 'SINK']):
-                return "Sink", "SequentialFile"
+                return "Sink", "File"
             else:
-                return "Source", "SequentialFile"
+                return "Source", "File"
         
         # Transformation stages
         elif enhanced_type in ['CTransformerStage', 'PxJoin', 'PxLookup', 'PxChangeCapture']:
@@ -848,7 +919,7 @@ def main():
     
     converter = EnhancedASGToIRConverter()
     
-    asg_file = 'synthetic_asg_fixed.json'
+    asg_file = 'simple_user_job.json'
     if not os.path.exists(asg_file):
         print(f"❌ ASG file not found: {asg_file}")
         return
@@ -858,7 +929,7 @@ def main():
         
         if ir_data:
             if converter.validate_ir():
-                converter.save_ir('synthetic_output_ir_enhanced_transformations.json')
+                converter.save_ir('simple_user_job_ir.json')
                 converter.print_summary()
             else:
                 print("❌ Enhanced IR validation failed - not saving invalid output")

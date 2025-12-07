@@ -28,7 +28,7 @@ from db import get_db
 
 async def main() -> None:
     svc = TranslationService(db=get_db())
-    with open("new_ir1.json", "r", encoding="utf-8") as f:
+    with open("simple_user_job_ir.json", "r", encoding="utf-8") as f:
         ir = json.load(f)
         
         # IR structure should be: { "irVersion": "...", "job": {...}, "nodes": [...], "links": [...] }

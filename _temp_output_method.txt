@@ -1,0 +1,95 @@
+    def _generate_tfileoutputdelimited_from_template(
+        self, 
+        node: Dict[str, Any], 
+        schema_columns: List[Dict[str, Any]], 
+        template_content: str
+    ) -> str:
+        """Generate tFileOutputDelimited XML from Jinja2 template.
+        
+        Args:
+            node: The Talend node dictionary with properties
+            schema_columns: List of schema columns from IR
+            template_content: Jinja2 template string
+            
+        Returns:
+            Rendered XML string for the component.
+        """
+        # Prepare template context with all needed variables
+        props = node.get("props", {})
+        config = props.get("configuration", {})
+        
+        # Convert IR schema columns to template-friendly format with Talend types
+        processed_columns = []
+        for col in schema_columns:
+            processed_columns.append({
+                "name": col.get("name", "unknown"),
+                "talend_type": self._map_ir_type_to_talend(col.get("type", "string")),
+                "nullable": "true" if col.get("nullable", True) else "false",
+                "key": col.get("key", "false"),
+                "length": str(col.get("length", -1)),
+                "precision": str(col.get("precision", -1)),
+                "pattern": col.get("pattern", ""),
+                "sourceType": col.get("sourceType", ""),
+                "originalLength": str(col.get("originalLength", -1)),
+            })
+        
+        # If no schema columns provided, add a default column to ensure valid XML
+        if not processed_columns:
+            print("DEBUG: No schema columns found for tFileOutputDelimited, adding default column")
+            processed_columns.append({
+                "name": "column1",
+                "talend_type": "id_String",
+                "nullable": "true",
+                "key": "false",
+                "length": "-1",
+                "precision": "-1",
+                "pattern": "",
+                "sourceType": "",
+                "originalLength": "-1",
+            })
+        
+        # Extract file path from props - handle different IR structures
+        file_path = config.get("file") or props.get("filepath") or ""
+        if file_path and not file_path.startswith('"'):
+            file_path = f'"{file_path}"'
+        
+        # Extract delimiter
+        delimiter = config.get("delimiter") or props.get("delimiter") or ","
+        if not delimiter.startswith('"'):
+            delimiter = f'"{delimiter}"'
+        
+        context = {
+            # Position
+            "pos_x": node.get("posX", 100),
+            "pos_y": node.get("posY", 100),
+            
+            # Identification
+            "unique_name": node.get("uniqueName", "tFileOutputDelimited_1"),
+            
+            # File settings
+            "file_path": file_path,
+            "field_separator": delimiter,
+            "row_separator": props.get("row_separator", '"\\n"'),
+            "append": props.get("append", "false"),
+            "include_header": props.get("include_header", "false"),
+            "compress": props.get("compress", "false"),
+            
+            # Encoding
+            "encoding": props.get("encoding", '"ISO-8859-15"'),
+            "encoding_type": props.get("encoding_type", "ISO-8859-15"),
+            
+            # Boolean options
+            "csv_option": props.get("csv_option", "false"),
+            "create_dir": props.get("create_dir", "true"),
+            "split": props.get("split", "false"),
+            "delete_empty_file": props.get("delete_empty_file", "false"),
+            "file_exist_exception": props.get("file_exist_exception", "false"),
+            "flush_on_row": props.get("flush_on_row", "false"),
+            "advanced_separator": props.get("advanced_separator", "false"),
+            
+            # Schema
+            "schema_columns": processed_columns,
+        }
+        
+        template = jinja2.Template(template_content)
+        return template.render(context)

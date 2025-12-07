@@ -110,7 +110,7 @@ class TranslationService:
         #     translated_logic=translated_logic
         # )
     
-    async def fill_jinja_templates(self, ir, mappings, output_base_dir: str = "verynew_generated_jobs_new", project_name: str = "VeryNewMigratedProjectNew"):
+    async def fill_jinja_templates(self, ir, mappings, output_base_dir: str = "simple_user_job", project_name: str = "simple_user_job"):
         """Fill Jinja templates for Talend and create zip package (reused from ETL_Weaver structure)."""
         print("Filling templates and generating Talend artifacts")
         from jinja2 import Environment, FileSystemLoader
@@ -229,6 +229,7 @@ class TranslationService:
         
         # Fetch tFileInputDelimited template from DB (once, outside loop)
         tfileinputdelimited_template = await self._get_component_template("tFileInputDelimited")
+        tfileoutputdelimited_template = await self._get_component_template("tFileOutputDelimited")
 
         # Convert nodes to have raw_xml attribute for template
         nodes_with_xml = []
@@ -236,7 +237,7 @@ class TranslationService:
             if not node:
                 continue
             node_copy = node.copy()
-            raw_xml = self._node_to_xml(node, tfileinputdelimited_template)
+            raw_xml = self._node_to_xml(node, tfileinputdelimited_template, tfileoutputdelimited_template)
             if not raw_xml or len(raw_xml.strip()) == 0:
                 print(f"Warning: Node {node.get('uniqueName', 'unknown')} generated empty XML, skipping")
                 continue
@@ -512,9 +513,14 @@ class TranslationService:
             ir_subtype = node.get("subtype", "")
             node_name = node.get("name", f"node_{idx}")
             
-            talend_component = mappings.get(
-                (ir_type, ir_subtype), "tUnknown"
-            )
+            # Determine component type: prefer customType, then mapping, then tUnknown
+            custom_type = node.get("props", {}).get("customType")
+            if custom_type:
+                talend_component = custom_type
+            else:
+                talend_component = mappings.get(
+                    (ir_type, ir_subtype), "tUnknown"
+                )
             
             print(f"  Node {idx}: {node_name} ({ir_type}/{ir_subtype}) → {talend_component}")
             
@@ -736,6 +742,48 @@ class TranslationService:
         ]
         
         # Map common properties based on component type
+        if component_type == "tFileOutputDelimited":
+            # Get configuration from props if available
+            config = properties.get("configuration", {})
+            
+            # File path
+            file_path = config.get("file") or properties.get("filepath") or ""
+            if file_path and not file_path.startswith('"'):
+                file_path = f'"{file_path}"'
+            params.append({"field": "FILE", "name": "FILENAME", "value": file_path})
+            
+            # Delimiter
+            delimiter = config.get("delimiter") or properties.get("delimiter") or ","
+            if not delimiter.startswith('"'):
+                delimiter = f'"{delimiter}"'
+            params.append({"field": "TEXT", "name": "FIELDSEPARATOR", "value": delimiter})
+            
+            # Row separator
+            row_sep = properties.get("row_separator", '"\\n"')
+            params.append({"field": "TEXT", "name": "ROWSEPARATOR", "value": row_sep})
+            
+            # Boolean options
+            params.append({"field": "CHECK", "name": "APPEND", "value": properties.get("append", "false")})
+            params.append({"field": "CHECK", "name": "INCLUDEHEADER", "value": properties.get("include_header", "false")})
+            params.append({"field": "CHECK", "name": "COMPRESS", "value": properties.get("compress", "false")})
+            params.append({"field": "CHECK", "name": "ADVANCED_SEPARATOR", "value": properties.get("advanced_separator", "false")})
+            params.append({"field": "CHECK", "name": "CSV_OPTION", "value": properties.get("csv_option", "false")})
+            params.append({"field": "CHECK", "name": "CREATE", "value": properties.get("create_dir", "true")})
+            params.append({"field": "CHECK", "name": "SPLIT", "value": properties.get("split", "false")})
+            params.append({"field": "CHECK", "name": "FLUSHONROW", "value": properties.get("flush_on_row", "false")})
+            params.append({"field": "CHECK", "name": "ROW_MODE", "value": properties.get("row_mode", "false")})
+            params.append({"field": "CHECK", "name": "DELETE_EMPTYFILE", "value": properties.get("delete_empty_file", "false")})
+            params.append({"field": "CHECK", "name": "FILE_EXIST_EXCEPTION", "value": properties.get("file_exist_exception", "false")})
+            
+            # Additional text fields
+            params.append({"field": "TEXT", "name": "ESCAPE_CHAR", "value": properties.get("escape_char", '"\\\\\"'), "show": False})
+            params.append({"field": "TEXT", "name": "TEXT_ENCLOSURE", "value": properties.get("text_enclosure", '"\\"\"'), "show": False})
+            params.append({"field": "TEXT", "name": "THOUSANDS_SEPARATOR", "value": properties.get("thousands_separator", '","'), "show": False})
+            params.append({"field": "TEXT", "name": "DECIMAL_SEPARATOR", "value": properties.get("decimal_separator", '"."'), "show": False})
+            params.append({"field": "ENCODING_TYPE", "name": "ENCODING", "value": properties.get("encoding", '"ISO-8859-15"')})
+            params.append({"field": "TECHNICAL", "name": "ENCODING:ENCODING_TYPE", "value": properties.get("encoding_type", "ISO-8859-15")})
+            params.append({"field": "TEXT", "name": "CONNECTION_FORMAT", "value": "row"})
+
         if component_type == "tFileInputDelimited":
             # Get configuration from props if available
             config = properties.get("configuration", {})
@@ -832,14 +880,23 @@ class TranslationService:
         
         return params
     
-    def _node_to_xml(self, node: Dict[str, Any], tfileinputdelimited_template: Optional[str] = None) -> str:
+    def _node_to_xml(self, node: Dict[str, Any], tfileinputdelimited_template: Optional[str] = None, tfileoutputdelimited_template: Optional[str] = None) -> str:
         """Convert a Talend node to XML element with full support for metadata and nodeData.
         
         For tFileInputDelimited, uses template-based generation when template is available.
         Falls back to hardcoded generation for other components or when template is not found.
         """
-        # Check if this is a tFileInputDelimited with a template
-        if node.get("componentName") == "tFileInputDelimited" and tfileinputdelimited_template:
+                # Check if this is a tFileOutputDelimited with a template
+        if node.get("componentName") == "tFileOutputDelimited" and tfileoutputdelimited_template:
+            try:
+                schema_columns = node.get("schema_columns", [])
+                return self._generate_tfileoutputdelimited_from_template(
+                    node, schema_columns, tfileoutputdelimited_template
+                )
+            except Exception as e:
+                print(f"DEBUG: Template-based generation failed for tFileOutputDelimited: {e}, falling back to hardcoded")
+        
+        # Check if this is a tFileInputDelimited with a template\s+if node\.get\"componentName"\ == "tFileInputDelimited" and tfileinputdelimited_template:
             try:
                 schema_columns = node.get("schema_columns", [])
                 return self._generate_tfileinputdelimited_from_template(

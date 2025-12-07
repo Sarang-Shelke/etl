@@ -1,0 +1,36 @@
+<node componentName="tFileOutputDelimited" componentVersion="0.101" offsetLabelX="0" offsetLabelY="0" posX="{{ pos_x }}" posY="{{ pos_y }}">
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="{{ unique_name }}" show="false"/>
+    <elementParameter field="CHECK" name="USESTREAM" value="{{ use_stream | default('false') }}"/>
+    <elementParameter field="TEXT" name="STREAMNAME" value="{{ stream_name | default('outputStream') }}" show="false"/>
+    <elementParameter field="FILE" name="FILENAME" value="{{ file_path | default('&quot;&quot;') }}"/>
+    <elementParameter field="TEXT" name="ROWSEPARATOR" value="{{ row_separator | default('&quot;\\n&quot;') }}"/>
+    <elementParameter field="CHECK" name="OS_LINE_SEPARATOR_AS_ROW_SEPARATOR" value="{{ os_line_separator | default('true') }}" show="false"/>
+    <elementParameter field="OPENED_LIST" name="CSVROWSEPARATOR" value="{{ csv_row_separator | default('CRLF') }}" show="false"/>
+    <elementParameter field="TEXT" name="FIELDSEPARATOR" value="{{ field_separator | default('&quot;,&quot;') }}"/>
+    <elementParameter field="CHECK" name="APPEND" value="{{ append | default('false') }}"/>
+    <elementParameter field="CHECK" name="INCLUDEHEADER" value="{{ include_header | default('false') }}"/>
+    <elementParameter field="CHECK" name="COMPRESS" value="{{ compress | default('false') }}"/>
+    <elementParameter field="CHECK" name="ADVANCED_SEPARATOR" value="{{ advanced_separator | default('false') }}"/>
+    <elementParameter field="TEXT" name="THOUSANDS_SEPARATOR" value="{{ thousands_separator | default('&quot;,&quot;') }}" show="false"/>
+    <elementParameter field="TEXT" name="DECIMAL_SEPARATOR" value="{{ decimal_separator | default('&quot;.&quot;') }}" show="false"/>
+    <elementParameter field="CHECK" name="CSV_OPTION" value="{{ csv_option | default('false') }}"/>
+    <elementParameter field="TEXT" name="ESCAPE_CHAR" value="{{ escape_char | default('&quot;\\\\&quot;') }}" show="false"/>
+    <elementParameter field="TEXT" name="TEXT_ENCLOSURE" value="{{ text_enclosure | default('&quot;&quot;&quot;') }}" show="false"/>
+    <elementParameter field="CHECK" name="CREATE" value="{{ create_dir | default('true') }}"/>
+    <elementParameter field="CHECK" name="SPLIT" value="{{ split | default('false') }}"/>
+    <elementParameter field="TEXT" name="SPLIT_EVERY" value="{{ split_every | default('1000') }}" show="false"/>
+    <elementParameter field="CHECK" name="FLUSHONROW" value="{{ flush_on_row | default('false') }}"/>
+    <elementParameter field="TEXT" name="FLUSHONROW_NUM" value="{{ flush_on_row_num | default('1') }}" show="false"/>
+    <elementParameter field="CHECK" name="ROW_MODE" value="{{ row_mode | default('false') }}"/>
+    <elementParameter field="ENCODING_TYPE" name="ENCODING" value="{{ encoding | default('&quot;ISO-8859-15&quot;') }}"/>
+    <elementParameter field="TECHNICAL" name="ENCODING:ENCODING_TYPE" value="{{ encoding_type | default('ISO-8859-15') }}"/>
+    <elementParameter field="CHECK" name="DELETE_EMPTYFILE" value="{{ delete_empty_file | default('false') }}"/>
+    <elementParameter field="CHECK" name="FILE_EXIST_EXCEPTION" value="{{ file_exist_exception | default('false') }}"/>
+    <elementParameter field="TEXT" name="SCHEMA_OPT_NUM" value="90" show="false"/>
+    <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    <metadata connector="FLOW" name="{{ unique_name }}">
+{% for col in schema_columns %}
+      <column comment="" key="{{ col.key | default('false') }}" length="{{ col.length | default('-1') }}" name="{{ col.name }}" nullable="{{ col.nullable | default('true') }}" pattern="{{ col.pattern | default('') }}" precision="{{ col.precision | default('-1') }}" sourceType="{{ col.sourceType | default('') }}" type="{{ col.talend_type | default('id_String') }}" originalLength="{{ col.originalLength | default('-1') }}" usefulColumn="true"/>
+{% endfor %}
+    </metadata>
+</node>
