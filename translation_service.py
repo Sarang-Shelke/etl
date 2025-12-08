@@ -14,6 +14,7 @@ from translate import get_mappings
 from uuid import UUID
 from datetime import datetime
 from jinja2 import Template
+import base64
 
 # --- Constants for Talend Versions (reused from ETL_Weaver) ---
 TALEND_PRODUCT_VERSION = "8.0.1.20250218_0945-patch"
@@ -26,6 +27,15 @@ MIGRATION_BREAKS_VERSION = "7.1.0"
 MIGRATION_VERSION = "7.1.1"
 AUTHOR_LOGIN = "etl.migrator@local"
 USER_ID = f"_{uuid.uuid4().hex}"  # Single user ID for consistency
+
+def generate_talend_id():
+    """Generate a Talend-style Base64 ID (23 chars starting with _)"""
+    uid = uuid.uuid4()
+    b64 = base64.b64encode(uid.bytes).decode('ascii')
+    # Replace + with p, / with s, = removed. NO HYPHENS allowed in XMI IDs usually.
+    # Map strict alphanumeric to ensure safety.
+    safe_b64 = b64.rstrip("=").replace("+", "p").replace("/", "s").replace("-", "m")
+    return "_" + safe_b64
 
 class TranslationService:
     def __init__(self, db: AsyncSession):
@@ -313,6 +323,11 @@ class TranslationService:
         if not rendered_content.strip().startswith('<?xml'):
             raise ValueError("Generated item file does not start with XML declaration")
         
+        # DEBUG: Save raw content for analysis
+        with open("debug_generated_item.xml", "w", encoding="utf-8") as f:
+            f.write(rendered_content)
+        print("DEBUG: Saved raw XML to debug_generated_item.xml")
+        
         # Validate XML structure
         try:
             import xml.etree.ElementTree as ET
@@ -325,10 +340,15 @@ class TranslationService:
                 print(f"WARNING: Root element is {root.tag}, expected ProcessType")
         except ET.ParseError as e:
             print(f"ERROR: Generated XML is invalid: {e}")
-            print(f"DEBUG: XML content preview (first 1000 chars):\n{rendered_content[:1000]}")
-            # Try to find the line with the error
-            error_line = getattr(e, 'lineno', 'unknown')
-            print(f"DEBUG: XML parse error at line {error_line}")
+            # Show lines around the error
+            error_line = getattr(e, 'position', (None, None))[0] or getattr(e, 'lineno', 110)
+            lines = rendered_content.split('\n')
+            start = max(0, error_line - 3)
+            end = min(len(lines), error_line + 3)
+            print(f"DEBUG: Lines {start+1}-{end} around error line {error_line}:")
+            for i in range(start, end):
+                prefix = ">>>" if i == error_line - 1 else "   "
+                print(f"{prefix} {i+1}: {lines[i][:100]}")
             raise ValueError(f"Generated item file has invalid XML structure: {e}")
         
         print(f"Generated item content length: {len(rendered_content)} characters")
@@ -341,21 +361,35 @@ class TranslationService:
         print(f"Filling properties template for job: {job_name}")
         
         # Generate unique IDs for the template variables
-        uuid1 = f"_{uuid.uuid4().hex}"  # Property xmi:id
-        uuid2 = f"_{uuid.uuid4().hex}"  # Property id
-        uuid3 = f"_{uuid.uuid4().hex}"  # ProcessItem xmi:id and Property item
-        uuid4 = f"_{uuid.uuid4().hex}"  # created_product_fullname xmi:id
-        uuid5 = f"_{uuid.uuid4().hex}"  # created_product_version xmi:id
-        uuid6 = f"_{uuid.uuid4().hex}"  # created_date xmi:id
-        uuid7 = f"_{uuid.uuid4().hex}"  # modified_product_fullname xmi:id
-        uuid8 = f"_{uuid.uuid4().hex}"  # modified_product_version xmi:id
-        uuid9 = f"_{uuid.uuid4().hex}"  # modified_date xmi:id
-        # uuid10 = f"_{uuid.uuid4().hex}" # item_key xmi:id
-        uuid11 = f"_{uuid.uuid4().hex}" # ItemState xmi:id
+
+
+        # Generate unique IDs for the template variables
+        # Use a common base for additionalProperties UUIDs (Talend Studio format)
+        # Using generate_talend_id for base properties logic
+        
+        uuid1 = generate_talend_id()  # Property xmi:id
+        uuid2 = generate_talend_id()  # Property id
+        uuid3 = generate_talend_id()  # ProcessItem xmi:id and Property item
+        
+        # All additionalProperties share a common base UUID with incrementing suffix?
+        # Actually, generated IDs are fine if they are unique and correct format.
+        # Let's generate them individually to be safe and simple
+        uuid4 = generate_talend_id()  # created_product_fullname xmi:id
+        uuid5 = generate_talend_id()  # created_product_version xmi:id
+        uuid6 = generate_talend_id()  # created_date xmi:id
+        uuid7 = generate_talend_id()  # modified_product_fullname xmi:id
+        uuid8 = generate_talend_id()  # modified_product_version xmi:id
+        uuid9 = generate_talend_id()  # modified_date xmi:id
+        uuid10 = generate_talend_id() # item_key xmi:id (if used)
+        uuid11 = generate_talend_id() # ItemState xmi:id
 
         if file_basename is None:
             file_basename = f"{job_name}_{job_version}"
         timestamp = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "+0000"
+        
+        # Generate item_key using SHA-256 format (64 chars) to match Talend requirements
+        import hashlib
+        item_key = hashlib.sha256(uuid.uuid4().bytes).hexdigest()
         
         render_context = {
             # UUID variables for template
@@ -368,18 +402,18 @@ class TranslationService:
             "uuid7": uuid7,
             "uuid8": uuid8,
             "uuid9": uuid9,
-            # "uuid10": uuid10,
+            "uuid10": uuid10,
             "uuid11": uuid11,
             
             # Content variables
             "label": job_name,
             "display_name": job_name,
-            "version": "",  # Empty version to avoid "0.1" in display name
+            "version": "0.1",  # Fixed: Set version to 0.1 (required by Talend)
             "user_id": USER_ID,  # Use the consistent user ID
             "product_version": TALEND_PRODUCT_VERSION,
             "created_date": timestamp,
             "modified_date": timestamp,
-            # "item_key": "",
+            "item_key": item_key,
             "process_href": f"{file_basename}.item#/",  # file_basename is just job_name without version
         }
 
@@ -513,14 +547,30 @@ class TranslationService:
             ir_subtype = node.get("subtype", "")
             node_name = node.get("name", f"node_{idx}")
             
-            # Determine component type: prefer customType, then mapping, then tUnknown
-            custom_type = node.get("props", {}).get("customType")
-            if custom_type:
-                talend_component = custom_type
-            else:
-                talend_component = mappings.get(
-                    (ir_type, ir_subtype), "tUnknown"
-                )
+            # Determine component type: prefer DB mapping, then customType, then tUnknown
+            talend_component = mappings.get((ir_type, ir_subtype))
+            if not talend_component:
+                # Fallback to customType from props if no DB mapping
+                talend_component = node.get("props", {}).get("customType", "tUnknown")
+            
+            # Hardcoded Talend component mapping (DataStage → Talend)
+            # The DB stores DataStage component names, but we need Talend components
+            talend_component_overrides = {
+                # Source components
+                ("Source", "File"): "tFileInputDelimited",
+                ("Source", "Database"): "tDBInput",
+                # Transform components
+                ("Transform", "Map"): "tMap",
+                ("Transform", "Filter"): "tFilterRow",
+                ("Transform", "Aggregate"): "tAggregateRow",
+                # Sink components
+                ("Sink", "File"): "tFileOutputDelimited",
+                ("Sink", "Database"): "tDBOutput",
+            }
+            
+            # Override with correct Talend component name if available
+            if (ir_type, ir_subtype) in talend_component_overrides:
+                talend_component = talend_component_overrides[(ir_type, ir_subtype)]
             
             print(f"  Node {idx}: {node_name} ({ir_type}/{ir_subtype}) → {talend_component}")
             
@@ -896,7 +946,8 @@ class TranslationService:
             except Exception as e:
                 print(f"DEBUG: Template-based generation failed for tFileOutputDelimited: {e}, falling back to hardcoded")
         
-        # Check if this is a tFileInputDelimited with a template\s+if node\.get\"componentName"\ == "tFileInputDelimited" and tfileinputdelimited_template:
+        # Check if this is a tFileInputDelimited with a template
+        if node.get("componentName") == "tFileInputDelimited" and tfileinputdelimited_template:
             try:
                 schema_columns = node.get("schema_columns", [])
                 return self._generate_tfileinputdelimited_from_template(
@@ -1101,7 +1152,7 @@ class TranslationService:
         xml_lines.append("  </connection>")
         return "\n".join(xml_lines)
     async def _get_component_template(self, component_type: str) -> Optional[str]:
-        """Fetch component template from target_component_templates table.
+        """Fetch component template from componentTemplates directory or database.
         
         Args:
             component_type: The Talend component type (e.g., 'tFileInputDelimited')
@@ -1109,8 +1160,19 @@ class TranslationService:
         Returns:
             Template content string if found, None otherwise.
         """
+        # First, try to load from componentTemplates directory
+        template_path = os.path.join("componentTemplates", f"{component_type}.xmlt")
+        if os.path.exists(template_path):
+            try:
+                with open(template_path, "r", encoding="utf-8") as f:
+                    template_content = f.read()
+                print(f"DEBUG: Loaded template for {component_type} from {template_path}")
+                return template_content
+            except Exception as e:
+                print(f"DEBUG: Error loading template from file {template_path}: {e}")
+        
+        # Fallback to database
         try:
-            # Import the model here to avoid circular imports
             from schemas.models import TargetComponentTemplate
             
             result = await self.db.execute(
@@ -1124,7 +1186,7 @@ class TranslationService:
                 print(f"DEBUG: Found template for {component_type} in database")
                 return template_record.template_content
             else:
-                print(f"DEBUG: No template found for {component_type} in database, using fallback")
+                print(f"DEBUG: No template found for {component_type} in database or files")
                 return None
         except Exception as e:
             print(f"DEBUG: Error fetching template for {component_type}: {e}")
@@ -1189,10 +1251,16 @@ class TranslationService:
         delimiter = config.get("delimiter") or props.get("delimiter") or ","
         if not delimiter.startswith('"'):
             delimiter = f'"{delimiter}"'
+        # Convert delimiter to XML-safe format
+        delimiter = delimiter.replace('"', '&quot;')
         
         # Determine header lines from firstLineColumnNames
         first_line_cols = config.get("firstLineColumnNames", "false")
         header_lines = "1" if first_line_cols.lower() == "true" else "0"
+        
+        # XML-safe quote helper
+        def xml_quote(val):
+            return val.replace('"', '&quot;') if isinstance(val, str) else val
         
         context = {
             # Position
@@ -1202,17 +1270,17 @@ class TranslationService:
             # Identification
             "unique_name": node.get("uniqueName", "tFileInputDelimited_1"),
             
-            # File settings
-            "file_path": file_path,
+            # File settings - use XML-safe &quot; for quote values
+            "file_path": xml_quote(file_path) if file_path else '&quot;&quot;',
             "field_separator": delimiter,
-            "row_separator": props.get("row_separator", '"\\n"'),
+            "row_separator": '&quot;\\n&quot;',
             "header_lines": header_lines,
             "footer_lines": props.get("footer_lines", "0"),
             "row_limit": props.get("row_limit", ""),
             
-            # Encoding
-            "encoding": props.get("encoding", '"ISO-8859-15"'),
-            "encoding_type": props.get("encoding_type", "ISO-8859-15"),
+            # Encoding - use XML-safe &quot;
+            "encoding": '&quot;ISO-8859-15&quot;',
+            "encoding_type": "ISO-8859-15",
             
             # Boolean options
             "csv_option": props.get("csv_option", "false"),
@@ -1223,16 +1291,125 @@ class TranslationService:
             "advanced_separator": props.get("advanced_separator", "false"),
             "check_fields_num": props.get("check_fields_num", "false"),
             "check_date": props.get("check_date", "false"),
-            "split_record": props.get("split_record", "false"),
-            "enable_decode": props.get("enable_decode", "false"),
-            "use_header_as_is": props.get("use_header_as_is", "false"),
+        }
+        
+        # Render the template
+        template = Template(template_content)
+        rendered_xml = template.render(**context)
+        
+        # Add proper indentation for embedding in the larger XML
+        lines = rendered_xml.split('\n')
+        indented_lines = ['  ' + line if line.strip() else line for line in lines]
+        
+        return '\n'.join(indented_lines)
+
+    def _generate_tfileoutputdelimited_from_template(
+        self, 
+        node: Dict[str, Any], 
+        schema_columns: List[Dict[str, Any]], 
+        template_content: str
+    ) -> str:
+        """Generate tFileOutputDelimited XML from Jinja2 template.
+        
+        Args:
+            node: The Talend node dictionary with properties
+            schema_columns: List of schema columns from IR
+            template_content: Jinja2 template string
             
-            # Additional settings
-            "escape_char": props.get("escape_char", '"\\\\\"'),
-            "text_enclosure": props.get("text_enclosure", '"\\"\\"'),
-            "thousands_separator": props.get("thousands_separator", '","'),
-            "decimal_separator": props.get("decimal_separator", '"."'),
-            "temp_directory": props.get("temp_directory", ""),
+        Returns:
+            Rendered XML string for the component.
+        """
+        # Prepare template context with all needed variables
+        props = node.get("props", {})
+        config = props.get("configuration", {})
+        
+        # Convert IR schema columns to template-friendly format with Talend types
+        processed_columns = []
+        for col in schema_columns:
+            processed_columns.append({
+                "name": col.get("name", "unknown"),
+                "talend_type": self._map_ir_type_to_talend(col.get("type", "string")),
+                "nullable": "true" if col.get("nullable", True) else "false",
+                "key": col.get("key", "false"),
+                "length": str(col.get("length", -1)),
+                "precision": str(col.get("precision", -1)),
+                "pattern": col.get("pattern", ""),
+                "sourceType": col.get("sourceType", ""),
+                "originalLength": str(col.get("originalLength", -1)),
+            })
+        
+        # If no schema columns provided, add a default column to ensure valid XML
+        if not processed_columns:
+            print("DEBUG: No schema columns found for tFileOutputDelimited, adding default column")
+            processed_columns.append({
+                "name": "column1",
+                "talend_type": "id_String",
+                "nullable": "true",
+                "key": "false",
+                "length": "-1",
+                "precision": "-1",
+                "pattern": "",
+                "sourceType": "",
+                "originalLength": "-1",
+            })
+        
+        # Extract file path from props - handle different IR structures
+        file_path = config.get("file") or props.get("filepath") or ""
+        if file_path and not file_path.startswith('"'):
+            file_path = f'"{file_path}"'
+        
+        # Extract delimiter
+        delimiter = config.get("delimiter") or props.get("delimiter") or ","
+        if not delimiter.startswith('"'):
+            delimiter = f'"{delimiter}"'
+        
+        # XML-safe quote helper
+        def xml_quote(val):
+            return val.replace('"', '&quot;') if isinstance(val, str) else val
+        
+        # Convert delimiter to XML-safe format
+        delimiter = delimiter.replace('"', '&quot;')
+        
+        context = {
+            # Position
+            "pos_x": node.get("posX", 100),
+            "pos_y": node.get("posY", 100),
+            
+            # Component identification
+            "unique_name": node.get("uniqueName", "tFileOutputDelimited_1"),
+            
+            # File settings - use XML-safe &quot;
+            "file_path": xml_quote(file_path) if file_path else '&quot;&quot;',
+            "field_separator": delimiter,
+            "row_separator": '&quot;\\n&quot;',
+            
+            # Boolean options
+            "use_stream": props.get("use_stream", "false"),
+            "stream_name": props.get("stream_name", "outputStream"),
+            "append": props.get("append", "false"),
+            "include_header": props.get("include_header", "false"),
+            "compress": props.get("compress", "false"),
+            "csv_option": props.get("csv_option", "false"),
+            "advanced_separator": props.get("advanced_separator", "false"),
+            "create_dir": props.get("create_dir", "true"),
+            "split": props.get("split", "false"),
+            "split_every": props.get("split_every", "1000"),
+            "flush_on_row": props.get("flush_on_row", "false"),
+            "flush_on_row_num": props.get("flush_on_row_num", "1"),
+            "row_mode": props.get("row_mode", "false"),
+            "delete_empty_file": props.get("delete_empty_file", "false"),
+            "file_exist_exception": props.get("file_exist_exception", "false"),
+            
+            # Encoding - use XML-safe &quot;
+            "encoding": '&quot;ISO-8859-15&quot;',
+            "encoding_type": "ISO-8859-15",
+            
+            # Additional settings - use XML-safe &quot;
+            "escape_char": '&quot;\\\\&quot;',
+            "text_enclosure": '&quot;&quot;&quot;',
+            "thousands_separator": '&quot;,&quot;',
+            "decimal_separator": '&quot;.&quot;',
+            "os_line_separator": props.get("os_line_separator", "true"),
             "csv_row_separator": props.get("csv_row_separator", "CRLF"),
             
             # Schema columns for dynamic sections
@@ -1251,7 +1428,6 @@ class TranslationService:
 
 
     
-
     async def _get_talend_templates(self) -> Dict[str, Dict[str, Any]]:
         """Get Talend component templates from database with enhanced metadata"""
         templates = {}

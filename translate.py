@@ -14,27 +14,31 @@ def get_node_type_subtype(node):
     return node.get("type", ""), node.get("subtype", "")
 
 async def get_mappings():
-    ir_data = read_ir("new_ir.json")
-    type_pairs = [get_node_type_subtype(n) for n in get_nodes(ir_data)]
+    """Fetch all available (ir_type, ir_subtype) → component mappings from DB."""
     mappings = {}
     async for session in get_db():
-        for ir_type, ir_subtype in type_pairs:
+        # Fetch ALL distinct type mappings from the database
+        query = text("""
+            SELECT DISTINCT ir_type, ir_subtype, component
+            FROM ir_property_mappings
+            WHERE ir_type IS NOT NULL 
+              AND ir_subtype IS NOT NULL 
+              AND component IS NOT NULL
+        """)
 
-            query = text("""
-                SELECT component
-                FROM ir_property_mappings
-                WHERE ir_type = :ir_type AND ir_subtype = :ir_subtype
-                LIMIT 1
-            """)
+        result = await session.execute(query)
+        for row in result:
+            ir_type, ir_subtype, component = row[0], row[1], row[2]
+            # Only store the first component for each (ir_type, ir_subtype) pair
+            if (ir_type, ir_subtype) not in mappings:
+                mappings[(ir_type, ir_subtype)] = component
+        
+        break
+    
+    print(f"✅ Loaded {len(mappings)} component mappings from DB")
+    return mappings
 
-            result = await session.execute(
-                query, {"ir_type": ir_type, "ir_subtype": ir_subtype}
-            )
-            row = result.first()
-            mappings[(ir_type, ir_subtype)] = row[0] if row else None
-            # print(f"{ir_type},{ir_subtype}  →  {row[0]}")
 
-        break 
-    return(mappings)
+if __name__ == "__main__":
+    asyncio.run(get_mappings())
 
-asyncio.run(get_mappings())

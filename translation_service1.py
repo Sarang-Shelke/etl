@@ -693,7 +693,7 @@ class TranslationService1:
             "uuid7": f"_{uuid.uuid4().hex}",
             "uuid8": f"_{uuid.uuid4().hex}",
             "uuid9": f"_{uuid.uuid4().hex}",
-            "uuid10": f"_{uuid.uuid4().hex}",
+
             "uuid11": f"_{uuid.uuid4().hex}",
             "label": job["name"],
             "display_name": job["name"],
@@ -701,7 +701,7 @@ class TranslationService1:
             "product_version": project_ctx["product_version"],
             "created_date": timestamp,
             "modified_date": timestamp,
-            "item_key": uuid.uuid4().hex,
+
             "process_href": f"{base_name}.item#/",
         }
         props_path = os.path.join(process_dir, f"{base_name}.properties")

@@ -1,0 +1,205 @@
+BEGIN HEADER
+   CharacterSet "CP1252"
+   ExportingTool "IBM InfoSphere DataStage Export"
+   ToolVersion "8"
+   ServerName "DS_SERVER"
+   ToolInstanceID "DEV"
+   MDISVersion "1.0"
+   Date "2025-12-08"
+   Time "14.10.00"
+   ServerVersion "11.7"
+END HEADER
+BEGIN DSJOB
+   Identifier "FILE_TO_FILE_ONE_TO_ONE_JOB"
+   DateModified "2025-12-08"
+   TimeModified "14.10.00"
+   BEGIN DSRECORD
+      Identifier "ROOT"
+      OLEType "CJobDefn"
+      Name "FILE_TO_FILE_ONE_TO_ONE_JOB"
+      NextID "10"
+      Container "V0"
+      JobVersion "1.0.0"
+      ControlAfterSubr "0"
+      Parameters "CParameters"
+      // --- STAGES DEFINITION ---
+      BEGIN DSRECORD
+         Identifier "2"
+         OLEType "CStage"
+         Name "Source_Sequential_File"
+         XPos "200"
+         YPos "150"
+         StageType "SequentialFile"
+         CustomStage "SequentialFile"
+         StageName "SequentialFile"
+         V0
+         BEGIN DSSUBRECORD
+            Name "LinkType"
+            Value "Input"
+         END DSSUBRECORD
+         MetaBag "CMetaPropertyBag"
+         BEGIN DSSUBRECORD
+            Name "FileName"
+            Value "C:\Data\source_data.csv"
+         END DSSUBRECORD
+         BEGIN DSSUBRECORD
+            Name "FirstLineIsColumnNames"
+            Value "TRUE"
+         END DSSUBRECORD
+         BEGIN DSSUBRECORD
+            Name "RecordDelimiter"
+            Value "\n"
+         END DSSUBRECORD
+         BEGIN DSSUBRECORD
+            Name "Delimiter"
+            Value ","
+         END DSSUBRECORD
+         OutputExt "COutputExt"
+         BEGIN DSRECORD
+            Identifier "5"
+            OLEType "CLink"
+            Name "Link_In"
+            LinkType "0"
+            MetaBag "CMetaPropertyBag"
+            V0
+            BEGIN DSSUBRECORD
+               Name "Schema"
+               Value "record\r\n{\r\n  ID:int32;\r\n  Name:nullable string[max=100];\r\n  Value:float64;\r\n}"
+            END DSSUBRECORD
+         END DSRECORD
+      END DSRECORD
+      BEGIN DSRECORD
+         Identifier "3"
+         OLEType "CStage"
+         Name "Transformer_One_to_One"
+         XPos "450"
+         YPos "150"
+         StageType "Transformer"
+         V0
+         InputExt "CInputExt"
+         BEGIN DSRECORD
+            Identifier "5"
+            OLEType "CLink"
+            Name "Link_In"
+            LinkType "0"
+            V0
+            Property "InputName"
+            Value "Link_In"
+            Property "Derivation"
+            Value "Source_Sequential_File.Link_In"
+            Property "RejectHandling"
+            Value "0"
+            MetaBag "CMetaPropertyBag"
+            BEGIN DSSUBRECORD
+               Name "Schema"
+               Value "record\r\n{\r\n  ID:int32;\r\n  Name:nullable string[max=100];\r\n  Value:float64;\r\n}"
+            END DSSUBRECORD
+         END DSRECORD
+         OutputExt "COutputExt"
+         BEGIN DSRECORD
+            Identifier "6"
+            OLEType "CLink"
+            Name "Link_Out"
+            LinkType "0"
+            V0
+            Property "OutputName"
+            Value "Link_Out"
+            Property "OutputOrdering"
+            Value "0"
+            Property "Derivation"
+            Value "Transformer_One_to_One.Link_Out"
+            MetaBag "CMetaPropertyBag"
+            BEGIN DSSUBRECORD
+               Name "Schema"
+               Value "record\r\n{\r\n  ID:int32;\r\n  Name:nullable string[max=100];\r\n  Value:float64;\r\n}"
+            END DSSUBRECORD
+            Transform "CTransform"
+            BEGIN DSRECORD
+               Identifier "6"
+               OLEType "CTransform"
+               Name "Transform_One_to_One_Derivations"
+               V0
+               Property "Identifier"
+               Value "Link_Out"
+               Property "Derivations"
+               BEGIN DSSUBRECORD
+                  Name "ID"
+                  Value "Link_In.ID" // One-to-One Mapping
+               END DSSUBRECORD
+               BEGIN DSSUBRECORD
+                  Name "Name"
+                  Value "Link_In.Name" // One-to-One Mapping
+               END DSSUBRECORD
+               BEGIN DSSUBRECORD
+                  Name "Value"
+                  Value "Link_In.Value" // One-to-One Mapping
+               END DSSUBRECORD
+               BEGIN DSSUBRECORD
+                  Name "Type"
+                  Value "0"
+               END DSSUBRECORD
+            END DSRECORD
+         END DSRECORD
+      END DSRECORD
+      BEGIN DSRECORD
+         Identifier "4"
+         OLEType "CStage"
+         Name "Target_Sequential_File"
+         XPos "700"
+         YPos "150"
+         StageType "SequentialFile"
+         CustomStage "SequentialFile"
+         StageName "SequentialFile"
+         V0
+         BEGIN DSSUBRECORD
+            Name "LinkType"
+            Value "Output"
+         END DSSUBRECORD
+         MetaBag "CMetaPropertyBag"
+         BEGIN DSSUBRECORD
+            Name "FileName"
+            Value "C:\Data\target_data.out"
+         END DSSUBRECORD
+         BEGIN DSSUBRECORD
+            Name "RecordDelimiter"
+            Value "\n"
+         END DSSUBRECORD
+         BEGIN DSSUBRECORD
+            Name "Delimiter"
+            Value "|"
+         END DSSUBRECORD
+         BEGIN DSSUBRECORD
+            Name "Overwrite"
+            Value "TRUE"
+         END DSSUBRECORD
+         InputExt "CInputExt"
+         BEGIN DSRECORD
+            Identifier "6"
+            OLEType "CLink"
+            Name "Link_Out"
+            LinkType "0"
+            MetaBag "CMetaPropertyBag"
+            V0
+            BEGIN DSSUBRECORD
+               Name "Schema"
+               Value "record\r\n{\r\n  ID:int32;\r\n  Name:nullable string[max=100];\r\n  Value:float64;\r\n}" // <<< SCHEMA MUST MATCH SOURCE
+            END DSSUBRECORD
+         END DSRECORD
+      END DSRECORD
+      // --- LINKS CONNECTION DEFINITION ---
+      BEGIN DSRECORD
+         Identifier "5"
+         OLEType "CLink"
+         Name "Link_In"
+         Source "Source_Sequential_File"
+         Target "Transformer_One_to_One"
+      END DSRECORD
+      BEGIN DSRECORD
+         Identifier "6"
+         OLEType "CLink"
+         Name "Link_Out"
+         Source "Transformer_One_to_One"
+         Target "Target_Sequential_File"
+      END DSRECORD
+   END DSRECORD
+END DSJOB
