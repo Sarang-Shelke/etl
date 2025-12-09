@@ -168,12 +168,14 @@ class EnhancedASGToIRConverter:
         
         # 🔧 NEW: DB-based type mappings cache
         self.db_type_mappings = {}  # component -> (ir_type, ir_subtype)
-        self._load_type_mappings_from_db()
+        # self._load_type_mappings_from_db()
     
     def _load_type_mappings_from_db(self):
         """Load component → (ir_type, ir_subtype) mappings from database."""
         try:
+            print("creating engine")
             engine = create_engine(SYNC_DB_URL)
+            print("created engine")
             with engine.connect() as conn:
                 result = conn.execute(text("""
                     SELECT DISTINCT component, ir_type, ir_subtype
@@ -509,10 +511,10 @@ class EnhancedASGToIRConverter:
         # Custom stages
         elif enhanced_type == 'CCustomStage':
             node_name = asg_node.get('name', '').upper()
-            if any(keyword in node_name for keyword in ['TGT', 'OUT', 'TARGET', 'SINK']):
-                return "Sink", "Custom"
-            elif any(keyword in node_name for keyword in ['SRC', 'IN', 'SOURCE']):
-                return "Source", "Custom"
+            if any(keyword in node_name for keyword in ['TGT', 'OUT', 'TARGET', 'SINK', 'OUTPUT_FILE']):
+                return "Sink", "tFileOutputDelimited"
+            elif any(keyword in node_name for keyword in ['SRC', 'IN', 'SOURCE', 'INPUT_FILE']):
+                return "Source", "tFileInputDelimited"
             else:
                 return "Transform", "Custom"
         

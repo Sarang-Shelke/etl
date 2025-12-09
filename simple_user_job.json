@@ -1,0 +1,327 @@
+{
+  "job_name": "J_DEMO_001",
+  "job_parameters": [
+    {
+      "name": "ENVIRONMENT",
+      "prompt": "Environment",
+      "default": "DEV"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "V0S0",
+      "name": "Input_File",
+      "type": "CCustomStage",
+      "enhanced_type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxSequentialFile"
+      },
+      "enhanced_properties": {
+        "configuration": {},
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transactional_properties": {},
+      "pins": [
+        {
+          "id": "V0S0P1",
+          "name": "UserLink",
+          "direction": "output",
+          "schema": [],
+          "enhanced_schema": []
+        }
+      ],
+      "schema_lineage": {}
+    },
+    {
+      "id": "V0S1",
+      "name": "VarUsername",
+      "type": "CTransformerStage",
+      "enhanced_type": "CTransformerStage",
+      "properties": {
+        "stage_type": "CTransformerStage"
+      },
+      "enhanced_properties": {
+        "configuration": {
+          "VarUsername": null
+        },
+        "apt_properties": {
+          "TrxGenCode": "//\n// Generated file to implement the V0S1_SIMPLE_USER_PROCESS_User_Transformer transform operator.\n//\n\n// define our input/output link names\ninputname 0 UserLink;\noutputname 0 TransformedLink;\n\nmainloop {\n\n// evaluate columns (no constraints) for link: TransformedLink\nTransformedLink.USERID = UserLink.USERID;\nTransformedLink.USERNAME = upcase(UserLink.USERNAME);\nTransformedLink.EMAIL = UserLink.EMAIL;\nTransformedLink.STATUS = UserLink.STATUS;\nwriterecord 0;\n}\n\nfinish {\n}",
+          "TrxClassName": "V0S1_SIMPLE_USER_PROCESS_User_Transformer",
+          "JobParameterNames": "ENVIRONMENT"
+        },
+        "metadata": {}
+      },
+      "transactional_properties": {},
+      "pins": [
+        {
+          "id": "V0S1P1",
+          "name": "UserLink",
+          "direction": "input",
+          "schema": [],
+          "enhanced_schema": []
+        },
+        {
+          "id": "V0S1P2",
+          "name": "TransformedLink",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "USERID",
+              "type": "DECIMAL",
+              "sql_type_code": "3",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "UserLink.USERID"
+            },
+            {
+              "name": "USERNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "UpperCase(USERNAME)"
+            },
+            {
+              "name": "EMAIL",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "UserLink.EMAIL"
+            },
+            {
+              "name": "STATUS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "UserLink.STATUS"
+            }
+          ],
+          "enhanced_schema": [
+            {
+              "name": "USERID",
+              "type": "DECIMAL",
+              "sql_type_code": "3",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "UserLink.USERID",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "UserLink.USERID",
+                  "UserLink",
+                  "USERID"
+                ],
+                "functions": [],
+                "expression": "UserLink.USERID"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "USERNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "UpperCase(USERNAME)",
+              "transformation_logic": {
+                "type": "simple",
+                "source_columns": [
+                  "USERNAME"
+                ],
+                "functions": [
+                  "UpperCase"
+                ],
+                "expression": "UpperCase(USERNAME)"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple"
+            },
+            {
+              "name": "EMAIL",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "UserLink.EMAIL",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "UserLink.EMAIL",
+                  "UserLink",
+                  "EMAIL"
+                ],
+                "functions": [],
+                "expression": "UserLink.EMAIL"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "STATUS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "UserLink.STATUS",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "UserLink",
+                  "UserLink.STATUS",
+                  "STATUS"
+                ],
+                "functions": [],
+                "expression": "UserLink.STATUS"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            }
+          ]
+        }
+      ],
+      "schema_lineage": {}
+    },
+    {
+      "id": "V0S2",
+      "name": "Output_File",
+      "type": "CCustomStage",
+      "enhanced_type": "CCustomStage",
+      "properties": {
+        "stage_type": "PxSequentialFile"
+      },
+      "enhanced_properties": {
+        "configuration": {},
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transactional_properties": {},
+      "pins": [
+        {
+          "id": "V0S2P1",
+          "name": "TransformedLink",
+          "direction": "input",
+          "schema": [],
+          "enhanced_schema": []
+        }
+      ],
+      "schema_lineage": {}
+    }
+  ],
+  "edges": [
+    {
+      "from_node": "V0S0",
+      "from_pin": "V0S0P1",
+      "from_pin_name": "UserLink",
+      "to_node": "V0S1",
+      "to_pin": "V0S1P1",
+      "to_pin_name": "UserLink",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V0S1",
+      "from_pin": "V0S1P1",
+      "from_pin_name": "UserLink",
+      "to_node": "V0S0",
+      "to_pin": "V0S0P1",
+      "to_pin_name": "UserLink",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V0S1",
+      "from_pin": "V0S1P2",
+      "from_pin_name": "TransformedLink",
+      "to_node": "V0S2",
+      "to_pin": "V0S2P1",
+      "to_pin_name": "TransformedLink",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V0S2",
+      "from_pin": "V0S2P1",
+      "from_pin_name": "TransformedLink",
+      "to_node": "V0S1",
+      "to_pin": "V0S1P2",
+      "to_pin_name": "TransformedLink",
+      "join_type": "unknown"
+    }
+  ],
+  "schema_lineage": {
+    "evolution_events": [
+      {
+        "node_id": "V0S0",
+        "input_columns": 0,
+        "output_columns": 0,
+        "transformations": [],
+        "schema_changes": {
+          "added": [],
+          "removed": [],
+          "modified": []
+        }
+      },
+      {
+        "node_id": "V0S1",
+        "input_columns": 0,
+        "output_columns": 4,
+        "transformations": [
+          {
+            "column": "USERID",
+            "type": "simple_column"
+          },
+          {
+            "column": "USERNAME",
+            "type": "simple"
+          },
+          {
+            "column": "EMAIL",
+            "type": "simple_column"
+          },
+          {
+            "column": "STATUS",
+            "type": "simple_column"
+          }
+        ],
+        "schema_changes": {
+          "added": [
+            "USERNAME",
+            "EMAIL",
+            "USERID",
+            "STATUS"
+          ],
+          "removed": [],
+          "modified": []
+        }
+      },
+      {
+        "node_id": "V0S2",
+        "input_columns": 0,
+        "output_columns": 0,
+        "transformations": [],
+        "schema_changes": {
+          "added": [],
+          "removed": [],
+          "modified": []
+        }
+      }
+    ],
+    "summary": {
+      "stages_analyzed": 3,
+      "total_input_columns": 0,
+      "total_output_columns": 4,
+      "net_column_change": 4,
+      "stages_with_enrichment": 1,
+      "stages_with_filtering": 0
+    }
+  }
+}
