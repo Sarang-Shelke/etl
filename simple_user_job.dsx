@@ -169,7 +169,7 @@ BEGIN DSJOB
       END DSSUBRECORD
       BEGIN DSSUBRECORD
          Name "file"
-         Value "\(2)\(2)0\(1)\(3)file\(2)/training/data/input/users.csv\(2)0"
+         Value "\(2)\(2)0\(1)\(3)file\(2)/D:\ETL_Migrator\inputfile.csv\(2)0"
       END DSSUBRECORD
       BEGIN DSSUBRECORD
          Name "append\\overwrite"
@@ -496,7 +496,7 @@ record
       END DSSUBRECORD
       BEGIN DSSUBRECORD
          Name "file"
-         Value "\(2)\(2)0\(1)\(3)file\(2)/training/data/output/processed_users.csv\(2)0"
+         Value "\(2)\(2)0\(1)\(3)file\(2)/D:\ETL_Migrator\outputfile.csv\(2)0"
       END DSSUBRECORD
       BEGIN DSSUBRECORD
          Name "append\\overwrite"

@@ -856,16 +856,26 @@ class TranslationService:
         # Map common properties based on component type
         if component_type == "tFileOutputDelimited":
             # Get configuration from props if available
-            config = properties.get("configuration", {})
+            # config = properties.get("configuration", {})
             
             # File path
-            file_path = config.get("file") or properties.get("filepath") or ""
+            file_path = properties.get("path") or properties.get("filepath") or properties.get("file") or ""
+            
+            # Clean up path: remove "0file" prefix but preserve directory structure
+            if file_path:
+                # Remove "0file" prefix if present (decoding artifact)
+                file_path = file_path.replace('0file/', '').replace('0file\\', '')
+                # Normalize path separators
+                file_path = file_path.replace('\\', '/')
+                # Remove drive letter if present (e.g., "D:/" -> "")
+                # file_path = re.sub(r'^[A-Za-z]:/', '', file_path)
+            
             if file_path and not file_path.startswith('"'):
                 file_path = f'"{file_path}"'
             params.append({"field": "FILE", "name": "FILENAME", "value": file_path})
             
             # Delimiter
-            delimiter = config.get("delimiter") or properties.get("delimiter") or ","
+            delimiter = properties.get("delimiter") or ","
             if not delimiter.startswith('"'):
                 delimiter = f'"{delimiter}"'
             params.append({"field": "TEXT", "name": "FIELDSEPARATOR", "value": delimiter})
@@ -892,22 +902,36 @@ class TranslationService:
             params.append({"field": "TEXT", "name": "TEXT_ENCLOSURE", "value": properties.get("text_enclosure", '"\\"\"'), "show": False})
             params.append({"field": "TEXT", "name": "THOUSANDS_SEPARATOR", "value": properties.get("thousands_separator", '","'), "show": False})
             params.append({"field": "TEXT", "name": "DECIMAL_SEPARATOR", "value": properties.get("decimal_separator", '"."'), "show": False})
-            params.append({"field": "ENCODING_TYPE", "name": "ENCODING", "value": properties.get("encoding", '"ISO-8859-15"')})
+            # Encoding - must be wrapped in quotes
+            encoding = properties.get("encoding", "ISO-8859-15")
+            if encoding and not encoding.startswith('"'):
+                encoding = f'"{encoding}"'
+            params.append({"field": "ENCODING_TYPE", "name": "ENCODING", "value": encoding})
             params.append({"field": "TECHNICAL", "name": "ENCODING:ENCODING_TYPE", "value": properties.get("encoding_type", "ISO-8859-15")})
             params.append({"field": "TEXT", "name": "CONNECTION_FORMAT", "value": "row"})
 
         if component_type == "tFileInputDelimited":
             # Get configuration from props if available
-            config = properties.get("configuration", {})
+            # config = properties.get("configuration", {})
             
             # File path - check multiple sources
-            file_path = config.get("file") or properties.get("filepath") or ""
+            file_path = properties.get("path") or properties.get("filepath") or properties.get("file") or ""
+            
+            # Clean up path: remove "0file" prefix but preserve directory structure
+            if file_path:
+                # Remove "0file" prefix if present (decoding artifact)
+                file_path = file_path.replace('0file/', '').replace('0file\\', '')
+                # Normalize path separators
+                file_path = file_path.replace('\\', '/')
+                # Remove drive letter if present (e.g., "D:/" -> "")
+                # file_path = re.sub(r'^[A-Za-z]:/', '', file_path)
+            
             if file_path and not file_path.startswith('"'):
                 file_path = f'"{file_path}"'
             params.append({"field": "FILE", "name": "FILENAME", "value": file_path})
             
             # Delimiter
-            delimiter = config.get("delimiter") or properties.get("delimiter") or ","
+            delimiter = properties.get("delimiter") or ","
             if not delimiter.startswith('"'):
                 delimiter = f'"{delimiter}"'
             params.append({"field": "TEXT", "name": "FIELDSEPARATOR", "value": delimiter})
@@ -917,14 +941,16 @@ class TranslationService:
             params.append({"field": "TEXT", "name": "ROWSEPARATOR", "value": row_sep})
             
             # Header/Footer
-            first_line = config.get("firstLineColumnNames", "false")
-            header_lines = "1" if first_line.lower() == "true" else properties.get("header_lines", "0")
+            first_line = properties.get("firstLineColumnNames", "true")
+            header_lines = "1" if str(first_line).lower() == "true" else properties.get("header_lines", "0")
             params.append({"field": "TEXT", "name": "HEADER", "value": header_lines})
             params.append({"field": "TEXT", "name": "FOOTER", "value": properties.get("footer_lines", "0")})
             params.append({"field": "TEXT", "name": "LIMIT", "value": properties.get("row_limit", "")})
             
-            # Encoding
-            encoding = properties.get("encoding", '"ISO-8859-15"')
+            # Encoding - must be wrapped in quotes
+            encoding = properties.get("encoding", "ISO-8859-15")
+            if encoding and not encoding.startswith('"'):
+                encoding = f'"{encoding}"'
             params.append({"field": "ENCODING_TYPE", "name": "ENCODING", "value": encoding})
             params.append({"field": "TECHNICAL", "name": "ENCODING:ENCODING_TYPE", "value": properties.get("encoding_type", "ISO-8859-15")})
             
@@ -1277,7 +1303,7 @@ class TranslationService:
         """
         # Prepare template context with all needed variables
         props = node.get("props", {})
-        config = props.get("configuration", {})
+        # config = props.get("configuration", {})
         
         # Convert IR schema columns to template-friendly format with Talend types
         processed_columns = []
@@ -1310,19 +1336,29 @@ class TranslationService:
             })
         
         # Extract file path from props - handle different IR structures
-        file_path = config.get("file") or props.get("filepath") or ""
+        file_path = props.get("file") or props.get("filepath") or props.get("path") or ""
+        
+        # Clean up path: remove "0file" prefix but preserve directory structure
+        if file_path:
+            # Remove "0file" prefix if present (decoding artifact)
+            file_path = file_path.replace('0file/', '').replace('0file\\', '')
+            # Normalize path separators
+            file_path = file_path.replace('\\', '/')
+            # Remove drive letter if present (e.g., "D:/" -> "")
+            # file_path = re.sub(r'^[A-Za-z]:/', '', file_path)
+        
         if file_path and not file_path.startswith('"'):
             file_path = f'"{file_path}"'
         
         # Extract delimiter
-        delimiter = config.get("delimiter") or props.get("delimiter") or ","
+        delimiter = props.get("delimiter") or props.get("delimiter") or ","
         if not delimiter.startswith('"'):
             delimiter = f'"{delimiter}"'
         # Convert delimiter to XML-safe format
         delimiter = delimiter.replace('"', '&quot;')
         
         # Determine header lines from firstLineColumnNames
-        first_line_cols = config.get("firstLineColumnNames", "false")
+        first_line_cols = props.get("firstLineColumnNames", "false")
         header_lines = "1" if first_line_cols.lower() == "true" else "0"
         
         # XML-safe quote helper
@@ -1391,8 +1427,18 @@ class TranslationService:
         """
         # Prepare template context with all needed variables
         props = node.get("props", {})
-        config = props.get("configuration", {})
+        # config = props.get("configuration", {})
         
+        # get file path from props
+        file_path = props.get("filepath") or props.get("file") or props.get("path") or ""
+
+        if file_path:
+            file_path = file_path.replace("0file/", "").replace("0file\\", "")
+            file_path = file_path.replace("\\", "/")
+            # Wrap in quotes for Talend format
+            if not file_path.startswith('"'):
+                file_path = f'"{file_path}"'
+
         # Convert IR schema columns to template-friendly format with Talend types
         processed_columns = []
         for col in schema_columns:
@@ -1423,13 +1469,8 @@ class TranslationService:
                 "originalLength": "-1",
             })
         
-        # Extract file path from props - handle different IR structures
-        file_path = config.get("file") or props.get("filepath") or ""
-        if file_path and not file_path.startswith('"'):
-            file_path = f'"{file_path}"'
-        
         # Extract delimiter
-        delimiter = config.get("delimiter") or props.get("delimiter") or ","
+        delimiter = props.get("delimiter") or props.get("delimiter") or ","
         if not delimiter.startswith('"'):
             delimiter = f'"{delimiter}"'
         

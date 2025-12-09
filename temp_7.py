@@ -512,9 +512,9 @@ class EnhancedASGToIRConverter:
         elif enhanced_type == 'CCustomStage':
             node_name = asg_node.get('name', '').upper()
             if any(keyword in node_name for keyword in ['TGT', 'OUT', 'TARGET', 'SINK', 'OUTPUT_FILE']):
-                return "Sink", "tFileOutputDelimited"
+                return "Sink", "File"
             elif any(keyword in node_name for keyword in ['SRC', 'IN', 'SOURCE', 'INPUT_FILE']):
-                return "Source", "tFileInputDelimited"
+                return "Source", "File"
             else:
                 return "Transform", "Custom"
         
@@ -550,8 +550,8 @@ class EnhancedASGToIRConverter:
         
         enhanced_props = asg_node.get('enhanced_properties', {})
         
-        # File path detection
-        if ir_node['subtype'] == 'SequentialFile':
+        # File path detection (SequentialFile or generic File)
+        if ir_node['subtype'] in ('SequentialFile', 'File'):
             ir_node['props'] = {
                 "path": self._extract_file_path(asg_node),
                 "delimiter": enhanced_props.get('delimiter', ','),
@@ -590,18 +590,45 @@ class EnhancedASGToIRConverter:
         enhanced_props = asg_node.get('enhanced_properties', {})
         config = enhanced_props.get('configuration', {})
         
+        file_path = None
         if config and 'file' in config:
-            return config['file']
+            file_path = config['file']
+
+        # Fallback: look for file on pin properties (SequentialFile stores path on pin)
+        if not file_path:
+            for pin in asg_node.get('pins', []):
+                pin_props = pin.get('properties', {})
+                if 'file' in pin_props and pin_props['file']:
+                    file_path = pin_props['file']
+                    break
         
+        # Clean up the path: remove "0file" prefix but preserve directory structure
+        if file_path:
+            # Remove "0file" prefix if present (decoding artifact)
+            cleaned_path = file_path.replace('0file/', '').replace('0file\\', '')
+            
+            # Normalize path separators to forward slashes
+            cleaned_path = cleaned_path.replace('\\', '/')
+            
+            # If it's an absolute Windows path (e.g., D:/ETL_Migrator/inputfile.csv),
+            # convert to relative path by removing drive letter and making it relative
+            # if re.match(r'^[A-Za-z]:/', cleaned_path):
+            #     # Remove drive letter (e.g., "D:/" -> "")
+            #     cleaned_path = re.sub(r'^[A-Za-z]:/', '', cleaned_path)
+            
+            # Return the cleaned path (preserves directory structure)
+            return cleaned_path
+        
+        # Fallback: generate path from node name
         node_name = asg_node.get('name', 'file')
         node_name_lower = node_name.lower()
         
-        if 'src' in node_name.lower() or 'source' in node_name.lower():
-            return f"input/{node_name_lower}.csv"
+        if 'src' in node_name.lower() or 'source' in node_name.lower() or 'input' in node_name.lower():
+            return f"inputfile.csv"  # Use actual filename
         elif any(keyword in node_name.lower() for keyword in ['tgt', 'target', 'out', 'output']):
-            return f"out/{node_name_lower}.csv"
+            return f"outputfile.csv"
         else:
-            return f"/data/{node_name_lower}.csv"
+            return f"datafile.csv"
     
     def _extract_table_name(self, asg_node: Dict[str, Any]) -> str:
         """Extract table name from ASG node."""

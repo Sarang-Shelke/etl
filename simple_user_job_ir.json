@@ -1,17 +1,22 @@
 {
   "irVersion": "1.0",
-  "generatedAt": "2025-12-09T11:19:17.856522Z",
+  "generatedAt": "2025-12-09T22:41:10.299692Z",
   "job": {
-    "id": "job-J_DEMO_001-202512091119",
+    "id": "job-J_DEMO_001-202512092241",
     "name": "J_DEMO_001"
   },
   "nodes": [
     {
       "id": "n0",
       "type": "Source",
-      "subtype": "tFileInputDelimited",
+      "subtype": "File",
       "name": "Input_File",
-      "props": {},
+      "props": {
+        "path": "D:/ETL_Migrator/inputfile.csv",
+        "delimiter": ",",
+        "encoding": "UTF-8",
+        "firstLineColumnNames": true
+      },
       "transformationDetails": {
         "hasTransformations": false,
         "transformationType": "none",
@@ -54,9 +59,14 @@
     {
       "id": "n2",
       "type": "Sink",
-      "subtype": "tFileOutputDelimited",
+      "subtype": "File",
       "name": "Output_File",
-      "props": {},
+      "props": {
+        "path": "D:/ETL_Migrator/outputfile.csv",
+        "delimiter": ",",
+        "encoding": "UTF-8",
+        "firstLineColumnNames": true
+      },
       "transformationDetails": {
         "hasTransformations": false,
         "transformationType": "none",
@@ -133,9 +143,9 @@
         "transformationLogic": {
           "type": "simple_column",
           "source_columns": [
-            "UserLink.USERID",
+            "USERID",
             "UserLink",
-            "USERID"
+            "UserLink.USERID"
           ],
           "functions": [],
           "expression": "UserLink.USERID"
@@ -143,9 +153,9 @@
         "transformationClassification": "simple_column",
         "complexityScore": 0.0,
         "sourceColumns": [
-          "UserLink.USERID",
+          "USERID",
           "UserLink",
-          "USERID"
+          "UserLink.USERID"
         ],
         "expression": "UserLink.USERID",
         "functions": [],
@@ -183,8 +193,8 @@
         "transformationLogic": {
           "type": "simple_column",
           "source_columns": [
-            "UserLink.EMAIL",
             "UserLink",
+            "UserLink.EMAIL",
             "EMAIL"
           ],
           "functions": [],
@@ -193,8 +203,8 @@
         "transformationClassification": "simple_column",
         "complexityScore": 0.0,
         "sourceColumns": [
-          "UserLink.EMAIL",
           "UserLink",
+          "UserLink.EMAIL",
           "EMAIL"
         ],
         "expression": "UserLink.EMAIL",
@@ -208,8 +218,8 @@
         "transformationLogic": {
           "type": "simple_column",
           "source_columns": [
-            "UserLink",
             "UserLink.STATUS",
+            "UserLink",
             "STATUS"
           ],
           "functions": [],
@@ -218,8 +228,8 @@
         "transformationClassification": "simple_column",
         "complexityScore": 0.0,
         "sourceColumns": [
-          "UserLink",
           "UserLink.STATUS",
+          "UserLink",
           "STATUS"
         ],
         "expression": "UserLink.STATUS",

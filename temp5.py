@@ -50,6 +50,40 @@ def map_sql_type(sql_type_code: str) -> str:
     """Map DataStage SqlType code to readable type name."""
     return SQL_TYPE_MAP.get(sql_type_code, f"UNKNOWN({sql_type_code})")
 
+def decode_dsx_value(value: Any) -> Any:
+    """
+    Decode DataStage-escaped values such as '\\(2)path\\(2)0' that wrap
+    actual strings in control markers. Keeps non-string values as-is.
+    
+    Example: '\\(2)\\(2)0\\(1)\\(3)file\\(2)/D:\\ETL_Migrator\\inputfile.csv\\(2)0'
+    Should decode to: 'D:\\ETL_Migrator\\inputfile.csv'
+    """
+    if not isinstance(value, str):
+        return value
+    
+    # Remove control markers like \(2) or \(1)
+    decoded = re.sub(r'\\\(\d\)', '', value)
+    # Unescape backslashes
+    decoded = decoded.replace('\\\\', '\\')
+    
+    # For file paths, look for patterns like "0file/path" or "0file\\path" and extract just the path
+    # The "0file" prefix is a DataStage artifact that should be removed
+    if 'file' in decoded.lower() and ('/' in decoded or '\\' in decoded):
+        # Try to find the actual path after "file" marker
+        # Pattern: ...file/path... or ...file\\path...
+        file_match = re.search(r'file[/\\](.+)', decoded, re.IGNORECASE)
+        if file_match:
+            decoded = file_match.group(1)
+        else:
+            # Fallback: remove "0file" prefix if present
+            decoded = re.sub(r'^0+file[/\\]?', '', decoded, flags=re.IGNORECASE)
+    
+    # Trim a trailing sentinel "0" that often follows the control markers
+    if decoded.endswith('0') and ('/' in decoded or '\\' in decoded):
+        decoded = decoded[:-1]
+    
+    return decoded.strip()
+
 # ============================================================================
 # STAGE PROPERTIES TO PRESERVE
 # ============================================================================
@@ -499,10 +533,6 @@ def get_sub_records(content: List[str], context: str = 'stage') -> List[List[str
                         if match:
                             property_value = match.group(1)
                         break
-                
-                # Store APT property if it's in preserve list
-                if property_name in APT_PROPERTIES_PRESERVE and property_value is not None:
-                    stage_properties['apt_properties'][property_name] = property_value
                 
                 # Only skip if it's not in the preserve list
                 if property_name not in APT_PROPERTIES_PRESERVE:
@@ -1008,6 +1038,9 @@ class ASGBuilder:
                         value_content, next_idx = parse_heredoc_value(sub_record, j)
                         property_value = value_content
                 
+                # Decode DataStage-escaped property values (e.g., file paths)
+                property_value = decode_dsx_value(property_value)
+                
                 # Store property in appropriate category
                 if property_name:
                     if property_name in APT_PROPERTIES_PRESERVE:
@@ -1060,7 +1093,8 @@ class ASGBuilder:
             "name": "",
             "direction": direction,
             "schema": [],
-            "enhanced_schema": []
+            "enhanced_schema": [],
+            "properties": {}
         }
         
         # Extract basic pin info
@@ -1072,6 +1106,39 @@ class ASGBuilder:
         # Extract column schemas
         pin['schema'] = self._extract_column_schemas(lines)
         pin['enhanced_schema'] = self._extract_enhanced_column_schemas(lines)
+
+        # Extract pin-level properties (e.g., file path on SequentialFile pins)
+        pin['properties'] = {}
+        i = 0
+        while i < len(lines):
+            if lines[i].strip().startswith('BEGIN DSSUBRECORD'):
+                sub_record = get_section_details(lines[i:])
+                if not sub_record:
+                    i += 1
+                    continue
+
+                sub_record = process_subrecord_values(sub_record)
+
+                prop_name = None
+                prop_value = None
+                for j, sr_line in enumerate(sub_record):
+                    if 'Name "' in sr_line:
+                        prop_name = extract_property_name(sr_line)
+                    elif 'Value "' in sr_line:
+                        match = re.search(r'Value "(.*?)"', sr_line)
+                        if match:
+                            prop_value = match.group(1)
+                    elif 'Value =+=+=+=' in sr_line:
+                        value_content, _ = parse_heredoc_value(sub_record, j)
+                        prop_value = value_content
+
+                prop_value = decode_dsx_value(prop_value)
+                if prop_name:
+                    pin['properties'][prop_name] = prop_value
+
+                i += len(sub_record)
+            else:
+                i += 1
         
         return pin
     

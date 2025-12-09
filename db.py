@@ -17,12 +17,19 @@ POSTGRES_TIMEOUT=30
 # Maximum lifetime of a connection in the pool (in seconds).
 POSTGRES_POOL_RECYCLE=1800
 # Interval for pinging the database to check connection validity (in seconds).
-POSTGRES_POOL_PRE_PING=10
+POSTGRES_POOL_PRE_PING=True
 # Whether to print all sql queries
 DB_DEBUG_MODE=False
 
-async_engine = create_async_engine(db_url, echo=DB_DEBUG_MODE, pool_size=POSTGRES_POOL_SIZE, max_overflow=POSTGRES_MAX_OVERFLOW, pool_timeout=POSTGRES_TIMEOUT, pool_recycle=POSTGRES_POOL_RECYCLE, pool_pre_ping=POSTGRES_POOL_PRE_PING)
-
+async_engine = create_async_engine(
+    db_url,
+    echo=DB_DEBUG_MODE,
+    pool_size=POSTGRES_POOL_SIZE,
+    max_overflow=POSTGRES_MAX_OVERFLOW,
+    pool_timeout=POSTGRES_TIMEOUT,
+    pool_recycle=POSTGRES_POOL_RECYCLE,
+    pool_pre_ping=True, 
+)
 AsyncSessionFactory = async_sessionmaker(autoflush=False, autocommit=False, bind=async_engine)
 
 async def get_db():
