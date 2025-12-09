@@ -522,7 +522,10 @@ class TranslationService:
         nodes = filtered_nodes
         print(f"  Filtered {len(job_ir.get('nodes', []))} nodes to {len(nodes)} (removed {len(excluded_node_ids)} DB components)")
         
-        # Filter links to exclude those connected to DB components
+        # Create lookup for node types to filter cyclic connections
+        node_type_map = {node.get("id"): node.get("type") for node in job_ir.get("nodes", [])}
+        
+        # Filter links to exclude those connected to DB components AND cyclic/reverse connections
         filtered_links = []
         for link in links:
             from_node_id = link.get("from", {}).get("nodeId")
@@ -531,6 +534,19 @@ class TranslationService:
             # Skip links that connect to/from excluded DB components
             if from_node_id in excluded_node_ids or to_node_id in excluded_node_ids:
                 print(f"  Excluding link from {from_node_id} to {to_node_id} (connected to DB component)")
+                continue
+            
+            # Filter out cyclic/reverse connections based on node types
+            # Rule 1: No links TO a Source node
+            to_type = node_type_map.get(to_node_id)
+            if to_type == "Source":
+                print(f"  Skipping reverse link {link.get('id')} to Source node {to_node_id}")
+                continue
+                
+            # Rule 2: No links FROM a Sink node
+            from_type = node_type_map.get(from_node_id)
+            if from_type == "Sink":
+                print(f"  Skipping reverse link {link.get('id')} from Sink node {from_node_id}")
                 continue
             
             filtered_links.append(link)
@@ -583,13 +599,58 @@ class TranslationService:
             # Build basic parameters from node properties
             params = self._create_node_parameters(talend_component, node.get("props", {}), node_name)
             
+            # Helper to find incoming connection name
+            # Only looks for the FIRST incoming connection (DataStage Transformer usually has 1 main input)
+            incoming_conn_name = "row1" # Default
+            incoming_link = None # Track the incoming link for schema propagation
+            for link in links: # filtered links
+                if link.get("to", {}).get("nodeId") == node.get("id"):
+                    from_id = link.get("from", {}).get("nodeId")
+                    # Find from_node name
+                    from_n_name = next((n.get("name") for n in nodes if n.get("id") == from_id), from_id)
+                    incoming_conn_name = f"row{from_n_name}"
+                    incoming_link = link
+                    break
+
+
             # Get schema for this node
             schema_ref = node.get("schemaRef")
             schema_columns = schemas.get(schema_ref, []) if schema_ref else []
+
+            # Propagate schema from incoming link if node schema is empty
+            if not schema_columns and incoming_link:
+                link_schema_ref = incoming_link.get("schemaRef")
+                if link_schema_ref:
+                     schema_columns = schemas.get(link_schema_ref, [])
+                     print(f"  Propagating schema {link_schema_ref} to node {node_name} (was empty)")
+            
+            # Logic for Source nodes (e.g. tFileInput*): Propagate schema from OUTGOING link
+            # If a source node has empty schema, we should check what the downstream component expects
+            if not schema_columns and (ir_type == "Source" or talend_component.startswith("tFileInput")):
+                # Find the first outgoing link
+                outgoing_link = next((l for l in links if l.get("from", {}).get("nodeId") == node.get("id")), None)
+                if outgoing_link:
+                    link_schema_ref = outgoing_link.get("schemaRef")
+                    if link_schema_ref:
+                         schema_columns = schemas.get(link_schema_ref, [])
+                    
+                    # If link schema is still empty, look at the target node's schema
+                    if not schema_columns:
+                        target_node_id = outgoing_link.get("to", {}).get("nodeId")
+                        target_node = next((n for n in nodes if n.get("id") == target_node_id), None)
+                        if target_node:
+                            target_schema_ref = target_node.get("schemaRef")
+                            if target_schema_ref:
+                                schema_columns = schemas.get(target_schema_ref, [])
+                    elif schema_columns:
+                         # Schema already propagated from link
+                         pass
+            
+            # Build metadata and nodeData
             
             # Build metadata and nodeData
             metadata, node_data = self._build_metadata_and_node_data(
-                talend_component, node, schema_columns
+                talend_component, node, schema_columns, incoming_conn_name
             )
             
             # Set correct component version (tMap uses 2.1, others use 0.102)
@@ -647,13 +708,14 @@ class TranslationService:
         component_name: str,
         ir_node: Dict[str, Any],
         schema_columns: List[Dict[str, Any]],
+        incoming_conn_name: str = "row1",
     ) -> tuple:
         """Build metadata and nodeData for a Talend node from IR schema."""
         ir_type = ir_node.get("type", "")
         ir_subtype = ir_node.get("subtype", "")
         
         if component_name == "tMap" and ir_type == "Transform" and ir_subtype == "Map":
-            return self._generate_tmap_metadata_and_nodedata_dict(schema_columns)
+            return self._generate_tmap_metadata_and_nodedata_dict(schema_columns, incoming_conn_name)
         
         if component_name.startswith("tDB") or component_name == "tFileInputDelimited":
             return (
@@ -689,7 +751,7 @@ class TranslationService:
         return [], None
 
     def _generate_tmap_metadata_and_nodedata_dict(
-        self, schema_columns: List[Dict[str, Any]]
+        self, schema_columns: List[Dict[str, Any]], incoming_conn_name: str
     ) -> tuple:
         """Generate metadata and nodeData for tMap component."""
         talend_columns = [self._ir_column_to_talend(col) for col in schema_columns]
@@ -702,7 +764,7 @@ class TranslationService:
         output_entries = [
             {
                 "name": col.get("name", "unknown"),
-                "expression": f"row1.{col.get('name', 'unknown')}",
+                "expression": f"{incoming_conn_name}.{col.get('name', 'unknown')}",
                 "type": self._map_ir_type_to_talend(col.get("type", "string")),
                 "nullable": "true",
             }
@@ -724,7 +786,7 @@ class TranslationService:
             "inputTables": [
                 {
                     "sizeState": "INTERMEDIATE",
-                    "name": "row1",
+                    "name": incoming_conn_name,
                     "matchingMode": "UNIQUE_MATCH",
                     "lookupMode": "LOAD_ONCE",
                     "mapperTableEntries": [
@@ -981,6 +1043,11 @@ class TranslationService:
                 show_attr = ' show="false"'
             elif "show" in param and param.get("show") is True:
                 show_attr = ' show="true"'
+            
+            xml_lines.append(
+                f'    <elementParameter field="{param.get("field", "TEXT")}" '
+                f'name="{param.get("name", "")}" value="{value}"{show_attr}/>'
+            )
         
         # For tFileInputDelimited: Add TRIMSELECT and DECODE_COLS TABLE elements
         if node.get("componentName") == "tFileInputDelimited":
@@ -1291,6 +1358,9 @@ class TranslationService:
             "advanced_separator": props.get("advanced_separator", "false"),
             "check_fields_num": props.get("check_fields_num", "false"),
             "check_date": props.get("check_date", "false"),
+            
+            # Schema columns for dynamic sections
+            "schema_columns": processed_columns,
         }
         
         # Render the template
