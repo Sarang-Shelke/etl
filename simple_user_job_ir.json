@@ -1,8 +1,8 @@
 {
   "irVersion": "1.0",
-  "generatedAt": "2025-12-09T22:41:10.299692Z",
+  "generatedAt": "2025-12-10T12:43:14.311092Z",
   "job": {
-    "id": "job-J_DEMO_001-202512092241",
+    "id": "job-J_DEMO_001-202512101243",
     "name": "J_DEMO_001"
   },
   "nodes": [
@@ -36,7 +36,7 @@
       "id": "n1",
       "type": "Transform",
       "subtype": "Map",
-      "name": "VarUsername",
+      "name": "User_Transformer",
       "props": {},
       "transformationDetails": {
         "hasTransformations": true,
@@ -45,7 +45,7 @@
         "transformationCount": 4
       },
       "schemaRef": "s_V0S1",
-      "trxgenCode": "//\n// Generated file to implement the V0S1_SIMPLE_USER_PROCESS_User_Transformer transform operator.\n//\n\n// define our input/output link names\ninputname 0 UserLink;\noutputname 0 TransformedLink;\n\nmainloop {\n\n// evaluate columns (no constraints) for link: TransformedLink\nTransformedLink.USERID = UserLink.USERID;\nTransformedLink.USERNAME = upcase(UserLink.USERNAME);\nTransformedLink.EMAIL = UserLink.EMAIL;\nTransformedLink.STATUS = UserLink.STATUS;\nwriterecord 0;\n}\n\nfinish {\n}",
+      "trxgenCode": "//\n// Generated file to implement the V0S1_SIMPLE_USER_PROCESS_User_Transformer transform operator.\n//\n// define our input/output link names\ninputname 0 UserLink;\noutputname 0 TransformedLink;\n\nmainloop {\nTransformedLink.USERID = UserLink.USERID;\nTransformedLink.USERNAME = upcase(UserLink.USERNAME);\nTransformedLink.EMAIL = UserLink.EMAIL;\nTransformedLink.STATUS = UserLink.STATUS;\nwriterecord 0;\n}\n\nfinish {\n}",
       "trxClassName": "V0S1_SIMPLE_USER_PROCESS_User_Transformer",
       "jobParameterNames": "ENVIRONMENT",
       "provenance": {
@@ -119,18 +119,6 @@
         "port": "in"
       },
       "schemaRef": "s_V0S1"
-    },
-    {
-      "id": "l4",
-      "from": {
-        "nodeId": "n2",
-        "port": "out"
-      },
-      "to": {
-        "nodeId": "n1",
-        "port": "in"
-      },
-      "schemaRef": "s_V0S2"
     }
   ],
   "schemas": {
@@ -143,8 +131,8 @@
         "transformationLogic": {
           "type": "simple_column",
           "source_columns": [
-            "USERID",
             "UserLink",
+            "USERID",
             "UserLink.USERID"
           ],
           "functions": [],
@@ -153,8 +141,8 @@
         "transformationClassification": "simple_column",
         "complexityScore": 0.0,
         "sourceColumns": [
-          "USERID",
           "UserLink",
+          "USERID",
           "UserLink.USERID"
         ],
         "expression": "UserLink.USERID",
@@ -194,8 +182,8 @@
           "type": "simple_column",
           "source_columns": [
             "UserLink",
-            "UserLink.EMAIL",
-            "EMAIL"
+            "EMAIL",
+            "UserLink.EMAIL"
           ],
           "functions": [],
           "expression": "UserLink.EMAIL"
@@ -204,8 +192,8 @@
         "complexityScore": 0.0,
         "sourceColumns": [
           "UserLink",
-          "UserLink.EMAIL",
-          "EMAIL"
+          "EMAIL",
+          "UserLink.EMAIL"
         ],
         "expression": "UserLink.EMAIL",
         "functions": [],
@@ -218,9 +206,9 @@
         "transformationLogic": {
           "type": "simple_column",
           "source_columns": [
-            "UserLink.STATUS",
             "UserLink",
-            "STATUS"
+            "STATUS",
+            "UserLink.STATUS"
           ],
           "functions": [],
           "expression": "UserLink.STATUS"
@@ -228,9 +216,9 @@
         "transformationClassification": "simple_column",
         "complexityScore": 0.0,
         "sourceColumns": [
-          "UserLink.STATUS",
           "UserLink",
-          "STATUS"
+          "STATUS",
+          "UserLink.STATUS"
         ],
         "expression": "UserLink.STATUS",
         "functions": [],

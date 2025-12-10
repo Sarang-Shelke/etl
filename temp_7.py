@@ -453,7 +453,12 @@ class EnhancedASGToIRConverter:
         properties = asg_node.get('properties', {})
         stage_type = properties.get('stage_type', enhanced_type)
         
-        # First, check DB mappings for the actual stage_type
+        # PRIORITY 1: Handle PxSequentialFile explicitly (can be Source or Sink)
+        if stage_type == 'PxSequentialFile':
+            ir_type = self._determine_source_or_sink(asg_node)
+            return ir_type, "File"
+        
+        # PRIORITY 2: Check DB mappings for the actual stage_type
         if stage_type in self.db_type_mappings:
             ir_type, ir_subtype = self.db_type_mappings[stage_type]
             
@@ -464,12 +469,16 @@ class EnhancedASGToIRConverter:
             
             return ir_type, ir_subtype
         
-        # Check DB mappings for enhanced_type as fallback
+        # PRIORITY 3: Check DB mappings for enhanced_type as fallback
         if enhanced_type in self.db_type_mappings:
-            return self.db_type_mappings[enhanced_type]
+            ir_type, ir_subtype = self.db_type_mappings[enhanced_type]
+            # Still check if it's a file stage that needs direction detection
+            if enhanced_type == 'PxSequentialFile':
+                ir_type = self._determine_source_or_sink(asg_node)
+            return ir_type, ir_subtype
         
-        # Final fallback to legacy heuristics
-        return self._legacy_type_mapping(enhanced_type, asg_node)
+        # PRIORITY 4: Final fallback to legacy heuristics (also checks stage_type)
+        return self._legacy_type_mapping(stage_type, asg_node, enhanced_type)
     
     def _determine_source_or_sink(self, asg_node: Dict[str, Any]) -> str:
         """Determine if a node is Source or Sink based on pins direction."""
@@ -489,34 +498,66 @@ class EnhancedASGToIRConverter:
             return "Sink"
         return "Source"
     
-    def _legacy_type_mapping(self, enhanced_type: str, asg_node: Dict[str, Any]) -> tuple:
+    def _legacy_type_mapping(self, stage_type: str, asg_node: Dict[str, Any], enhanced_type: str = None) -> tuple:
         """Legacy fallback for type mapping when DB mapping not found."""
         
+        # Use stage_type first, then enhanced_type as fallback
+        type_to_check = stage_type if stage_type else (enhanced_type or '')
+        
         # Database connector patterns
-        if any(db in enhanced_type.upper() for db in ['DB2', 'ORACLE', 'SQL', 'CONNECTOR']):
+        if any(db in type_to_check.upper() for db in ['DB2', 'ORACLE', 'SQL', 'CONNECTOR']):
             return "Source", self._detect_db_type(asg_node)
         
-        # File-based stages
-        elif 'Sequential' in enhanced_type or 'File' in enhanced_type:
-            node_name = asg_node.get('name', '').upper()
-            if any(keyword in node_name for keyword in ['TGT', 'OUT', 'TARGET', 'SINK']):
+        # File-based stages - PxSequentialFile or any Sequential/File stage
+        elif 'Sequential' in type_to_check or (type_to_check == 'PxSequentialFile'):
+            # Determine Source or Sink based on pins
+            pins = asg_node.get('pins', [])
+            has_input = any(p.get('direction') == 'input' for p in pins)
+            has_output = any(p.get('direction') == 'output' for p in pins)
+            
+            if has_output and not has_input:
+                return "Source", "File"
+            elif has_input and not has_output:
                 return "Sink", "File"
             else:
-                return "Source", "File"
+                # Fallback to name heuristics
+                node_name = asg_node.get('name', '').upper()
+                if any(keyword in node_name for keyword in ['TGT', 'OUT', 'TARGET', 'SINK', 'OUTPUT']):
+                    return "Sink", "File"
+                else:
+                    return "Source", "File"
         
         # Transformation stages
-        elif enhanced_type in ['CTransformerStage', 'PxJoin', 'PxLookup', 'PxChangeCapture']:
+        elif type_to_check in ['CTransformerStage', 'PxJoin', 'PxLookup', 'PxChangeCapture']:
             return "Transform", "Map"
         
-        # Custom stages
-        elif enhanced_type == 'CCustomStage':
-            node_name = asg_node.get('name', '').upper()
-            if any(keyword in node_name for keyword in ['TGT', 'OUT', 'TARGET', 'SINK', 'OUTPUT_FILE']):
-                return "Sink", "File"
-            elif any(keyword in node_name for keyword in ['SRC', 'IN', 'SOURCE', 'INPUT_FILE']):
-                return "Source", "File"
-            else:
-                return "Transform", "Custom"
+        # Custom stages - check if it's actually a file stage based on properties
+        elif enhanced_type == 'CCustomStage' or type_to_check == 'CCustomStage':
+            # Check if it has file-related properties
+            enhanced_props = asg_node.get('enhanced_properties', {})
+            config = enhanced_props.get('configuration', {})
+            has_file_path = 'FilePath' in config or any('file' in str(k).lower() for k in config.keys())
+            
+            if has_file_path:
+                # Determine Source or Sink based on pins
+                pins = asg_node.get('pins', [])
+                has_input = any(p.get('direction') == 'input' for p in pins)
+                has_output = any(p.get('direction') == 'output' for p in pins)
+                
+                if has_output and not has_input:
+                    return "Source", "File"
+                elif has_input and not has_output:
+                    return "Sink", "File"
+                else:
+                    # Fallback to name heuristics
+                    node_name = asg_node.get('name', '').upper()
+                    if any(keyword in node_name for keyword in ['TGT', 'OUT', 'TARGET', 'SINK', 'OUTPUT']):
+                        return "Sink", "File"
+                    elif any(keyword in node_name for keyword in ['SRC', 'IN', 'SOURCE', 'INPUT']):
+                        return "Source", "File"
+            
+            # Default for CCustomStage without file properties
+            return "Transform", "Custom"
         
         # Default fallback
         else:
@@ -591,7 +632,9 @@ class EnhancedASGToIRConverter:
         config = enhanced_props.get('configuration', {})
         
         file_path = None
-        if config and 'file' in config:
+        if config and 'FilePath' in config:
+            file_path = config['FilePath']
+        elif config and 'file' in config:
             file_path = config['file']
 
         # Fallback: look for file on pin properties (SequentialFile stores path on pin)

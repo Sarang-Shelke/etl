@@ -172,7 +172,7 @@
   </node>
   
     <node componentName="tMap" componentVersion="2.1" offsetLabelX="0" offsetLabelY="0" posX="350" posY="100">
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="VarUsername" show="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="User_Transformer" show="false"/>
     <elementParameter field="EXTERNAL" name="MAP" value=""/>
     <elementParameter field="CLOSED_LIST" name="LINK_STYLE" value="AUTO"/>
     <elementParameter field="DIRECTORY" name="TEMPORARY_DATA_DIRECTORY" value=""/>
@@ -196,7 +196,7 @@
       <varTables sizeState="INTERMEDIATE" name="Var" minimized="true"/>
       <outputTables sizeState="INTERMEDIATE" name="out1">
         <mapperTableEntries name="USERID" expression="rowInput_File.USERID" type="id_BigDecimal" nullable="true"/>
-        <mapperTableEntries name="USERNAME" expression="rowInput_File.USERNAME" type="id_String" nullable="true"/>
+        <mapperTableEntries name="USERNAME" expression="StringHandling.UPPER(rowInput_File.USERNAME)" type="id_String" nullable="true"/>
         <mapperTableEntries name="EMAIL" expression="rowInput_File.EMAIL" type="id_String" nullable="true"/>
         <mapperTableEntries name="STATUS" expression="rowInput_File.STATUS" type="id_String" nullable="true"/>
       </outputTables>
@@ -253,7 +253,7 @@
   </node>
   
   
-  <connection connectorName="FLOW" label="rowInput_File" lineStyle="0" metaname="Input_File" offsetLabelX="0" offsetLabelY="0" source="Input_File" target="VarUsername">
+  <connection connectorName="FLOW" label="rowInput_File" lineStyle="0" metaname="Input_File" offsetLabelX="0" offsetLabelY="0" source="Input_File" target="User_Transformer">
     
     <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
     
@@ -261,11 +261,11 @@
     
   </connection>
   
-  <connection connectorName="FLOW" label="rowVarUsername" lineStyle="0" metaname="VarUsername" offsetLabelX="0" offsetLabelY="0" source="VarUsername" target="Output_File">
+  <connection connectorName="FLOW" label="rowUser_Transformer" lineStyle="0" metaname="User_Transformer" offsetLabelX="0" offsetLabelY="0" source="User_Transformer" target="Output_File">
     
     <elementParameter field="CHECK" name="MONITOR_CONNECTION" value="false"/>
     
-    <elementParameter field="TEXT" name="UNIQUE_NAME" value="rowVarUsername" show="false"/>
+    <elementParameter field="TEXT" name="UNIQUE_NAME" value="rowUser_Transformer" show="false"/>
     
   </connection>
   

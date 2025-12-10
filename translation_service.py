@@ -761,15 +761,29 @@ class TranslationService:
             {"connector": "FLOW", "name": "out1", "columns": talend_columns},
         ]
         
-        output_entries = [
-            {
-                "name": col.get("name", "unknown"),
-                "expression": f"{incoming_conn_name}.{col.get('name', 'unknown')}",
+        output_entries = []
+        for col in schema_columns:
+            col_name = col.get("name", "unknown")
+            
+            # Check if column has transformation expression
+            expression = None
+            if col.get("hasTransformation") and col.get("expression"):
+                # Use the transformation expression from IR
+                ir_expression = col.get("expression", "")
+                # Convert IR expression to Talend expression format
+                # Example: "UpperCase(USERNAME)" -> "StringHandling.UPPER(rowInput_File.USERNAME)"
+                # Example: "UserLink.USERNAME" -> "rowInput_File.USERNAME"
+                expression = self._convert_ir_expression_to_talend(ir_expression, incoming_conn_name, col_name)
+            else:
+                # Simple pass-through
+                expression = f"{incoming_conn_name}.{col_name}"
+            
+            output_entries.append({
+                "name": col_name,
+                "expression": expression,
                 "type": self._map_ir_type_to_talend(col.get("type", "string")),
                 "nullable": "true",
-            }
-            for col in schema_columns
-        ]
+            })
         
         node_data = {
             "uiProperties": {},
@@ -827,6 +841,42 @@ class TranslationService:
             "originalLength": str(column.get("originalLength", -1)),
             "usefulColumn": "true",
         }
+
+    def _convert_ir_expression_to_talend(self, ir_expression: str, incoming_conn_name: str, col_name: str) -> str:
+        """Convert IR transformation expression to Talend tMap expression format.
+        
+        Examples:
+        - "UpperCase(USERNAME)" -> "StringHandling.UPPER(rowInput_File.USERNAME)"
+        - "UserLink.USERNAME" -> "rowInput_File.USERNAME"
+        - "UserLink.USERID" -> "rowInput_File.USERID"
+        """
+        if not ir_expression:
+            return f"{incoming_conn_name}.{col_name}"
+        
+        # Handle function calls like "UpperCase(USERNAME)" or "upcase(UserLink.USERNAME)"
+        upper_match = re.search(r'(?i)(upper|uppercase)\s*\(([^)]+)\)', ir_expression)
+        if upper_match:
+            arg = upper_match.group(2).strip()
+            # Extract column name from argument (could be "USERNAME" or "UserLink.USERNAME")
+            if '.' in arg:
+                col_ref = arg.split('.')[-1]
+            else:
+                col_ref = arg
+            return f"StringHandling.UPPER({incoming_conn_name}.{col_ref})"
+        
+        # Handle simple column references like "UserLink.USERNAME" -> "rowInput_File.USERNAME"
+        if '.' in ir_expression:
+            col_ref = ir_expression.split('.')[-1]
+            return f"{incoming_conn_name}.{col_ref}"
+        
+        # If it's just a column name, use it directly
+        if ir_expression == col_name or ir_expression.upper() == col_name.upper():
+            return f"{incoming_conn_name}.{col_name}"
+        
+        # Fallback: use the expression as-is but replace link references
+        # Replace "UserLink." with incoming_conn_name
+        talend_expr = re.sub(r'UserLink\.', f'{incoming_conn_name}.', ir_expression, flags=re.IGNORECASE)
+        return talend_expr
 
     def _map_ir_type_to_talend(self, ir_type: str) -> str:
         """Map IR data type to Talend type."""

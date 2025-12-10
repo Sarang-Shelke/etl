@@ -128,29 +128,31 @@ def detect_complex_stage_type(stage_type: str, ole_type: str, properties: List[s
     ole_type_upper = ole_type.upper() if ole_type else ""
     properties_str = " ".join(properties).upper()
     
-    # Complex stage type mappings
-    if "PxChangeCapture".lower() in stage_type.lower():
+    # Complex stage type mappings - check stage_type FIRST before ole_type
+    if stage_type and "PxSequentialFile".lower() in stage_type.lower():
+        return "PxSequentialFile"
+    elif stage_type and "PxChangeCapture".lower() in stage_type.lower():
         return "PxChangeCapture"
-    elif "DB2ConnectorPX".lower() in stage_type.lower():
+    elif stage_type and "DB2ConnectorPX".lower() in stage_type.lower():
         return "DB2ConnectorPX"
-    elif "PxJoin".lower() in stage_type.lower():
+    elif stage_type and "PxJoin".lower() in stage_type.lower():
         return "PxJoin"
-    elif "PxLookup".lower() in stage_type.lower():
+    elif stage_type and "PxLookup".lower() in stage_type.lower():
         return "PxLookup"
-    elif "PxTransformer".lower() in stage_type.lower():
+    elif stage_type and "PxTransformer".lower() in stage_type.lower():
         return "PxTransformer"
-    elif ole_type_upper == "CCUSTOMSTAGE" and "TRANSACTION" in properties_str:
-        return "TransactionalCustomStage"
     elif ole_type_upper == "CTRANSFORMERSTAGE":
         return "CTransformerStage"
     elif ole_type_upper == "CCUSTOMOUTPUT":
         return "CCustomOutput"
     elif ole_type_upper == "CCUSTOMINPUT":
         return "CCustomInput"
+    elif ole_type_upper == "CCUSTOMSTAGE" and "TRANSACTION" in properties_str:
+        return "TransactionalCustomStage"
     elif ole_type_upper == "CCUSTOMSTAGE":
         return "CCustomStage"
     else:
-        return ole_type if ole_type else stage_type
+        return stage_type if stage_type else ole_type
 
 # ============================================================================
 # CORE PARSING FUNCTIONS
@@ -930,16 +932,21 @@ class ASGBuilder:
         # Extract basic stage properties from main record
         ole_type = ""
         stage_type = ""
+        stage_name_found = False
         for line in lines:
-            if 'Name "' in line and 'BEGIN' not in line and 'Name "APT"' not in line:
-                # Only extract stage name from main DSRECORD, not from subrecords
-                if not line.strip().startswith('BEGIN') and 'Owner "APT"' not in line:
+            # Extract stage name FIRST - only from the main DSRECORD Name field (not subrecords)
+            if 'Name "' in line and not stage_name_found:
+                # Check if this is the main record Name field (not inside a subrecord)
+                # Main record Name appears early, before BEGIN DSSUBRECORD
+                if not any('BEGIN DSSUBRECORD' in prev_line for prev_line in lines[:lines.index(line)]):
                     stage_name = extract_property_name(line)
-                    # Avoid setting name to subrecord property names
+                    # Avoid setting name to property names that are column names or config keys
                     if stage_name and stage_name not in ['file', 'delimiter', 'firstLineColumnNames', 
                                                        'keys', 'aggregations', 'schema', 'TrxGenCode', 
-                                                       'TrxClassName', 'JobParameterNames']:
+                                                       'TrxClassName', 'JobParameterNames', 'USERID', 
+                                                       'USERNAME', 'EMAIL', 'STATUS', 'VarUsername']:
                         node['name'] = stage_name
+                        stage_name_found = True
             elif 'OLEType "' in line:
                 match = re.search(r'OLEType "(.*?)"', line)
                 if match:
@@ -960,8 +967,17 @@ class ASGBuilder:
                     parsed_keys = parse_join_keys(match.group(1))
                     node['properties']['join_key'] = parsed_keys
         
-        # Enhanced stage type detection
+        # Enhanced stage type detection (initial)
         node['enhanced_type'] = detect_complex_stage_type(stage_type, ole_type, lines)
+        
+        # If stage_type not found in record, try to get it from container's StageTypes
+        if (not stage_type or stage_type == "") and self.container_record:
+            container_stage_type = self._get_stage_type_from_container(identifier)
+            if container_stage_type:
+                stage_type = container_stage_type
+                node['properties']['stage_type'] = stage_type
+                # Re-detect enhanced_type with the container stage type
+                node['enhanced_type'] = detect_complex_stage_type(stage_type, ole_type, lines)
         
         # Extract ALL stage properties
         node['enhanced_properties'] = self._extract_stage_properties(lines)
@@ -969,9 +985,10 @@ class ASGBuilder:
         # Find and attach pins for this node
         node['pins'] = self._get_pins_for_node(identifier)
         
-        # Fallback: Get stage name from V0 container if still missing
-        if not node['name']:
-            node['name'] = self._get_stage_name_from_container_fallback(identifier)
+        # ALWAYS get stage name from V0 container (most reliable source)
+        container_name = self._get_stage_name_from_container_fallback(identifier)
+        if container_name and container_name != "Unknown":
+            node['name'] = container_name
         
         return node
     
@@ -979,26 +996,63 @@ class ASGBuilder:
         """Get stage name from V0 container StageNames field."""
         if not self.container_record:
             return "Unknown"
-            
+        
+        # Extract StageList and StageNames separately (they're on different lines)
+        stage_list_str = None
+        stage_names_str = None
+        
         for line in self.container_record['lines']:
-            if 'StageNames "' in line:
-                # Extract stage names from StageNames field
+            if 'StageList "' in line:
+                stage_list_match = re.search(r'StageList "([^"]*)"', line)
+                if stage_list_match:
+                    stage_list_str = stage_list_match.group(1)
+            elif 'StageNames "' in line:
                 stage_names_match = re.search(r'StageNames "([^"]*)"', line)
                 if stage_names_match:
                     stage_names_str = stage_names_match.group(1)
-                    stage_names = stage_names_str.split('|')
-                    
-                    # Also get StageList to map names to IDs
-                    stage_list_match = re.search(r'StageList "([^"]*)"', line)
-                    if stage_list_match:
-                        stage_list_str = stage_list_match.group(1)
-                        stage_ids = stage_list_str.split('|')
-                        
-                        # Map IDs to names
-                        for i, stage_id_in_list in enumerate(stage_ids):
-                            if stage_id_in_list == stage_id and i < len(stage_names):
-                                return stage_names[i]
+        
+        # Map IDs to names if both are found
+        if stage_list_str and stage_names_str:
+            stage_ids = stage_list_str.split('|')
+            stage_names = stage_names_str.split('|')
+            
+            # Map IDs to names
+            for i, stage_id_in_list in enumerate(stage_ids):
+                if stage_id_in_list == stage_id and i < len(stage_names):
+                    return stage_names[i]
+        
         return "Unknown"
+    
+    def _get_stage_type_from_container(self, stage_id: str) -> Optional[str]:
+        """Get stage type from V0 container StageTypes field."""
+        if not self.container_record:
+            return None
+        
+        # Extract StageList and StageTypes separately (they're on different lines)
+        stage_list_str = None
+        stage_types_str = None
+        
+        for line in self.container_record['lines']:
+            if 'StageList "' in line:
+                stage_list_match = re.search(r'StageList "([^"]*)"', line)
+                if stage_list_match:
+                    stage_list_str = stage_list_match.group(1)
+            elif 'StageTypes "' in line:
+                stage_types_match = re.search(r'StageTypes "([^"]*)"', line)
+                if stage_types_match:
+                    stage_types_str = stage_types_match.group(1)
+        
+        # Map IDs to types if both are found
+        if stage_list_str and stage_types_str:
+            stage_ids = stage_list_str.split('|')
+            stage_types = stage_types_str.split('|')
+            
+            # Map IDs to types
+            for i, stage_id_in_list in enumerate(stage_ids):
+                if stage_id_in_list == stage_id and i < len(stage_types):
+                    return stage_types[i]
+        
+        return None
 
     def _extract_stage_properties(self, lines: List[str]) -> Dict[str, Any]:
         """Extract ALL stage properties from DSSUBRECORD blocks."""
@@ -1594,7 +1648,7 @@ if __name__ == "__main__":
             print(f"  Filtering Stages: {evolution_summary.get('stages_with_filtering', 0)}")
         
         # Save enhanced ASG to file
-        output_file = 'simple_user_job.json'
+        output_file = 'workingdsx.json'
         builder.save_to_file(output_file)
         print(f"\n✓ Enhanced ASG saved to: {output_file}")
         

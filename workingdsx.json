@@ -168,8 +168,8 @@
                 "type": "simple_column",
                 "source_columns": [
                   "UserLink",
-                  "EMAIL",
-                  "UserLink.EMAIL"
+                  "UserLink.EMAIL",
+                  "EMAIL"
                 ],
                 "functions": [],
                 "expression": "UserLink.EMAIL"
@@ -188,8 +188,8 @@
               "transformation_logic": {
                 "type": "simple_column",
                 "source_columns": [
-                  "UserLink",
                   "STATUS",
+                  "UserLink",
                   "UserLink.STATUS"
                 ],
                 "functions": [],
