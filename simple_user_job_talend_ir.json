@@ -1,0 +1,342 @@
+{
+  "metadata": {
+    "version": "2.0",
+    "generated_at": "2025-12-10T18:02:53.952051Z",
+    "generator": "TalendASGToIRConverter",
+    "source": {
+      "type": "datastage_asg",
+      "job_name": "J_DEMO_001"
+    }
+  },
+  "job": {
+    "id": "talend-J_DEMO_001",
+    "name": "J_DEMO_001",
+    "description": "",
+    "parameters": [],
+    "contexts": {
+      "default": {}
+    }
+  },
+  "components": [
+    {
+      "id": "comp_V0S0",
+      "asg_id": "V0S0",
+      "name": "Input_File",
+      "type": "file_read",
+      "category": "input",
+      "talend_component": "tFileInputDelimited",
+      "properties": {},
+      "schema": {
+        "input_pins": [],
+        "output_pins": [
+          {
+            "id": "V0S0P1",
+            "asg_id": "V0S0P1",
+            "name": "UserLink",
+            "direction": "output",
+            "columns": []
+          }
+        ]
+      },
+      "configuration": {
+        "file_path": "D:\\ETL_Migrator\\inputfile.csv",
+        "delimiter": ",",
+        "header": "true"
+      },
+      "talend_specific": {}
+    },
+    {
+      "id": "comp_V0S1",
+      "asg_id": "V0S1",
+      "name": "User_Transformer",
+      "type": "transform",
+      "category": "processor",
+      "talend_component": "tMap",
+      "properties": {},
+      "schema": {
+        "input_pins": [
+          {
+            "id": "V0S1P1",
+            "asg_id": "V0S1P1",
+            "name": "UserLink",
+            "direction": "input",
+            "columns": []
+          }
+        ],
+        "output_pins": [
+          {
+            "id": "V0S1P2",
+            "asg_id": "V0S1P2",
+            "name": "TransformedLink",
+            "direction": "output",
+            "columns": [
+              {
+                "name": "USERID",
+                "type": "BigDecimal",
+                "length": "10",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "UserLink",
+                    "UserLink.USERID",
+                    "USERID"
+                  ],
+                  "expression": "UserLink.USERID",
+                  "functions": [],
+                  "derivation": "UserLink.USERID"
+                }
+              },
+              {
+                "name": "USERNAME",
+                "type": "String",
+                "length": "50",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple",
+                  "source_columns": [
+                    "USERNAME"
+                  ],
+                  "expression": "UpperCase(USERNAME)",
+                  "functions": [
+                    "UpperCase"
+                  ],
+                  "derivation": "UpperCase(USERNAME)"
+                }
+              },
+              {
+                "name": "EMAIL",
+                "type": "String",
+                "length": "100",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "UserLink",
+                    "UserLink.EMAIL",
+                    "EMAIL"
+                  ],
+                  "expression": "UserLink.EMAIL",
+                  "functions": [],
+                  "derivation": "UserLink.EMAIL"
+                }
+              },
+              {
+                "name": "STATUS",
+                "type": "String",
+                "length": "20",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "UserLink",
+                    "UserLink.STATUS",
+                    "STATUS"
+                  ],
+                  "expression": "UserLink.STATUS",
+                  "functions": [],
+                  "derivation": "UserLink.STATUS"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "configuration": {},
+      "talend_specific": {
+        "trx_class_name": "V0S1_SIMPLE_USER_PROCESS_User_Transformer",
+        "has_transformation_code": true,
+        "transformation_code_length": 13,
+        "job_parameters": "ENVIRONMENT"
+      }
+    },
+    {
+      "id": "comp_V0S2",
+      "asg_id": "V0S2",
+      "name": "Output_File",
+      "type": "custom_transform",
+      "category": "processor",
+      "talend_component": "tJavaRow",
+      "properties": {},
+      "schema": {
+        "input_pins": [],
+        "output_pins": []
+      },
+      "configuration": {
+        "FilePath": "D:\\ETL_Migrator\\outputfile.csv",
+        "FieldDelimiter": ",",
+        "FirstLineColumnNames": "true",
+        "USERID": null,
+        "USERNAME": null,
+        "EMAIL": null,
+        "STATUS": null
+      },
+      "talend_specific": {}
+    }
+  ],
+  "connections": [
+    {
+      "id": "conn_V0S0_V0S1",
+      "from": {
+        "component_id": "comp_V0S0",
+        "pin": "UserLink",
+        "asg_pin_id": "V0S0P1"
+      },
+      "to": {
+        "component_id": "comp_V0S1",
+        "pin": "UserLink",
+        "asg_pin_id": "V0S1P1"
+      },
+      "schema_ref": "V0S0P1"
+    },
+    {
+      "id": "conn_V0S1_V0S0",
+      "from": {
+        "component_id": "comp_V0S1",
+        "pin": "UserLink",
+        "asg_pin_id": "V0S1P1"
+      },
+      "to": {
+        "component_id": "comp_V0S0",
+        "pin": "UserLink",
+        "asg_pin_id": "V0S0P1"
+      },
+      "schema_ref": "V0S1P1"
+    },
+    {
+      "id": "conn_V0S1_V0S2",
+      "from": {
+        "component_id": "comp_V0S1",
+        "pin": "TransformedLink",
+        "asg_pin_id": "V0S1P2"
+      },
+      "to": {
+        "component_id": "comp_V0S2",
+        "pin": "in",
+        "asg_pin_id": "V0S2P1"
+      },
+      "schema_ref": "V0S1P2"
+    }
+  ],
+  "schemas": {
+    "comp_V0S0": {
+      "inputs": {},
+      "outputs": {
+        "UserLink": {
+          "columns": [],
+          "pin_id": "V0S0P1"
+        }
+      }
+    },
+    "comp_V0S1": {
+      "inputs": {
+        "UserLink": {
+          "columns": [],
+          "pin_id": "V0S1P1"
+        }
+      },
+      "outputs": {
+        "TransformedLink": {
+          "columns": [
+            {
+              "name": "USERID",
+              "type": "BigDecimal",
+              "length": "10",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "UserLink",
+                  "UserLink.USERID",
+                  "USERID"
+                ],
+                "expression": "UserLink.USERID",
+                "functions": [],
+                "derivation": "UserLink.USERID"
+              }
+            },
+            {
+              "name": "USERNAME",
+              "type": "String",
+              "length": "50",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple",
+                "source_columns": [
+                  "USERNAME"
+                ],
+                "expression": "UpperCase(USERNAME)",
+                "functions": [
+                  "UpperCase"
+                ],
+                "derivation": "UpperCase(USERNAME)"
+              }
+            },
+            {
+              "name": "EMAIL",
+              "type": "String",
+              "length": "100",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "UserLink",
+                  "UserLink.EMAIL",
+                  "EMAIL"
+                ],
+                "expression": "UserLink.EMAIL",
+                "functions": [],
+                "derivation": "UserLink.EMAIL"
+              }
+            },
+            {
+              "name": "STATUS",
+              "type": "String",
+              "length": "20",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "UserLink",
+                  "UserLink.STATUS",
+                  "STATUS"
+                ],
+                "expression": "UserLink.STATUS",
+                "functions": [],
+                "derivation": "UserLink.STATUS"
+              }
+            }
+          ],
+          "pin_id": "V0S1P2"
+        }
+      }
+    },
+    "comp_V0S2": {
+      "inputs": {},
+      "outputs": {}
+    }
+  },
+  "metadata_info": {
+    "total_columns": 7,
+    "total_transformations": 5,
+    "total_connections": 3,
+    "total_components": 3,
+    "total_parameters": 0
+  }
+}

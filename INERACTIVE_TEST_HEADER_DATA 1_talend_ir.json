@@ -1,0 +1,4820 @@
+{
+  "metadata": {
+    "version": "2.0",
+    "generated_at": "2025-12-10T18:03:34.566287Z",
+    "generator": "TalendASGToIRConverter",
+    "source": {
+      "type": "datastage_asg",
+      "job_name": "J_DEMO_001"
+    }
+  },
+  "job": {
+    "id": "talend-J_DEMO_001",
+    "name": "J_DEMO_001",
+    "description": "",
+    "parameters": [
+      {
+        "name": "TEST_Param",
+        "type": "string",
+        "default_value": "(As pre-defined)",
+        "prompt": "TEST_Param parameters",
+        "required": true
+      },
+      {
+        "name": "STMT_START",
+        "type": "string",
+        "default_value": "2016-03-01",
+        "prompt": "STMT_START",
+        "required": true
+      },
+      {
+        "name": "STMT_END",
+        "type": "string",
+        "default_value": "2016-03-31",
+        "prompt": "STMT_END",
+        "required": true
+      },
+      {
+        "name": "PRODUCT_CODE",
+        "type": "string",
+        "default_value": "\\\\'HF41\\\\',\\\\'HF42\\\\',\\\\'HF43\\\\',\\\\'HF44\\\\',\\\\'HF45\\\\',\\\\'HF46\\\\',\\\\'HF47\\\\',\\\\'HF49\\\\',\\\\'HF50\\\\',\\\\'HF51\\\\',\\\\'HF52\\\\',\\\\'HF53\\\\',\\\\'HF54\\\\',\\\\'HF57\\\\',\\\\'IJ46\\\\',\\\\'MB41\\\\',\\\\'MB43\\\\',\\\\'MO51\\\\',\\\\'MO52\\\\',\\\\'MO53\\\\',\\\\'MO54\\\\',\\\\'MS41\\\\',\\\\'NB21\\\\',\\\\'NB22\\\\',\\\\'NB23\\\\',\\\\'NB24\\\\',\\\\'NB25\\\\',\\\\'NB26\\\\',\\\\'NB27\\\\',\\\\'NF41\\\\',\\\\'TW01\\\\',\\\\'TW02\\\\',\\\\'TW03\\\\',\\\\'TW04\\\\',\\\\'TW05\\\\',\\\\'TW06\\\\',\\\\'TW07\\\\',\\\\'TW08\\\\',\\\\'WK41\\\\'",
+        "prompt": "PRODUCT_CODE",
+        "required": true
+      }
+    ],
+    "contexts": {
+      "default": {
+        "TEST_Param": "(As pre-defined)",
+        "STMT_START": "2016-03-01",
+        "STMT_END": "2016-03-31",
+        "PRODUCT_CODE": "\\\\'HF41\\\\',\\\\'HF42\\\\',\\\\'HF43\\\\',\\\\'HF44\\\\',\\\\'HF45\\\\',\\\\'HF46\\\\',\\\\'HF47\\\\',\\\\'HF49\\\\',\\\\'HF50\\\\',\\\\'HF51\\\\',\\\\'HF52\\\\',\\\\'HF53\\\\',\\\\'HF54\\\\',\\\\'HF57\\\\',\\\\'IJ46\\\\',\\\\'MB41\\\\',\\\\'MB43\\\\',\\\\'MO51\\\\',\\\\'MO52\\\\',\\\\'MO53\\\\',\\\\'MO54\\\\',\\\\'MS41\\\\',\\\\'NB21\\\\',\\\\'NB22\\\\',\\\\'NB23\\\\',\\\\'NB24\\\\',\\\\'NB25\\\\',\\\\'NB26\\\\',\\\\'NB27\\\\',\\\\'NF41\\\\',\\\\'TW01\\\\',\\\\'TW02\\\\',\\\\'TW03\\\\',\\\\'TW04\\\\',\\\\'TW05\\\\',\\\\'TW06\\\\',\\\\'TW07\\\\',\\\\'TW08\\\\',\\\\'WK41\\\\'"
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "comp_V127S0",
+      "asg_id": "V127S0",
+      "name": "IJARA_HEADER",
+      "type": "database_write",
+      "category": "output",
+      "talend_component": "tDB2Output",
+      "properties": {},
+      "schema": {
+        "input_pins": [
+          {
+            "id": "V127S0P2",
+            "asg_id": "V127S0P2",
+            "name": "lnk_tgt",
+            "direction": "input",
+            "columns": []
+          }
+        ],
+        "output_pins": []
+      },
+      "configuration": {
+        "instance": "/Connection/Instance",
+        "username": "/Connection/Username",
+        "password": "/Connection/Password",
+        "connectionstring": "/Connection/Database"
+      },
+      "talend_specific": {
+        "connector_name": "DB2Connector",
+        "engine": "EE",
+        "context_params": {
+          "XMLProperties": "<?xml version='1.0' encoding='UTF-16'?><Properties version='1.1'><Common><Context type='int'>2</Context><Variant type='string'>9.1</Variant><DescriptorVersion type='string'>1.0</DescriptorVersion><PartitionType type='int'>3</PartitionType><RCP type='int'>0</RCP></Common><Connection><Instance type='string'><![CDATA[#TEST_Param.$DB2_INSTANCE#]]></Instance><Database type='string'><![CDATA[#TEST_Param.$DB2_DATABASE#]]></Database><Username type='string'><![CDATA[#TEST_Param.$DB2_USERNAME#]]></Username><Password type='string'><![CDATA[#TEST_Param.$DB2_PASSWORD#]]></Password><DB2ClientLibFile type='string'><![CDATA[#TEST_Param.$DB2_LOCATION#]]></DB2ClientLibFile><Conductor collapsed='1' type='bool'><![CDATA[0]]></Conductor><UseDirectConnections type='bool'><![CDATA[0]]></UseDirectConnections><KeepConductorConnectionAlive type='bool'><![CDATA[1]]></KeepConductorConnectionAlive></Connection><Usage><MigratedJob type='bool'><![CDATA[0]]></MigratedJob><WriteMode modified='1' type='int'><![CDATA[0]]></WriteMode><GenerateSQL modified='1' type='bool'><![CDATA[1]]></GenerateSQL><EnableQuotedIDs type='bool'><![CDATA[0]]></EnableQuotedIDs><TableName modified='1' type='string'><![CDATA[#TEST_Param.$DB2_WRK_SCHEMA#.INERACTIVE_IJARA_HEADER_DATA]]></TableName><XMLColumnAsLOB type='bool'><![CDATA[0]]></XMLColumnAsLOB><PrefixForExpressionColumns type='string'><![CDATA[EXPR]]></PrefixForExpressionColumns><SQL><DirectInsert type='bool'><![CDATA[1]]></DirectInsert></SQL><TableAction collapsed='1' modified='1' type='int'><![CDATA[0]]></TableAction><Transaction><RecordCount modified='1' type='int'><![CDATA[20000]]></RecordCount></Transaction><Session><IsolationLevel type='int'><![CDATA[1]]></IsolationLevel><AutocommitMode type='int'><![CDATA[0]]></AutocommitMode><ArraySize modified='1' type='int'><![CDATA[20000]]></ArraySize><SchemaReconciliation><FailOnSizeMismatch type='bool'><![CDATA[0]]></FailOnSizeMismatch><FailOnTypeMismatch type='bool'><![CDATA[0]]></FailOnTypeMismatch><FailOnCodePageMismatch type='bool'><![CDATA[0]]></FailOnCodePageMismatch><DropUnmatchedFields type='bool'><![CDATA[1]]></DropUnmatchedFields></SchemaReconciliation><FailOnRowErrorPX type='bool'><![CDATA[1]]></FailOnRowErrorPX><InsertBuffering type='int'><![CDATA[0]]><AtomicArrays type='int'><![CDATA[0]]></AtomicArrays></InsertBuffering></Session><Logging><LogColumnValues collapsed='1' type='bool'><![CDATA[0]]></LogColumnValues></Logging><BeforeAfter collapsed='1' modified='1' type='bool'><![CDATA[0]]></BeforeAfter><ReOptimization type='int'><![CDATA[2]]></ReOptimization><LockWaitMode collapsed='1' type='int'><![CDATA[1]]></LockWaitMode></Usage></Properties >"
+        }
+      }
+    },
+    {
+      "id": "comp_V221S0",
+      "asg_id": "V221S0",
+      "name": "INERACTIVE_IJARA_HEADER_DATA",
+      "type": "custom_write",
+      "category": "output",
+      "talend_component": "tJavaRow",
+      "properties": {},
+      "schema": {
+        "input_pins": [
+          {
+            "id": "V221S0P1",
+            "asg_id": "V221S0P1",
+            "name": "lnk_tgt1",
+            "direction": "input",
+            "columns": []
+          }
+        ],
+        "output_pins": []
+      },
+      "configuration": {
+        "VariantName": "3.5",
+        "VariantLibrary": "ccodbc",
+        "VariantVersion": "1.0",
+        "SupportedVariants": "V1;3.5::ccodbc",
+        "SupportedVariantsLibraries": "ccodbc",
+        "SupportedVariantsVersions": "1.0",
+        "Orientation": "link",
+        "RejectFromLink": "-1",
+        "RejectThreshold": "0",
+        "RejectNumber": "0",
+        "RejectUsesPercentage": "false",
+        "ConnectorName": "ODBCConnector",
+        "Engine": "EE",
+        "Context": "target",
+        "ConnectionString": "/Connection/DataSource",
+        "Username": "/Connection/Username",
+        "Password": "/Connection/Password",
+        "XMLProperties_parsed": {}
+      },
+      "talend_specific": {
+        "connector_name": "ODBCConnector",
+        "engine": "EE",
+        "context_params": {
+          "XMLProperties": "<?xml version='1.0' encoding='UTF-16'?><Properties version='1.1'><Common><Context type='int'>2</Context><Variant type='string'>3.5</Variant><DescriptorVersion type='string'>1.0</DescriptorVersion><PartitionType type='int'>-1</PartitionType><RCP type='int'>0</RCP></Common><Connection><DataSource modified='1' type='string'><![CDATA[#TEST_Param.$iSTATEMENT_SID#]]></DataSource><Username modified='1' type='string'><![CDATA[#TEST_Param.$iSTATEMENT_USERNAME#]]></Username><Password modified='1' type='string'><![CDATA[#TEST_Param.$iSTATEMENT_PASSWORD#]]></Password></Connection><Usage><WriteMode type='int'><![CDATA[0]]></WriteMode><GenerateSQL modified='1' type='bool'><![CDATA[1]]></GenerateSQL><TableName modified='1' type='string'><![CDATA[TEST.DBO.INERACTIVE_IJARA_HEADER_DATA]]></TableName><EnableQuotedIDs modified='1' type='bool'><![CDATA[0]]></EnableQuotedIDs><SQL></SQL><TableAction collapsed='1' modified='1' type='int'><![CDATA[0]]></TableAction><Transaction><RecordCount type='int'><![CDATA[2000]]></RecordCount></Transaction><Session><IsolationLevel type='int'><![CDATA[1]]></IsolationLevel><AutocommitMode type='int'><![CDATA[0]]></AutocommitMode><ArraySize type='int'><![CDATA[2000]]></ArraySize><SchemaReconciliation><FailOnSizeMismatch type='bool'><![CDATA[1]]></FailOnSizeMismatch><FailOnTypeMismatch type='bool'><![CDATA[1]]></FailOnTypeMismatch><FailOnCodePageMismatch type='bool'><![CDATA[0]]></FailOnCodePageMismatch><DropUnmatchedFields type='bool'><![CDATA[1]]></DropUnmatchedFields></SchemaReconciliation><CodePage collapsed='1' type='int'><![CDATA[0]]></CodePage><FailOnRowErrorPX type='bool'><![CDATA[1]]></FailOnRowErrorPX></Session><Logging collapsed='1'><LogColumnValues collapsed='1' type='bool'><![CDATA[0]]></LogColumnValues></Logging><BeforeAfter modified='1' type='bool'><![CDATA[1]]><before modified='1' type='string'><![CDATA[DELETE FROM TEST.DBO.INERACTIVE_IJARA_HEADER_DATA;]]><ReadFromFileBeforeSQL type='bool'><![CDATA[0]]></ReadFromFileBeforeSQL><FailOnError type='bool'><![CDATA[1]]></FailOnError></before><after type='string'><![CDATA[]]><ReadFromFileAfterSQL type='bool'><![CDATA[0]]></ReadFromFileAfterSQL><FailOnError type='bool'><![CDATA[1]]></FailOnError></after><beforeNode type='string'><![CDATA[]]><ReadFromFileBeforeSQLNode type='bool'><![CDATA[0]]></ReadFromFileBeforeSQLNode><FailOnError type='bool'><![CDATA[1]]></FailOnError></beforeNode><afterNode type='string'><![CDATA[]]><ReadFromFileAfterSQLNode type='bool'><![CDATA[0]]></ReadFromFileAfterSQLNode><FailOnError type='bool'><![CDATA[1]]></FailOnError></afterNode></BeforeAfter></Usage></Properties >"
+        }
+      }
+    },
+    {
+      "id": "comp_V228S0",
+      "asg_id": "V228S0",
+      "name": "Lookup_62",
+      "type": "lookup",
+      "category": "processor",
+      "talend_component": "tMap",
+      "properties": {},
+      "schema": {
+        "input_pins": [
+          {
+            "id": "V228S0P1",
+            "asg_id": "V228S0P1",
+            "name": "READ_CORE_SOURCE1",
+            "direction": "input",
+            "columns": []
+          },
+          {
+            "id": "V228S0P2",
+            "asg_id": "V228S0P2",
+            "name": "L13",
+            "direction": "input",
+            "columns": []
+          },
+          {
+            "id": "V228S0P5",
+            "asg_id": "V228S0P5",
+            "name": "L14",
+            "direction": "input",
+            "columns": []
+          }
+        ],
+        "output_pins": [
+          {
+            "id": "V228S0P3",
+            "asg_id": "V228S0P3",
+            "name": "READ_CORE_SOURCE",
+            "direction": "output",
+            "columns": [
+              {
+                "name": "CONTRACT_REF_NO",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "CONTRACT_REF_NO",
+                    "READ_CORE_SOURCE1",
+                    "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+                }
+              },
+              {
+                "name": "CUSTOMERNAME1",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "CUSTOMERNAME1",
+                    "READ_CORE_SOURCE1",
+                    "READ_CORE_SOURCE1.CUSTOMERNAME1"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.CUSTOMERNAME1",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.CUSTOMERNAME1"
+                }
+              },
+              {
+                "name": "MAILING_POBOX",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1.MAILING_POBOX",
+                    "READ_CORE_SOURCE1",
+                    "MAILING_POBOX"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.MAILING_POBOX",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.MAILING_POBOX"
+                }
+              },
+              {
+                "name": "MAILING_COUNTRY",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "aggregation",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1",
+                    "MAILING_COUNTRY",
+                    "READ_CORE_SOURCE1.MAILING_COUNTRY"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.MAILING_COUNTRY",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.MAILING_COUNTRY"
+                }
+              },
+              {
+                "name": "MOBILE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1.MOBILE",
+                    "READ_CORE_SOURCE1",
+                    "MOBILE"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.MOBILE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.MOBILE"
+                }
+              },
+              {
+                "name": "CUSTOMERID",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "CUSTOMERID",
+                    "READ_CORE_SOURCE1",
+                    "READ_CORE_SOURCE1.CUSTOMERID"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.CUSTOMERID",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.CUSTOMERID"
+                }
+              },
+              {
+                "name": "APPLICATIONID",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1",
+                    "READ_CORE_SOURCE1.APPLICATIONID",
+                    "APPLICATIONID"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.APPLICATIONID",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.APPLICATIONID"
+                }
+              },
+              {
+                "name": "MAILING_CITY",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "MAILING_CITY",
+                    "READ_CORE_SOURCE1",
+                    "READ_CORE_SOURCE1.MAILING_CITY"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.MAILING_CITY",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.MAILING_CITY"
+                }
+              },
+              {
+                "name": "PROPERTYNAME",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1.PROPERTYNAME",
+                    "READ_CORE_SOURCE1",
+                    "PROPERTYNAME"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.PROPERTYNAME",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.PROPERTYNAME"
+                }
+              },
+              {
+                "name": "PROPERTYDETAILS",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "PROPERTYDETAILS",
+                    "READ_CORE_SOURCE1",
+                    "READ_CORE_SOURCE1.PROPERTYDETAILS"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.PROPERTYDETAILS",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.PROPERTYDETAILS"
+                }
+              },
+              {
+                "name": "SPREAD",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1",
+                    "SPREAD",
+                    "READ_CORE_SOURCE1.SPREAD"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.SPREAD",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.SPREAD"
+                }
+              },
+              {
+                "name": "BASERATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "BASERATE",
+                    "READ_CORE_SOURCE1.BASERATE",
+                    "READ_CORE_SOURCE1"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.BASERATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.BASERATE"
+                }
+              },
+              {
+                "name": "LAST_RATE_CHANGE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1.LAST_RATE_CHANGE",
+                    "READ_CORE_SOURCE1",
+                    "LAST_RATE_CHANGE"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.LAST_RATE_CHANGE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.LAST_RATE_CHANGE"
+                }
+              },
+              {
+                "name": "CURRENT_RATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1",
+                    "CURRENT_RATE",
+                    "READ_CORE_SOURCE1.CURRENT_RATE"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.CURRENT_RATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.CURRENT_RATE"
+                }
+              },
+              {
+                "name": "REPAYMENT_TENOR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1.REPAYMENT_TENOR",
+                    "READ_CORE_SOURCE1",
+                    "REPAYMENT_TENOR"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.REPAYMENT_TENOR",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.REPAYMENT_TENOR"
+                }
+              },
+              {
+                "name": "BALANCE_TENOR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "BALANCE_TENOR",
+                    "READ_CORE_SOURCE1.BALANCE_TENOR",
+                    "READ_CORE_SOURCE1"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.BALANCE_TENOR",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.BALANCE_TENOR"
+                }
+              },
+              {
+                "name": "START_DATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "START_DATE",
+                    "READ_CORE_SOURCE1",
+                    "READ_CORE_SOURCE1.START_DATE"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.START_DATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.START_DATE"
+                }
+              },
+              {
+                "name": "END_DATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1.END_DATE",
+                    "READ_CORE_SOURCE1",
+                    "END_DATE"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.END_DATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.END_DATE"
+                }
+              },
+              {
+                "name": "BRANCH",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1.BRANCH",
+                    "READ_CORE_SOURCE1",
+                    "BRANCH"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.BRANCH",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.BRANCH"
+                }
+              },
+              {
+                "name": "PERSONAL_EMAIL",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1",
+                    "READ_CORE_SOURCE1.PERSONAL_EMAIL",
+                    "PERSONAL_EMAIL"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.PERSONAL_EMAIL",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.PERSONAL_EMAIL"
+                }
+              },
+              {
+                "name": "PRODUCT_CODE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1.PRODUCT_CODE",
+                    "READ_CORE_SOURCE1",
+                    "PRODUCT_CODE"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.PRODUCT_CODE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.PRODUCT_CODE"
+                }
+              },
+              {
+                "name": "PRODUCT_GROUP",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "PRODUCT_GROUP",
+                    "READ_CORE_SOURCE1.PRODUCT_GROUP",
+                    "READ_CORE_SOURCE1"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.PRODUCT_GROUP",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.PRODUCT_GROUP"
+                }
+              },
+              {
+                "name": "PORTFOLIO",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "PORTFOLIO",
+                    "READ_CORE_SOURCE1",
+                    "READ_CORE_SOURCE1.PORTFOLIO"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.PORTFOLIO",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.PORTFOLIO"
+                }
+              },
+              {
+                "name": "RATE_CODE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1.RATE_CODE",
+                    "READ_CORE_SOURCE1",
+                    "RATE_CODE"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.RATE_CODE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.RATE_CODE"
+                }
+              },
+              {
+                "name": "FIX_PROFIT_FLG",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1.FIX_PROFIT_FLG",
+                    "FIX_PROFIT_FLG",
+                    "READ_CORE_SOURCE1"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.FIX_PROFIT_FLG",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.FIX_PROFIT_FLG"
+                }
+              },
+              {
+                "name": "DR_SETL_AC",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1",
+                    "READ_CORE_SOURCE1.DR_SETL_AC",
+                    "DR_SETL_AC"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.DR_SETL_AC",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.DR_SETL_AC"
+                }
+              },
+              {
+                "name": "STMT_DT",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "STMT_DT",
+                    "READ_CORE_SOURCE1.STMT_DT",
+                    "READ_CORE_SOURCE1"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.STMT_DT",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.STMT_DT"
+                }
+              },
+              {
+                "name": "USER_REF_NO",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1.USER_REF_NO",
+                    "READ_CORE_SOURCE1",
+                    "USER_REF_NO"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.USER_REF_NO",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.USER_REF_NO"
+                }
+              },
+              {
+                "name": "INS_REPLENISHMENT_DATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1",
+                    "INS_REPLENISHMENT_DATE",
+                    "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE"
+                }
+              },
+              {
+                "name": "REPLENISHMENT_DATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1",
+                    "REPLENISHMENT_DATE",
+                    "READ_CORE_SOURCE1.REPLENISHMENT_DATE"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.REPLENISHMENT_DATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.REPLENISHMENT_DATE"
+                }
+              },
+              {
+                "name": "LAST_RATE_CHANGE_CHAR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "L14.RATE_CHANGE_DATE",
+                    "RATE_CHANGE_DATE",
+                    "L14"
+                  ],
+                  "expression": "L14.RATE_CHANGE_DATE",
+                  "functions": [],
+                  "derivation": "L14.RATE_CHANGE_DATE"
+                }
+              },
+              {
+                "name": "INS_REPLENISHMENT_DATE_CHAR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE_CHAR",
+                    "READ_CORE_SOURCE1",
+                    "INS_REPLENISHMENT_DATE_CHAR"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE_CHAR",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE_CHAR"
+                }
+              },
+              {
+                "name": "REPLENISHMENT_DATE_CHAR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "REPLENISHMENT_DATE_CHAR",
+                    "READ_CORE_SOURCE1",
+                    "READ_CORE_SOURCE1.REPLENISHMENT_DATE_CHAR"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.REPLENISHMENT_DATE_CHAR",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.REPLENISHMENT_DATE_CHAR"
+                }
+              },
+              {
+                "name": "STMT_DT_CHAR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "STMT_DT_CHAR",
+                    "READ_CORE_SOURCE1.STMT_DT_CHAR",
+                    "READ_CORE_SOURCE1"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.STMT_DT_CHAR",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.STMT_DT_CHAR"
+                }
+              },
+              {
+                "name": "TOTAL_OS",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "TOTAL_OS",
+                    "READ_CORE_SOURCE1.TOTAL_OS",
+                    "READ_CORE_SOURCE1"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.TOTAL_OS",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.TOTAL_OS"
+                }
+              },
+              {
+                "name": "TOTAL_OS_N",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "L13",
+                    "TOTAL_OS_N",
+                    "L13.TOTAL_OS_N"
+                  ],
+                  "expression": "L13.TOTAL_OS_N",
+                  "functions": [],
+                  "derivation": "L13.TOTAL_OS_N"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "configuration": {},
+      "talend_specific": {}
+    },
+    {
+      "id": "comp_V228S2",
+      "asg_id": "V228S2",
+      "name": "CARRIED_FORWARD",
+      "type": "database_read",
+      "category": "input",
+      "talend_component": "tDB2Input",
+      "properties": {},
+      "schema": {
+        "input_pins": [],
+        "output_pins": [
+          {
+            "id": "V228S2P1",
+            "asg_id": "V228S2P1",
+            "name": "L13",
+            "direction": "output",
+            "columns": [
+              {
+                "name": "CONTRACT_REF_NO",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "CONTRACT_REF_NO",
+                    "READ_CORE_SOURCE1",
+                    "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+                }
+              },
+              {
+                "name": "TOTAL_OS_N",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              }
+            ]
+          }
+        ]
+      },
+      "configuration": {
+        "instance": "/Connection/Instance",
+        "username": "/Connection/Username",
+        "password": "/Connection/Password",
+        "connectionstring": "/Connection/Database"
+      },
+      "talend_specific": {
+        "connector_name": "DB2Connector",
+        "engine": "EE"
+      }
+    },
+    {
+      "id": "comp_V231S0",
+      "asg_id": "V231S0",
+      "name": "SOURCE",
+      "type": "database_read",
+      "category": "input",
+      "talend_component": "tDB2Input",
+      "properties": {},
+      "schema": {
+        "input_pins": [],
+        "output_pins": [
+          {
+            "id": "V231S0P2",
+            "asg_id": "V231S0P2",
+            "name": "READ_CORE_SOURCE1",
+            "direction": "output",
+            "columns": [
+              {
+                "name": "CONTRACT_REF_NO",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "CUSTOMERNAME1",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "MAILING_POBOX",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "MAILING_COUNTRY",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "MOBILE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "CUSTOMERID",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "APPLICATIONID",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "MAILING_CITY",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "PROPERTYNAME",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "PROPERTYDETAILS",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "SPREAD",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "BASERATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "LAST_RATE_CHANGE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "CURRENT_RATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "REPAYMENT_TENOR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "BALANCE_TENOR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "START_DATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "END_DATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "BRANCH",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "PERSONAL_EMAIL",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "PRODUCT_CODE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "PRODUCT_GROUP",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "PORTFOLIO",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "RATE_CODE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "FIX_PROFIT_FLG",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "DR_SETL_AC",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "STMT_DT",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "USER_REF_NO",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "INS_REPLENISHMENT_DATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "REPLENISHMENT_DATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "LAST_RATE_CHANGE_CHAR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "INS_REPLENISHMENT_DATE_CHAR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "REPLENISHMENT_DATE_CHAR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "STMT_DT_CHAR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "TOTAL_OS",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              }
+            ]
+          }
+        ]
+      },
+      "configuration": {
+        "instance": "/Connection/Instance",
+        "username": "/Connection/Username",
+        "password": "/Connection/Password",
+        "connectionstring": "/Connection/Database"
+      },
+      "talend_specific": {
+        "connector_name": "DB2Connector",
+        "engine": "EE"
+      }
+    },
+    {
+      "id": "comp_V232S0",
+      "asg_id": "V232S0",
+      "name": "LAST_RATE_CHANGE_DATE",
+      "type": "database_read",
+      "category": "input",
+      "talend_component": "tDB2Input",
+      "properties": {},
+      "schema": {
+        "input_pins": [],
+        "output_pins": [
+          {
+            "id": "V232S0P1",
+            "asg_id": "V232S0P1",
+            "name": "L14",
+            "direction": "output",
+            "columns": [
+              {
+                "name": "IND",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "ARR",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "V_CONTRACT_CODE",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "CONTRACT_REF_NO",
+                    "READ_CORE_SOURCE1",
+                    "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+                  ],
+                  "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+                }
+              },
+              {
+                "name": "RATE_CHANGE_DATE",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0
+              },
+              {
+                "name": "FIXED_RATE",
+                "type": "BigDecimal",
+                "length": "0",
+                "scale": "8",
+                "nullable": true,
+                "precision": 0
+              }
+            ]
+          }
+        ]
+      },
+      "configuration": {
+        "instance": "/Connection/Instance",
+        "username": "/Connection/Username",
+        "password": "/Connection/Password",
+        "connectionstring": "/Connection/Database"
+      },
+      "talend_specific": {
+        "connector_name": "DB2Connector",
+        "engine": "EE"
+      }
+    },
+    {
+      "id": "comp_V47S2",
+      "asg_id": "V47S2",
+      "name": "xfm",
+      "type": "transform",
+      "category": "processor",
+      "talend_component": "tMap",
+      "properties": {},
+      "schema": {
+        "input_pins": [
+          {
+            "id": "V47S2P9",
+            "asg_id": "V47S2P9",
+            "name": "READ_CORE_SOURCE",
+            "direction": "input",
+            "columns": []
+          }
+        ],
+        "output_pins": [
+          {
+            "id": "V47S2P2",
+            "asg_id": "V47S2P2",
+            "name": "lnk_tgt",
+            "direction": "output",
+            "columns": [
+              {
+                "name": "CONTRACT_REF_NO",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "CONTRACT_REF_NO",
+                    "READ_CORE_SOURCE.CONTRACT_REF_NO",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.CONTRACT_REF_NO",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.CONTRACT_REF_NO"
+                }
+              },
+              {
+                "name": "CUSTOMERNAME1",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.CUSTOMERNAME1",
+                    "CUSTOMERNAME1",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.CUSTOMERNAME1",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.CUSTOMERNAME1"
+                }
+              },
+              {
+                "name": "MAILING_POBOX",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "MAILING_POBOX",
+                    "READ_CORE_SOURCE.MAILING_POBOX",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.MAILING_POBOX",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.MAILING_POBOX"
+                }
+              },
+              {
+                "name": "MAILING_CITY",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "MAILING_CITY",
+                    "READ_CORE_SOURCE.MAILING_CITY",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.MAILING_CITY",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.MAILING_CITY"
+                }
+              },
+              {
+                "name": "MAILING_COUNTRY",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "aggregation",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.MAILING_COUNTRY",
+                    "MAILING_COUNTRY",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.MAILING_COUNTRY",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.MAILING_COUNTRY"
+                }
+              },
+              {
+                "name": "MOBILE",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "MOBILE",
+                    "READ_CORE_SOURCE.MOBILE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.MOBILE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.MOBILE"
+                }
+              },
+              {
+                "name": "CUSTOMERID",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.CUSTOMERID",
+                    "CUSTOMERID",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.CUSTOMERID",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.CUSTOMERID"
+                }
+              },
+              {
+                "name": "APPLICATIONID",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.APPLICATIONID",
+                    "APPLICATIONID",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.APPLICATIONID",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.APPLICATIONID"
+                }
+              },
+              {
+                "name": "PROPERTYNAME",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.PROPERTYNAME",
+                    "PROPERTYNAME",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.PROPERTYNAME",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.PROPERTYNAME"
+                }
+              },
+              {
+                "name": "PROPERTYDETAILS",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "PROPERTYDETAILS",
+                    "READ_CORE_SOURCE.PROPERTYDETAILS",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.PROPERTYDETAILS",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.PROPERTYDETAILS"
+                }
+              },
+              {
+                "name": "SPREAD",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.SPREAD",
+                    "SPREAD",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.SPREAD",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.SPREAD"
+                }
+              },
+              {
+                "name": "BASERATE",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "BASERATE",
+                    "READ_CORE_SOURCE.BASERATE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.BASERATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.BASERATE"
+                }
+              },
+              {
+                "name": "LAST_RATE_CHANGE",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "LAST_RATE_CHANGE",
+                    "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.LAST_RATE_CHANGE"
+                }
+              },
+              {
+                "name": "CURRENT_RATE",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.CURRENT_RATE",
+                    "CURRENT_RATE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.CURRENT_RATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.CURRENT_RATE"
+                }
+              },
+              {
+                "name": "REPAYMENT_TENOR",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE",
+                    "REPAYMENT_TENOR",
+                    "READ_CORE_SOURCE.REPAYMENT_TENOR"
+                  ],
+                  "expression": "READ_CORE_SOURCE.REPAYMENT_TENOR",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.REPAYMENT_TENOR"
+                }
+              },
+              {
+                "name": "REPLENISHMENT_DATE",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "REPLENISHMENT_DATE",
+                    "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE"
+                }
+              },
+              {
+                "name": "INS_REPLENISHMENT_DATE",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "INS_REPLENISHMENT_DATE",
+                    "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE"
+                }
+              },
+              {
+                "name": "TOTAL_OS",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "conditional",
+                  "source_columns": [
+                    "IF",
+                    "READ_CORE_SOURCE",
+                    "READ_CORE_SOURCE.TOTAL_OS_N",
+                    "TOTAL_OS",
+                    "READ_CORE_SOURCE.TOTAL_OS",
+                    "TOTAL_OS_N"
+                  ],
+                  "expression": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))",
+                  "functions": [
+                    "IsNotNull",
+                    "THEN",
+                    "ELSE"
+                  ],
+                  "derivation": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))"
+                }
+              },
+              {
+                "name": "BALANCE_TENOR",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "BALANCE_TENOR",
+                    "READ_CORE_SOURCE.BALANCE_TENOR",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.BALANCE_TENOR",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.BALANCE_TENOR"
+                }
+              },
+              {
+                "name": "START_DATE",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "START_DATE",
+                    "READ_CORE_SOURCE.START_DATE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.START_DATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.START_DATE"
+                }
+              },
+              {
+                "name": "END_DATE",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.END_DATE",
+                    "END_DATE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.END_DATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.END_DATE"
+                }
+              },
+              {
+                "name": "BRANCH",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.BRANCH",
+                    "BRANCH",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.BRANCH",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.BRANCH"
+                }
+              },
+              {
+                "name": "PERSONAL_EMAIL",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.PERSONAL_EMAIL",
+                    "PERSONAL_EMAIL",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.PERSONAL_EMAIL",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.PERSONAL_EMAIL"
+                }
+              },
+              {
+                "name": "PRODUCT_CODE",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "PRODUCT_CODE",
+                    "READ_CORE_SOURCE.PRODUCT_CODE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.PRODUCT_CODE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.PRODUCT_CODE"
+                }
+              },
+              {
+                "name": "PRODUCT_GROUP",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "PRODUCT_GROUP",
+                    "READ_CORE_SOURCE.PRODUCT_GROUP",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.PRODUCT_GROUP",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.PRODUCT_GROUP"
+                }
+              },
+              {
+                "name": "PORTFOLIO",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.PORTFOLIO",
+                    "PORTFOLIO",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.PORTFOLIO",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.PORTFOLIO"
+                }
+              },
+              {
+                "name": "LAST_RATE_CHANGE_CHAR",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "conditional",
+                  "source_columns": [
+                    "IF",
+                    "READ_CORE_SOURCE",
+                    "JUN",
+                    "READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR",
+                    "LAST_RATE_CHANGE_CHAR"
+                  ],
+                  "expression": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))",
+                  "functions": [
+                    "IsNotNull",
+                    "THEN",
+                    "ELSE"
+                  ],
+                  "derivation": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))"
+                }
+              },
+              {
+                "name": "REPLENISHMENT_DATE_CHAR",
+                "type": "String",
+                "length": "0",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "REPLENISHMENT_DATE_CHAR",
+                    "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR"
+                }
+              }
+            ]
+          },
+          {
+            "id": "V47S2P8",
+            "asg_id": "V47S2P8",
+            "name": "lnk_tgt1",
+            "direction": "output",
+            "columns": [
+              {
+                "name": "CUSTOMERNAME1",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.CUSTOMERNAME1",
+                    "CUSTOMERNAME1",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.CUSTOMERNAME1",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.CUSTOMERNAME1"
+                }
+              },
+              {
+                "name": "MAILING_POBOX",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "MAILING_POBOX",
+                    "READ_CORE_SOURCE.MAILING_POBOX",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.MAILING_POBOX",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.MAILING_POBOX"
+                }
+              },
+              {
+                "name": "MAILING_CITY",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "MAILING_CITY",
+                    "READ_CORE_SOURCE.MAILING_CITY",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.MAILING_CITY",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.MAILING_CITY"
+                }
+              },
+              {
+                "name": "MAILING_COUNTRY",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "aggregation",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.MAILING_COUNTRY",
+                    "MAILING_COUNTRY",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.MAILING_COUNTRY",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.MAILING_COUNTRY"
+                }
+              },
+              {
+                "name": "MOBILE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "MOBILE",
+                    "READ_CORE_SOURCE.MOBILE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.MOBILE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.MOBILE"
+                }
+              },
+              {
+                "name": "CUSTOMERID",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.CUSTOMERID",
+                    "CUSTOMERID",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.CUSTOMERID",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.CUSTOMERID"
+                }
+              },
+              {
+                "name": "APPLICATIONID",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.APPLICATIONID",
+                    "APPLICATIONID",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.APPLICATIONID",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.APPLICATIONID"
+                }
+              },
+              {
+                "name": "PROPERTYNAME",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.PROPERTYNAME",
+                    "PROPERTYNAME",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.PROPERTYNAME",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.PROPERTYNAME"
+                }
+              },
+              {
+                "name": "PROPERTYDETAILS",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "PROPERTYDETAILS",
+                    "READ_CORE_SOURCE.PROPERTYDETAILS",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.PROPERTYDETAILS",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.PROPERTYDETAILS"
+                }
+              },
+              {
+                "name": "SPREAD",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.SPREAD",
+                    "SPREAD",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.SPREAD",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.SPREAD"
+                }
+              },
+              {
+                "name": "BASERATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "BASERATE",
+                    "READ_CORE_SOURCE.BASERATE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.BASERATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.BASERATE"
+                }
+              },
+              {
+                "name": "LAST_RATE_CHANGE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "LAST_RATE_CHANGE",
+                    "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.LAST_RATE_CHANGE"
+                }
+              },
+              {
+                "name": "CURRENT_RATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.CURRENT_RATE",
+                    "CURRENT_RATE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.CURRENT_RATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.CURRENT_RATE"
+                }
+              },
+              {
+                "name": "REPAYMENT_TENOR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE",
+                    "REPAYMENT_TENOR",
+                    "READ_CORE_SOURCE.REPAYMENT_TENOR"
+                  ],
+                  "expression": "READ_CORE_SOURCE.REPAYMENT_TENOR",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.REPAYMENT_TENOR"
+                }
+              },
+              {
+                "name": "REPLENISHMENT_DATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "REPLENISHMENT_DATE",
+                    "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE"
+                }
+              },
+              {
+                "name": "INS_REPLENISHMENT_DATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "INS_REPLENISHMENT_DATE",
+                    "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE"
+                }
+              },
+              {
+                "name": "TOTAL_OS",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "conditional",
+                  "source_columns": [
+                    "IF",
+                    "READ_CORE_SOURCE",
+                    "READ_CORE_SOURCE.TOTAL_OS_N",
+                    "TOTAL_OS",
+                    "READ_CORE_SOURCE.TOTAL_OS",
+                    "TOTAL_OS_N"
+                  ],
+                  "expression": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))",
+                  "functions": [
+                    "IsNotNull",
+                    "THEN",
+                    "ELSE"
+                  ],
+                  "derivation": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))"
+                }
+              },
+              {
+                "name": "BALANCE_TENOR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "BALANCE_TENOR",
+                    "READ_CORE_SOURCE.BALANCE_TENOR",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.BALANCE_TENOR",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.BALANCE_TENOR"
+                }
+              },
+              {
+                "name": "START_DATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "START_DATE",
+                    "READ_CORE_SOURCE.START_DATE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.START_DATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.START_DATE"
+                }
+              },
+              {
+                "name": "END_DATE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.END_DATE",
+                    "END_DATE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.END_DATE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.END_DATE"
+                }
+              },
+              {
+                "name": "BRANCH",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.BRANCH",
+                    "BRANCH",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.BRANCH",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.BRANCH"
+                }
+              },
+              {
+                "name": "PERSONAL_EMAIL",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.PERSONAL_EMAIL",
+                    "PERSONAL_EMAIL",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.PERSONAL_EMAIL",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.PERSONAL_EMAIL"
+                }
+              },
+              {
+                "name": "PRODUCT_CODE",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "PRODUCT_CODE",
+                    "READ_CORE_SOURCE.PRODUCT_CODE",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.PRODUCT_CODE",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.PRODUCT_CODE"
+                }
+              },
+              {
+                "name": "PRODUCT_GROUP",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "PRODUCT_GROUP",
+                    "READ_CORE_SOURCE.PRODUCT_GROUP",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.PRODUCT_GROUP",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.PRODUCT_GROUP"
+                }
+              },
+              {
+                "name": "PORTFOLIO",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "READ_CORE_SOURCE.PORTFOLIO",
+                    "PORTFOLIO",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.PORTFOLIO",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.PORTFOLIO"
+                }
+              },
+              {
+                "name": "LAST_RATE_CHANGE_CHAR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "conditional",
+                  "source_columns": [
+                    "IF",
+                    "READ_CORE_SOURCE",
+                    "JUN",
+                    "READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR",
+                    "LAST_RATE_CHANGE_CHAR"
+                  ],
+                  "expression": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))",
+                  "functions": [
+                    "IsNotNull",
+                    "THEN",
+                    "ELSE"
+                  ],
+                  "derivation": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))"
+                }
+              },
+              {
+                "name": "REPLENISHMENT_DATE_CHAR",
+                "type": "String",
+                "length": "1",
+                "scale": "0",
+                "nullable": true,
+                "precision": 0,
+                "transformation": {
+                  "type": "simple_column",
+                  "source_columns": [
+                    "REPLENISHMENT_DATE_CHAR",
+                    "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+                    "READ_CORE_SOURCE"
+                  ],
+                  "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+                  "functions": [],
+                  "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "configuration": {},
+      "talend_specific": {
+        "trx_class_name": "V47S2_INERACTIVE_IJARA_HEADER_DATA_xfm",
+        "has_transformation_code": true,
+        "transformation_code_length": 13
+      }
+    }
+  ],
+  "connections": [
+    {
+      "id": "conn_V127S0_V47S2",
+      "from": {
+        "component_id": "comp_V127S0",
+        "pin": "lnk_tgt",
+        "asg_pin_id": "V127S0P2"
+      },
+      "to": {
+        "component_id": "comp_V47S2",
+        "pin": "lnk_tgt",
+        "asg_pin_id": "V47S2P2"
+      },
+      "schema_ref": "V127S0P2"
+    },
+    {
+      "id": "conn_V221S0_V47S2",
+      "from": {
+        "component_id": "comp_V221S0",
+        "pin": "lnk_tgt1",
+        "asg_pin_id": "V221S0P1"
+      },
+      "to": {
+        "component_id": "comp_V47S2",
+        "pin": "lnk_tgt1",
+        "asg_pin_id": "V47S2P8"
+      },
+      "schema_ref": "V221S0P1"
+    },
+    {
+      "id": "conn_V228S0_V231S0",
+      "from": {
+        "component_id": "comp_V228S0",
+        "pin": "READ_CORE_SOURCE1",
+        "asg_pin_id": "V228S0P1"
+      },
+      "to": {
+        "component_id": "comp_V231S0",
+        "pin": "READ_CORE_SOURCE1",
+        "asg_pin_id": "V231S0P2"
+      },
+      "schema_ref": "V228S0P1"
+    },
+    {
+      "id": "conn_V228S0_V228S2",
+      "from": {
+        "component_id": "comp_V228S0",
+        "pin": "L13",
+        "asg_pin_id": "V228S0P2"
+      },
+      "to": {
+        "component_id": "comp_V228S2",
+        "pin": "L13",
+        "asg_pin_id": "V228S2P1"
+      },
+      "schema_ref": "V228S0P2"
+    },
+    {
+      "id": "conn_V228S0_V47S2",
+      "from": {
+        "component_id": "comp_V228S0",
+        "pin": "READ_CORE_SOURCE",
+        "asg_pin_id": "V228S0P3"
+      },
+      "to": {
+        "component_id": "comp_V47S2",
+        "pin": "READ_CORE_SOURCE",
+        "asg_pin_id": "V47S2P9"
+      },
+      "schema_ref": "V228S0P3"
+    },
+    {
+      "id": "conn_V228S0_V232S0",
+      "from": {
+        "component_id": "comp_V228S0",
+        "pin": "L14",
+        "asg_pin_id": "V228S0P5"
+      },
+      "to": {
+        "component_id": "comp_V232S0",
+        "pin": "L14",
+        "asg_pin_id": "V232S0P1"
+      },
+      "schema_ref": "V228S0P5"
+    },
+    {
+      "id": "conn_V228S2_V228S0",
+      "from": {
+        "component_id": "comp_V228S2",
+        "pin": "L13",
+        "asg_pin_id": "V228S2P1"
+      },
+      "to": {
+        "component_id": "comp_V228S0",
+        "pin": "L13",
+        "asg_pin_id": "V228S0P2"
+      },
+      "schema_ref": "V228S2P1"
+    },
+    {
+      "id": "conn_V231S0_V228S0",
+      "from": {
+        "component_id": "comp_V231S0",
+        "pin": "READ_CORE_SOURCE1",
+        "asg_pin_id": "V231S0P2"
+      },
+      "to": {
+        "component_id": "comp_V228S0",
+        "pin": "READ_CORE_SOURCE1",
+        "asg_pin_id": "V228S0P1"
+      },
+      "schema_ref": "V231S0P2"
+    },
+    {
+      "id": "conn_V232S0_V228S0",
+      "from": {
+        "component_id": "comp_V232S0",
+        "pin": "L14",
+        "asg_pin_id": "V232S0P1"
+      },
+      "to": {
+        "component_id": "comp_V228S0",
+        "pin": "L14",
+        "asg_pin_id": "V228S0P5"
+      },
+      "schema_ref": "V232S0P1"
+    },
+    {
+      "id": "conn_V47S2_V127S0",
+      "from": {
+        "component_id": "comp_V47S2",
+        "pin": "lnk_tgt",
+        "asg_pin_id": "V47S2P2"
+      },
+      "to": {
+        "component_id": "comp_V127S0",
+        "pin": "lnk_tgt",
+        "asg_pin_id": "V127S0P2"
+      },
+      "schema_ref": "V47S2P2"
+    },
+    {
+      "id": "conn_V47S2_V221S0",
+      "from": {
+        "component_id": "comp_V47S2",
+        "pin": "lnk_tgt1",
+        "asg_pin_id": "V47S2P8"
+      },
+      "to": {
+        "component_id": "comp_V221S0",
+        "pin": "lnk_tgt1",
+        "asg_pin_id": "V221S0P1"
+      },
+      "schema_ref": "V47S2P8"
+    },
+    {
+      "id": "conn_V47S2_V228S0",
+      "from": {
+        "component_id": "comp_V47S2",
+        "pin": "READ_CORE_SOURCE",
+        "asg_pin_id": "V47S2P9"
+      },
+      "to": {
+        "component_id": "comp_V228S0",
+        "pin": "READ_CORE_SOURCE",
+        "asg_pin_id": "V228S0P3"
+      },
+      "schema_ref": "V47S2P9"
+    }
+  ],
+  "schemas": {
+    "comp_V127S0": {
+      "inputs": {
+        "lnk_tgt": {
+          "columns": [],
+          "pin_id": "V127S0P2"
+        }
+      },
+      "outputs": {}
+    },
+    "comp_V221S0": {
+      "inputs": {
+        "lnk_tgt1": {
+          "columns": [],
+          "pin_id": "V221S0P1"
+        }
+      },
+      "outputs": {}
+    },
+    "comp_V228S0": {
+      "inputs": {
+        "READ_CORE_SOURCE1": {
+          "columns": [],
+          "pin_id": "V228S0P1"
+        },
+        "L13": {
+          "columns": [],
+          "pin_id": "V228S0P2"
+        },
+        "L14": {
+          "columns": [],
+          "pin_id": "V228S0P5"
+        }
+      },
+      "outputs": {
+        "READ_CORE_SOURCE": {
+          "columns": [
+            {
+              "name": "CONTRACT_REF_NO",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CONTRACT_REF_NO",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+                ],
+                "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+              }
+            },
+            {
+              "name": "CUSTOMERNAME1",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CUSTOMERNAME1",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.CUSTOMERNAME1"
+                ],
+                "expression": "READ_CORE_SOURCE1.CUSTOMERNAME1",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.CUSTOMERNAME1"
+              }
+            },
+            {
+              "name": "MAILING_POBOX",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.MAILING_POBOX",
+                  "READ_CORE_SOURCE1",
+                  "MAILING_POBOX"
+                ],
+                "expression": "READ_CORE_SOURCE1.MAILING_POBOX",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.MAILING_POBOX"
+              }
+            },
+            {
+              "name": "MAILING_COUNTRY",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "aggregation",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "MAILING_COUNTRY",
+                  "READ_CORE_SOURCE1.MAILING_COUNTRY"
+                ],
+                "expression": "READ_CORE_SOURCE1.MAILING_COUNTRY",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.MAILING_COUNTRY"
+              }
+            },
+            {
+              "name": "MOBILE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.MOBILE",
+                  "READ_CORE_SOURCE1",
+                  "MOBILE"
+                ],
+                "expression": "READ_CORE_SOURCE1.MOBILE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.MOBILE"
+              }
+            },
+            {
+              "name": "CUSTOMERID",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CUSTOMERID",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.CUSTOMERID"
+                ],
+                "expression": "READ_CORE_SOURCE1.CUSTOMERID",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.CUSTOMERID"
+              }
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.APPLICATIONID",
+                  "APPLICATIONID"
+                ],
+                "expression": "READ_CORE_SOURCE1.APPLICATIONID",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.APPLICATIONID"
+              }
+            },
+            {
+              "name": "MAILING_CITY",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "MAILING_CITY",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.MAILING_CITY"
+                ],
+                "expression": "READ_CORE_SOURCE1.MAILING_CITY",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.MAILING_CITY"
+              }
+            },
+            {
+              "name": "PROPERTYNAME",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.PROPERTYNAME",
+                  "READ_CORE_SOURCE1",
+                  "PROPERTYNAME"
+                ],
+                "expression": "READ_CORE_SOURCE1.PROPERTYNAME",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.PROPERTYNAME"
+              }
+            },
+            {
+              "name": "PROPERTYDETAILS",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PROPERTYDETAILS",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.PROPERTYDETAILS"
+                ],
+                "expression": "READ_CORE_SOURCE1.PROPERTYDETAILS",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.PROPERTYDETAILS"
+              }
+            },
+            {
+              "name": "SPREAD",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "SPREAD",
+                  "READ_CORE_SOURCE1.SPREAD"
+                ],
+                "expression": "READ_CORE_SOURCE1.SPREAD",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.SPREAD"
+              }
+            },
+            {
+              "name": "BASERATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "BASERATE",
+                  "READ_CORE_SOURCE1.BASERATE",
+                  "READ_CORE_SOURCE1"
+                ],
+                "expression": "READ_CORE_SOURCE1.BASERATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.BASERATE"
+              }
+            },
+            {
+              "name": "LAST_RATE_CHANGE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.LAST_RATE_CHANGE",
+                  "READ_CORE_SOURCE1",
+                  "LAST_RATE_CHANGE"
+                ],
+                "expression": "READ_CORE_SOURCE1.LAST_RATE_CHANGE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.LAST_RATE_CHANGE"
+              }
+            },
+            {
+              "name": "CURRENT_RATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "CURRENT_RATE",
+                  "READ_CORE_SOURCE1.CURRENT_RATE"
+                ],
+                "expression": "READ_CORE_SOURCE1.CURRENT_RATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.CURRENT_RATE"
+              }
+            },
+            {
+              "name": "REPAYMENT_TENOR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.REPAYMENT_TENOR",
+                  "READ_CORE_SOURCE1",
+                  "REPAYMENT_TENOR"
+                ],
+                "expression": "READ_CORE_SOURCE1.REPAYMENT_TENOR",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.REPAYMENT_TENOR"
+              }
+            },
+            {
+              "name": "BALANCE_TENOR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "BALANCE_TENOR",
+                  "READ_CORE_SOURCE1.BALANCE_TENOR",
+                  "READ_CORE_SOURCE1"
+                ],
+                "expression": "READ_CORE_SOURCE1.BALANCE_TENOR",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.BALANCE_TENOR"
+              }
+            },
+            {
+              "name": "START_DATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "START_DATE",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.START_DATE"
+                ],
+                "expression": "READ_CORE_SOURCE1.START_DATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.START_DATE"
+              }
+            },
+            {
+              "name": "END_DATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.END_DATE",
+                  "READ_CORE_SOURCE1",
+                  "END_DATE"
+                ],
+                "expression": "READ_CORE_SOURCE1.END_DATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.END_DATE"
+              }
+            },
+            {
+              "name": "BRANCH",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.BRANCH",
+                  "READ_CORE_SOURCE1",
+                  "BRANCH"
+                ],
+                "expression": "READ_CORE_SOURCE1.BRANCH",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.BRANCH"
+              }
+            },
+            {
+              "name": "PERSONAL_EMAIL",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.PERSONAL_EMAIL",
+                  "PERSONAL_EMAIL"
+                ],
+                "expression": "READ_CORE_SOURCE1.PERSONAL_EMAIL",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.PERSONAL_EMAIL"
+              }
+            },
+            {
+              "name": "PRODUCT_CODE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.PRODUCT_CODE",
+                  "READ_CORE_SOURCE1",
+                  "PRODUCT_CODE"
+                ],
+                "expression": "READ_CORE_SOURCE1.PRODUCT_CODE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.PRODUCT_CODE"
+              }
+            },
+            {
+              "name": "PRODUCT_GROUP",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PRODUCT_GROUP",
+                  "READ_CORE_SOURCE1.PRODUCT_GROUP",
+                  "READ_CORE_SOURCE1"
+                ],
+                "expression": "READ_CORE_SOURCE1.PRODUCT_GROUP",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.PRODUCT_GROUP"
+              }
+            },
+            {
+              "name": "PORTFOLIO",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PORTFOLIO",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.PORTFOLIO"
+                ],
+                "expression": "READ_CORE_SOURCE1.PORTFOLIO",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.PORTFOLIO"
+              }
+            },
+            {
+              "name": "RATE_CODE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.RATE_CODE",
+                  "READ_CORE_SOURCE1",
+                  "RATE_CODE"
+                ],
+                "expression": "READ_CORE_SOURCE1.RATE_CODE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.RATE_CODE"
+              }
+            },
+            {
+              "name": "FIX_PROFIT_FLG",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.FIX_PROFIT_FLG",
+                  "FIX_PROFIT_FLG",
+                  "READ_CORE_SOURCE1"
+                ],
+                "expression": "READ_CORE_SOURCE1.FIX_PROFIT_FLG",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.FIX_PROFIT_FLG"
+              }
+            },
+            {
+              "name": "DR_SETL_AC",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.DR_SETL_AC",
+                  "DR_SETL_AC"
+                ],
+                "expression": "READ_CORE_SOURCE1.DR_SETL_AC",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.DR_SETL_AC"
+              }
+            },
+            {
+              "name": "STMT_DT",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "STMT_DT",
+                  "READ_CORE_SOURCE1.STMT_DT",
+                  "READ_CORE_SOURCE1"
+                ],
+                "expression": "READ_CORE_SOURCE1.STMT_DT",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.STMT_DT"
+              }
+            },
+            {
+              "name": "USER_REF_NO",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.USER_REF_NO",
+                  "READ_CORE_SOURCE1",
+                  "USER_REF_NO"
+                ],
+                "expression": "READ_CORE_SOURCE1.USER_REF_NO",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.USER_REF_NO"
+              }
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "INS_REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE"
+                ],
+                "expression": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE"
+              }
+            },
+            {
+              "name": "REPLENISHMENT_DATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE1.REPLENISHMENT_DATE"
+                ],
+                "expression": "READ_CORE_SOURCE1.REPLENISHMENT_DATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.REPLENISHMENT_DATE"
+              }
+            },
+            {
+              "name": "LAST_RATE_CHANGE_CHAR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "L14.RATE_CHANGE_DATE",
+                  "RATE_CHANGE_DATE",
+                  "L14"
+                ],
+                "expression": "L14.RATE_CHANGE_DATE",
+                "functions": [],
+                "derivation": "L14.RATE_CHANGE_DATE"
+              }
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE_CHAR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE_CHAR",
+                  "READ_CORE_SOURCE1",
+                  "INS_REPLENISHMENT_DATE_CHAR"
+                ],
+                "expression": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE_CHAR",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE_CHAR"
+              }
+            },
+            {
+              "name": "REPLENISHMENT_DATE_CHAR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "REPLENISHMENT_DATE_CHAR",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.REPLENISHMENT_DATE_CHAR"
+                ],
+                "expression": "READ_CORE_SOURCE1.REPLENISHMENT_DATE_CHAR",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.REPLENISHMENT_DATE_CHAR"
+              }
+            },
+            {
+              "name": "STMT_DT_CHAR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "STMT_DT_CHAR",
+                  "READ_CORE_SOURCE1.STMT_DT_CHAR",
+                  "READ_CORE_SOURCE1"
+                ],
+                "expression": "READ_CORE_SOURCE1.STMT_DT_CHAR",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.STMT_DT_CHAR"
+              }
+            },
+            {
+              "name": "TOTAL_OS",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "TOTAL_OS",
+                  "READ_CORE_SOURCE1.TOTAL_OS",
+                  "READ_CORE_SOURCE1"
+                ],
+                "expression": "READ_CORE_SOURCE1.TOTAL_OS",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.TOTAL_OS"
+              }
+            },
+            {
+              "name": "TOTAL_OS_N",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "L13",
+                  "TOTAL_OS_N",
+                  "L13.TOTAL_OS_N"
+                ],
+                "expression": "L13.TOTAL_OS_N",
+                "functions": [],
+                "derivation": "L13.TOTAL_OS_N"
+              }
+            }
+          ],
+          "pin_id": "V228S0P3"
+        }
+      }
+    },
+    "comp_V228S2": {
+      "inputs": {},
+      "outputs": {
+        "L13": {
+          "columns": [
+            {
+              "name": "CONTRACT_REF_NO",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CONTRACT_REF_NO",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+                ],
+                "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+              }
+            },
+            {
+              "name": "TOTAL_OS_N",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            }
+          ],
+          "pin_id": "V228S2P1"
+        }
+      }
+    },
+    "comp_V231S0": {
+      "inputs": {},
+      "outputs": {
+        "READ_CORE_SOURCE1": {
+          "columns": [
+            {
+              "name": "CONTRACT_REF_NO",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "CUSTOMERNAME1",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "MAILING_POBOX",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "MAILING_COUNTRY",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "MOBILE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "CUSTOMERID",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "MAILING_CITY",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "PROPERTYNAME",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "PROPERTYDETAILS",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "SPREAD",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "BASERATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "LAST_RATE_CHANGE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "CURRENT_RATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "REPAYMENT_TENOR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "BALANCE_TENOR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "START_DATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "END_DATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "BRANCH",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "PERSONAL_EMAIL",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "PRODUCT_CODE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "PRODUCT_GROUP",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "PORTFOLIO",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "RATE_CODE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "FIX_PROFIT_FLG",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "DR_SETL_AC",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "STMT_DT",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "USER_REF_NO",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "REPLENISHMENT_DATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "LAST_RATE_CHANGE_CHAR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE_CHAR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "REPLENISHMENT_DATE_CHAR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "STMT_DT_CHAR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "TOTAL_OS",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            }
+          ],
+          "pin_id": "V231S0P2"
+        }
+      }
+    },
+    "comp_V232S0": {
+      "inputs": {},
+      "outputs": {
+        "L14": {
+          "columns": [
+            {
+              "name": "IND",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "ARR",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "V_CONTRACT_CODE",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CONTRACT_REF_NO",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+                ],
+                "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+              }
+            },
+            {
+              "name": "RATE_CHANGE_DATE",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0
+            },
+            {
+              "name": "FIXED_RATE",
+              "type": "BigDecimal",
+              "length": "0",
+              "scale": "8",
+              "nullable": true,
+              "precision": 0
+            }
+          ],
+          "pin_id": "V232S0P1"
+        }
+      }
+    },
+    "comp_V47S2": {
+      "inputs": {
+        "READ_CORE_SOURCE": {
+          "columns": [],
+          "pin_id": "V47S2P9"
+        }
+      },
+      "outputs": {
+        "lnk_tgt": {
+          "columns": [
+            {
+              "name": "CONTRACT_REF_NO",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CONTRACT_REF_NO",
+                  "READ_CORE_SOURCE.CONTRACT_REF_NO",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.CONTRACT_REF_NO",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.CONTRACT_REF_NO"
+              }
+            },
+            {
+              "name": "CUSTOMERNAME1",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.CUSTOMERNAME1",
+                  "CUSTOMERNAME1",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.CUSTOMERNAME1",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.CUSTOMERNAME1"
+              }
+            },
+            {
+              "name": "MAILING_POBOX",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "MAILING_POBOX",
+                  "READ_CORE_SOURCE.MAILING_POBOX",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.MAILING_POBOX",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.MAILING_POBOX"
+              }
+            },
+            {
+              "name": "MAILING_CITY",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "MAILING_CITY",
+                  "READ_CORE_SOURCE.MAILING_CITY",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.MAILING_CITY",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.MAILING_CITY"
+              }
+            },
+            {
+              "name": "MAILING_COUNTRY",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "aggregation",
+                "source_columns": [
+                  "READ_CORE_SOURCE.MAILING_COUNTRY",
+                  "MAILING_COUNTRY",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.MAILING_COUNTRY",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.MAILING_COUNTRY"
+              }
+            },
+            {
+              "name": "MOBILE",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "MOBILE",
+                  "READ_CORE_SOURCE.MOBILE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.MOBILE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.MOBILE"
+              }
+            },
+            {
+              "name": "CUSTOMERID",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.CUSTOMERID",
+                  "CUSTOMERID",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.CUSTOMERID",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.CUSTOMERID"
+              }
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.APPLICATIONID",
+                  "APPLICATIONID",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.APPLICATIONID",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.APPLICATIONID"
+              }
+            },
+            {
+              "name": "PROPERTYNAME",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.PROPERTYNAME",
+                  "PROPERTYNAME",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.PROPERTYNAME",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.PROPERTYNAME"
+              }
+            },
+            {
+              "name": "PROPERTYDETAILS",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PROPERTYDETAILS",
+                  "READ_CORE_SOURCE.PROPERTYDETAILS",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.PROPERTYDETAILS",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.PROPERTYDETAILS"
+              }
+            },
+            {
+              "name": "SPREAD",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.SPREAD",
+                  "SPREAD",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.SPREAD",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.SPREAD"
+              }
+            },
+            {
+              "name": "BASERATE",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "BASERATE",
+                  "READ_CORE_SOURCE.BASERATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.BASERATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.BASERATE"
+              }
+            },
+            {
+              "name": "LAST_RATE_CHANGE",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "LAST_RATE_CHANGE",
+                  "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.LAST_RATE_CHANGE"
+              }
+            },
+            {
+              "name": "CURRENT_RATE",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.CURRENT_RATE",
+                  "CURRENT_RATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.CURRENT_RATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.CURRENT_RATE"
+              }
+            },
+            {
+              "name": "REPAYMENT_TENOR",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE",
+                  "REPAYMENT_TENOR",
+                  "READ_CORE_SOURCE.REPAYMENT_TENOR"
+                ],
+                "expression": "READ_CORE_SOURCE.REPAYMENT_TENOR",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.REPAYMENT_TENOR"
+              }
+            },
+            {
+              "name": "REPLENISHMENT_DATE",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE"
+              }
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "INS_REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE"
+              }
+            },
+            {
+              "name": "TOTAL_OS",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "conditional",
+                "source_columns": [
+                  "IF",
+                  "READ_CORE_SOURCE",
+                  "READ_CORE_SOURCE.TOTAL_OS_N",
+                  "TOTAL_OS",
+                  "READ_CORE_SOURCE.TOTAL_OS",
+                  "TOTAL_OS_N"
+                ],
+                "expression": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))",
+                "functions": [
+                  "IsNotNull",
+                  "THEN",
+                  "ELSE"
+                ],
+                "derivation": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))"
+              }
+            },
+            {
+              "name": "BALANCE_TENOR",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "BALANCE_TENOR",
+                  "READ_CORE_SOURCE.BALANCE_TENOR",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.BALANCE_TENOR",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.BALANCE_TENOR"
+              }
+            },
+            {
+              "name": "START_DATE",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "START_DATE",
+                  "READ_CORE_SOURCE.START_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.START_DATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.START_DATE"
+              }
+            },
+            {
+              "name": "END_DATE",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.END_DATE",
+                  "END_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.END_DATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.END_DATE"
+              }
+            },
+            {
+              "name": "BRANCH",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.BRANCH",
+                  "BRANCH",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.BRANCH",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.BRANCH"
+              }
+            },
+            {
+              "name": "PERSONAL_EMAIL",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.PERSONAL_EMAIL",
+                  "PERSONAL_EMAIL",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.PERSONAL_EMAIL",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.PERSONAL_EMAIL"
+              }
+            },
+            {
+              "name": "PRODUCT_CODE",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PRODUCT_CODE",
+                  "READ_CORE_SOURCE.PRODUCT_CODE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.PRODUCT_CODE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.PRODUCT_CODE"
+              }
+            },
+            {
+              "name": "PRODUCT_GROUP",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PRODUCT_GROUP",
+                  "READ_CORE_SOURCE.PRODUCT_GROUP",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.PRODUCT_GROUP",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.PRODUCT_GROUP"
+              }
+            },
+            {
+              "name": "PORTFOLIO",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.PORTFOLIO",
+                  "PORTFOLIO",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.PORTFOLIO",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.PORTFOLIO"
+              }
+            },
+            {
+              "name": "LAST_RATE_CHANGE_CHAR",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "conditional",
+                "source_columns": [
+                  "IF",
+                  "READ_CORE_SOURCE",
+                  "JUN",
+                  "READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR",
+                  "LAST_RATE_CHANGE_CHAR"
+                ],
+                "expression": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))",
+                "functions": [
+                  "IsNotNull",
+                  "THEN",
+                  "ELSE"
+                ],
+                "derivation": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))"
+              }
+            },
+            {
+              "name": "REPLENISHMENT_DATE_CHAR",
+              "type": "String",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "REPLENISHMENT_DATE_CHAR",
+                  "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR"
+              }
+            }
+          ],
+          "pin_id": "V47S2P2"
+        },
+        "lnk_tgt1": {
+          "columns": [
+            {
+              "name": "CUSTOMERNAME1",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.CUSTOMERNAME1",
+                  "CUSTOMERNAME1",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.CUSTOMERNAME1",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.CUSTOMERNAME1"
+              }
+            },
+            {
+              "name": "MAILING_POBOX",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "MAILING_POBOX",
+                  "READ_CORE_SOURCE.MAILING_POBOX",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.MAILING_POBOX",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.MAILING_POBOX"
+              }
+            },
+            {
+              "name": "MAILING_CITY",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "MAILING_CITY",
+                  "READ_CORE_SOURCE.MAILING_CITY",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.MAILING_CITY",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.MAILING_CITY"
+              }
+            },
+            {
+              "name": "MAILING_COUNTRY",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "aggregation",
+                "source_columns": [
+                  "READ_CORE_SOURCE.MAILING_COUNTRY",
+                  "MAILING_COUNTRY",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.MAILING_COUNTRY",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.MAILING_COUNTRY"
+              }
+            },
+            {
+              "name": "MOBILE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "MOBILE",
+                  "READ_CORE_SOURCE.MOBILE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.MOBILE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.MOBILE"
+              }
+            },
+            {
+              "name": "CUSTOMERID",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.CUSTOMERID",
+                  "CUSTOMERID",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.CUSTOMERID",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.CUSTOMERID"
+              }
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.APPLICATIONID",
+                  "APPLICATIONID",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.APPLICATIONID",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.APPLICATIONID"
+              }
+            },
+            {
+              "name": "PROPERTYNAME",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.PROPERTYNAME",
+                  "PROPERTYNAME",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.PROPERTYNAME",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.PROPERTYNAME"
+              }
+            },
+            {
+              "name": "PROPERTYDETAILS",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PROPERTYDETAILS",
+                  "READ_CORE_SOURCE.PROPERTYDETAILS",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.PROPERTYDETAILS",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.PROPERTYDETAILS"
+              }
+            },
+            {
+              "name": "SPREAD",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.SPREAD",
+                  "SPREAD",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.SPREAD",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.SPREAD"
+              }
+            },
+            {
+              "name": "BASERATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "BASERATE",
+                  "READ_CORE_SOURCE.BASERATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.BASERATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.BASERATE"
+              }
+            },
+            {
+              "name": "LAST_RATE_CHANGE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "LAST_RATE_CHANGE",
+                  "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.LAST_RATE_CHANGE"
+              }
+            },
+            {
+              "name": "CURRENT_RATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.CURRENT_RATE",
+                  "CURRENT_RATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.CURRENT_RATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.CURRENT_RATE"
+              }
+            },
+            {
+              "name": "REPAYMENT_TENOR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE",
+                  "REPAYMENT_TENOR",
+                  "READ_CORE_SOURCE.REPAYMENT_TENOR"
+                ],
+                "expression": "READ_CORE_SOURCE.REPAYMENT_TENOR",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.REPAYMENT_TENOR"
+              }
+            },
+            {
+              "name": "REPLENISHMENT_DATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE"
+              }
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "INS_REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE"
+              }
+            },
+            {
+              "name": "TOTAL_OS",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "conditional",
+                "source_columns": [
+                  "IF",
+                  "READ_CORE_SOURCE",
+                  "READ_CORE_SOURCE.TOTAL_OS_N",
+                  "TOTAL_OS",
+                  "READ_CORE_SOURCE.TOTAL_OS",
+                  "TOTAL_OS_N"
+                ],
+                "expression": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))",
+                "functions": [
+                  "IsNotNull",
+                  "THEN",
+                  "ELSE"
+                ],
+                "derivation": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))"
+              }
+            },
+            {
+              "name": "BALANCE_TENOR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "BALANCE_TENOR",
+                  "READ_CORE_SOURCE.BALANCE_TENOR",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.BALANCE_TENOR",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.BALANCE_TENOR"
+              }
+            },
+            {
+              "name": "START_DATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "START_DATE",
+                  "READ_CORE_SOURCE.START_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.START_DATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.START_DATE"
+              }
+            },
+            {
+              "name": "END_DATE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.END_DATE",
+                  "END_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.END_DATE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.END_DATE"
+              }
+            },
+            {
+              "name": "BRANCH",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.BRANCH",
+                  "BRANCH",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.BRANCH",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.BRANCH"
+              }
+            },
+            {
+              "name": "PERSONAL_EMAIL",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.PERSONAL_EMAIL",
+                  "PERSONAL_EMAIL",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.PERSONAL_EMAIL",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.PERSONAL_EMAIL"
+              }
+            },
+            {
+              "name": "PRODUCT_CODE",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PRODUCT_CODE",
+                  "READ_CORE_SOURCE.PRODUCT_CODE",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.PRODUCT_CODE",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.PRODUCT_CODE"
+              }
+            },
+            {
+              "name": "PRODUCT_GROUP",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PRODUCT_GROUP",
+                  "READ_CORE_SOURCE.PRODUCT_GROUP",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.PRODUCT_GROUP",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.PRODUCT_GROUP"
+              }
+            },
+            {
+              "name": "PORTFOLIO",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.PORTFOLIO",
+                  "PORTFOLIO",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.PORTFOLIO",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.PORTFOLIO"
+              }
+            },
+            {
+              "name": "LAST_RATE_CHANGE_CHAR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "conditional",
+                "source_columns": [
+                  "IF",
+                  "READ_CORE_SOURCE",
+                  "JUN",
+                  "READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR",
+                  "LAST_RATE_CHANGE_CHAR"
+                ],
+                "expression": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))",
+                "functions": [
+                  "IsNotNull",
+                  "THEN",
+                  "ELSE"
+                ],
+                "derivation": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))"
+              }
+            },
+            {
+              "name": "REPLENISHMENT_DATE_CHAR",
+              "type": "String",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "precision": 0,
+              "transformation": {
+                "type": "simple_column",
+                "source_columns": [
+                  "REPLENISHMENT_DATE_CHAR",
+                  "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+                  "READ_CORE_SOURCE"
+                ],
+                "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+                "functions": [],
+                "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR"
+              }
+            }
+          ],
+          "pin_id": "V47S2P8"
+        }
+      }
+    }
+  },
+  "metadata_info": {
+    "total_columns": 145,
+    "total_transformations": 94,
+    "total_connections": 12,
+    "total_components": 7,
+    "total_parameters": 4
+  }
+}

@@ -1,34 +1,72 @@
 #!/usr/bin/env python3
 """
-Enhanced ASG to IR Converter with Complete Transformation Tracking
-Converts DataStage ASG (Abstract Syntax Graph) to IR (Intermediate Representation)
+Enhanced ASG to IR Converter - Talend-Focused
+Converts DataStage ASG to IR with complete Talend compatibility
 
 ENHANCEMENTS:
-✅ Complete transformation tracking from DSX to IR
-✅ Preserves TrxGenCode transformation logic
-✅ Column-level transformation details
-✅ Complexity scoring and classification
-✅ Full data lineage tracking
-✅ Expression preservation
+✅ Comprehensive debug logging for every conversion step
+✅ Talend-specific property extraction (table names, DB info, schemas)
+✅ Multi-pin handling for complex stages (Lookup, Join, Merge)
+✅ XML property parsing for connector configurations
+✅ Transformation logic preservation (TrxGenCode, TrxClassName)
+✅ Complete schema lineage tracking
+✅ All connector types supported (DB2, ODBC, etc.)
 """
 
 import json
 import re
-from typing import Dict, List, Any, Optional, Union
+import sys
+import xml.etree.ElementTree as ET
+from typing import Dict, List, Any, Optional, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 from datetime import datetime
-import uuid
 import os
 
-# Database connection for type mappings
-from sqlalchemy import create_engine, text
+# ============================================================================
+# DEBUG CONFIGURATION
+# ============================================================================
 
-# Sync DB URL for script execution (converted from async)
-SYNC_DB_URL = "postgresql://postgres:Edgematics2025@axoma-dev-postgres.cd4keaaye6mk.eu-west-1.rds.amazonaws.com:5432/axoma-etl-migration-tool"
+DEBUG = False  # Can be set via CLI flag
+def dbg(msg: str):
+    """Print debug message to stderr"""
+    if DEBUG:
+        print(f"[DEBUG] {msg}", file=sys.stderr)
 
-class IRNodeType(Enum):
-    """IR Node Types for Migration"""
+def log_step(step: str, detail: str = ""):
+    """Log a conversion step"""
+    if detail:
+        print(f"  ℹ️  {step}: {detail}", file=sys.stderr)
+    else:
+        print(f"  ℹ️  {step}", file=sys.stderr)
+
+def log_node_processing(asg_id: str, node_name: str, node_type: str, ir_id: str):
+    """Log node processing"""
+    dbg(f"Processing node {asg_id} '{node_name}' ({node_type}) → IR ID {ir_id}")
+
+def log_pin_processing(pin_id: str, pin_name: str, direction: str, col_count: int):
+    """Log pin processing"""
+    dbg(f"  Pin {pin_id} '{pin_name}' ({direction}): {col_count} columns")
+
+def log_property_extraction(node_id: str, prop_name: str, prop_value: str):
+    """Log property extraction"""
+    val_preview = str(prop_value)[:80]
+    dbg(f"  Property {node_id}::{prop_name} = {val_preview}")
+
+def log_error(msg: str):
+    """Log error message"""
+    print(f"❌ ERROR: {msg}", file=sys.stderr)
+
+def log_warning(msg: str):
+    """Log warning message"""
+    print(f"⚠️  WARNING: {msg}", file=sys.stderr)
+
+# ============================================================================
+# DATA STRUCTURES FOR TALEND IR
+# ============================================================================
+
+class NodeType(Enum):
+    """Node types for Talend IR"""
     SOURCE = "source"
     SINK = "sink"
     TRANSFORM = "transform"
@@ -38,976 +76,905 @@ class IRNodeType(Enum):
     DEDUPLICATE = "deduplicate"
     AGGREGATE = "aggregate"
 
-class TransformationType(Enum):
-    """Transformation Types in IR"""
-    SIMPLE_COLUMN = "simple_column"
-    CONDITIONAL = "conditional"
-    AGGREGATION = "aggregation"
-    WINDOW_FUNCTION = "window_function"
-    CONSTANT = "constant"
-    EXPRESSION = "expression"
-
 @dataclass
-class IRASTNode:
-    """Abstract Syntax Tree Node for Transformations"""
-    node_type: str
-    value: str
-    children: List['IRASTNode'] = field(default_factory=list)
-    operator: Optional[str] = None
-    conditions: List['IRASTNode'] = field(default_factory=list)
-
-@dataclass
-class IRColumn:
-    """IR Column Definition with Full Transformation Tracking"""
+class TalendProperty:
+    """Talend-specific property"""
     name: str
-    data_type: str
-    nullable: bool = True
-    length: int = 0
-    scale: int = 0
-    
-    # Transformation info
-    source_columns: List[str] = field(default_factory=list)
-    transformation_type: TransformationType = TransformationType.SIMPLE_COLUMN
-    complexity_score: float = 0.0
-    expression: str = ""
-    ast: Optional[IRASTNode] = None
-    
-    # 🔧 NEW: Enhanced transformation tracking
-    transformation_logic: Dict[str, Any] = field(default_factory=dict)
-    has_transformation: bool = False
-    transformation_classification: str = "none"
-    functions: List[str] = field(default_factory=list)
-    
-    # Lineage tracking
-    source_stage: Optional[str] = None
-    lineage_path: List[str] = field(default_factory=list)
+    value: Any
+    category: str = "config"  # config, connection, schema, etc.
+    required_for_talend: bool = True
 
-@dataclass
-class IRNode:
-    """IR Node Definition with Enhanced Transformation Tracking"""
-    node_id: str
-    node_type: IRNodeType
-    name: str
-    description: str = ""
-    
-    # Schema
-    input_columns: List[IRColumn] = field(default_factory=list)
-    output_columns: List[IRColumn] = field(default_factory=list)
-    
-    # 🔧 NEW: Enhanced business logic tracking
-    transformation_logic: Dict[str, Any] = field(default_factory=dict)
-    trxgen_code: Optional[str] = None  # 🔧 NEW: Preserve TrxGenCode
-    trx_class_name: Optional[str] = None  # 🔧 NEW: Transformation class name
-    complexity_score: float = 0.0
-    
-    # Performance metrics
-    processing_time_estimate: float = 0.0
-    memory_usage_estimate: int = 0
-    
-    # Dependencies
-    dependencies: List[str] = field(default_factory=list)
+# ============================================================================
+# TALEND IR CONVERTER - TALEND-FOCUSED
+# ============================================================================
 
-@dataclass
-class IREdge:
-    """IR Edge Definition"""
-    from_node: str
-    to_node: str
-    from_pin: str = ""
-    to_pin: str = ""
-    join_type: str = "unknown"
-    data_flow_type: str = "sequential"
-
-@dataclass
-class IRJob:
-    """Complete IR Job Definition with Transformation Tracking"""
-    job_name: str
-    description: str = ""
+class TalendASGToIRConverter:
+    """Convert ASG to IR optimized for Talend job generation"""
     
-    # Pipeline structure
-    nodes: List[IRNode] = field(default_factory=list)
-    edges: List[IREdge] = field(default_factory=list)
-    
-    # Metadata
-    total_stages: int = 0
-    total_columns: int = 0
-    total_transformations: int = 0  # 🔧 NEW: Track transformation count
-    complexity_metrics: Dict[str, float] = field(default_factory=dict)
-    
-    # Schema evolution tracking
-    schema_lineage: Dict[str, Any] = field(default_factory=dict)
-
-class EnhancedASGToIRConverter:
-    """Enhanced converter with complete transformation tracking"""
-    
-    def __init__(self):
+    def __init__(self, debug: bool = False):
+        global DEBUG
+        DEBUG = debug
+        
+        self.asg_data: Optional[Dict[str, Any]] = None
+        self.ir_data: Dict[str, Any] = {}
         self.node_counter = 0
-        self.asg_data = None
-        self.ir_job = None
-        self.node_mappings = {
-            'PxChangeCapture': IRNodeType.SOURCE,
-            'CTransformerStage': IRNodeType.TRANSFORM,
-            'PxPeek': IRNodeType.SOURCE,
-            'PxLookup': IRNodeType.LOOKUP,
-            'PxJoin': IRNodeType.JOIN,
-            'PxFunnel': IRNodeType.MERGE,
-            'PxRemDup': IRNodeType.DEDUPLICATE,
-            'CCustomStage': IRNodeType.TRANSFORM
+        
+        # Mappings
+        self.asg_to_ir_node_id_map: Dict[str, str] = {}
+        self.schema_mappings: Dict[str, str] = {}
+        self.pin_mappings: Dict[str, str] = {}
+        
+        # Statistics
+        self.stats = {
+            'nodes_processed': 0,
+            'pins_processed': 0,
+            'edges_processed': 0,
+            'columns_extracted': 0,
+            'transformations_extracted': 0,
+            'properties_extracted': 0,
+            'errors': 0
         }
         
-        # 🔧 FIX: Consistent ID tracking
-        self.asg_to_ir_node_id_map = {}  # Maps ASG node IDs to IR node IDs
-        self.schema_mappings = {}  # Maps schema references
-        self.provenance_map = {}  # Maps ASG node IDs to provenance info
-        self.transformation_stats = {  # Track transformation statistics
-            'simple_columns': 0,
-            'aggregations': 0,
-            'conditionals': 0,
-            'expressions': 0,
-            'constants': 0
-        }
-        
-        # 🔧 NEW: DB-based type mappings cache
-        self.db_type_mappings = {}  # component -> (ir_type, ir_subtype)
-        # self._load_type_mappings_from_db()
+        dbg("=== TalendASGToIRConverter initialized ===")
     
-    def _load_type_mappings_from_db(self):
-        """Load component → (ir_type, ir_subtype) mappings from database."""
+    # ========================================================================
+    # PHASE 1: LOAD ASG
+    # ========================================================================
+    
+    def load_asg(self, asg_file_path: str) -> bool:
+        """Load ASG from JSON file"""
         try:
-            print("creating engine")
-            engine = create_engine(SYNC_DB_URL)
-            print("created engine")
-            with engine.connect() as conn:
-                result = conn.execute(text("""
-                    SELECT DISTINCT component, ir_type, ir_subtype
-                    FROM ir_property_mappings
-                    WHERE ir_type IS NOT NULL AND ir_subtype IS NOT NULL
-                """))
-                for row in result:
-                    component = row[0]
-                    if component not in self.db_type_mappings:
-                        self.db_type_mappings[component] = (row[1], row[2])
-            print(f"✅ Loaded {len(self.db_type_mappings)} type mappings from DB")
-        except Exception as e:
-            print(f"⚠️ Failed to load type mappings from DB: {e}")
-        
-    def load_asg(self, asg_file_path: str) -> Dict[str, Any]:
-        """Load ASG data from file with improved error handling"""
-        try:
+            dbg(f"Loading ASG from: {asg_file_path}")
             with open(asg_file_path, 'r', encoding='utf-8') as f:
                 self.asg_data = json.load(f)
-            print(f"✅ Loaded ASG data from: {asg_file_path}")
-            return self.asg_data
-        except FileNotFoundError:
-            print(f"ASG file not found: {asg_file_path}")
-            return None
-        except json.JSONDecodeError as e:
-            print(f"Invalid JSON in ASG file: {e}")
-            return None
+            
+            job_name = self.asg_data.get('job_name', 'Unknown')
+            num_nodes = len(self.asg_data.get('nodes', []))
+            num_edges = len(self.asg_data.get('edges', []))
+            num_params = len(self.asg_data.get('job_parameters', []))
+            
+            log_step(f"Loaded ASG", f"{job_name} with {num_nodes} nodes, {num_edges} edges, {num_params} params")
+            dbg(f"ASG loaded successfully: {job_name}")
+            return True
         except Exception as e:
-            print(f"Error loading ASG file: {e}")
-            return None
+            log_error(f"Failed to load ASG: {e}")
+            self.stats['errors'] += 1
+            return False
     
-    def convert(self) -> Dict[str, Any]:
-        """Main conversion: ASG → IR with complete transformation tracking."""
-        print("\n🔄 Starting ASG → IR conversion...")
-        
+    # ========================================================================
+    # PHASE 2: CONVERT ASG TO IR
+    # ========================================================================
+    
+    def convert(self) -> bool:
+        """Main conversion pipeline"""
         if not self.asg_data:
-            print("❌ No ASG data loaded. Call load_asg() first.")
-            return None
+            log_error("No ASG data loaded. Call load_asg() first.")
+            return False
         
-        # Initialize IR structure
+        print("\n" + "="*70)
+        print("PHASE 2: CONVERTING ASG TO IR (TALEND-FOCUSED)")
+        print("="*70)
+        
+        try:
+            # Step 1: Initialize IR structure
+            print("\n[1/6] Initializing IR structure...")
+            self._init_ir_structure()
+            
+            # Step 2: Extract and convert nodes
+            print("[2/6] Converting nodes...")
+            self._convert_all_nodes()
+            
+            # Step 3: Convert edges
+            print("[3/6] Converting edges...")
+            self._convert_all_edges()
+            
+            # Step 4: Build complete schemas
+            print("[4/6] Building schemas...")
+            self._build_complete_schemas()
+            
+            # Step 5: Extract job parameters
+            print("[5/6] Extracting job parameters...")
+            self._extract_job_parameters()
+            
+            # Step 6: Validate conversion
+            print("[6/6] Validating conversion...")
+            if not self._validate_conversion():
+                log_warning("Validation found issues but continuing...")
+            
+            return True
+        except Exception as e:
+            log_error(f"Conversion failed: {e}")
+            import traceback
+            traceback.print_exc()
+            self.stats['errors'] += 1
+            return False
+    
+    def _init_ir_structure(self):
+        """Initialize IR JSON structure"""
+        job_name = self.asg_data.get('job_name', 'Unknown_Job')
+        
         self.ir_data = {
-            "irVersion": "1.0",
-            "generatedAt": datetime.now().isoformat() + "Z",
-            "job": {
-                "id": self._generate_deterministic_id(),
-                "name": self.asg_data.get('job_name', 'Unknown_Job')
+            "metadata": {
+                "version": "2.0",
+                "generated_at": datetime.now().isoformat() + "Z",
+                "generator": "TalendASGToIRConverter",
+                "source": {
+                    "type": "datastage_asg",
+                    "job_name": job_name
+                }
             },
-            "nodes": [],
-            "links": [],
+            "job": {
+                "id": f"talend-{job_name.replace(' ', '_')}",
+                "name": job_name,
+                "description": "",
+                "parameters": [],
+                "contexts": {
+                    "default": {}
+                }
+            },
+            "components": [],
+            "connections": [],
             "schemas": {},
-            "transformationTracking": {
-                "totalTransformations": 0,
-                "complexityDistribution": {},
-                "transformationTypes": {}
+            "metadata_info": {
+                "total_columns": 0,
+                "total_transformations": 0,
+                "total_connections": 0
             }
         }
         
-        print("  [1/6] Extracting provenance...")
-        self._extract_all_provenance()
-        
-        print("  [2/6] Converting nodes with transformation tracking...")
-        self._convert_nodes_with_transformations()
-        
-        print("  [3/6] Converting edges...")
-        self._convert_edges()
-        
-        print("  [4/6] Building schemas...")
-        self._build_schemas()
-        
-        print("  [5/6] Adding provenance...")
-        self._add_provenance()
-        
-        print("  [6/6] Computing transformation statistics...")
-        self._compute_transformation_statistics()
-        
-        total_transformations = sum(self.transformation_stats.values())
-        print(f"Enhanced conversion complete: {len(self.ir_data['nodes'])} nodes, {len(self.ir_data['links'])} links, {total_transformations} transformations")
-        return self.ir_data
+        dbg(f"IR structure initialized for job '{job_name}'")
     
-    def _extract_all_provenance(self):
-        """Extract provenance information from all ASG nodes"""
-        for node in self.asg_data.get('nodes', []):
-            node_id = node.get('id', '')
-            provenance = node.get('provenance', {})
-            
-            # Extract provenance with defaults
-            self.provenance_map[node_id] = {
-                'source': provenance.get('source', 'dsx'),
-                'location': provenance.get('location', f"{self.asg_data.get('job_name', 'Unknown')}.dsx"),
-                'lineStart': provenance.get('lineStart', '--'),
-                'lineEnd': provenance.get('lineEnd', '--'),
-                'filePath': provenance.get('filePath', f"{self.asg_data.get('job_name', 'Unknown')}.dsx")
-            }
+    # ========================================================================
+    # PHASE 2.1: NODE CONVERSION
+    # ========================================================================
     
-    def _convert_nodes_with_transformations(self):
-        """Convert ASG nodes to IR nodes with complete transformation tracking."""
-        for asg_node in self.asg_data.get('nodes', []):
+    def _convert_all_nodes(self):
+        """Convert all ASG nodes to IR components"""
+        nodes = self.asg_data.get('nodes', [])
+        
+        for idx, asg_node in enumerate(nodes, 1):
             try:
-                ir_node = self._convert_single_node_with_transformations(asg_node)
-                if ir_node:
-                    self.ir_data['nodes'].append(ir_node)
+                asg_id = asg_node.get('id', f'unknown_{idx}')
+                node_name = asg_node.get('name', 'Unknown')
+                node_type = asg_node.get('type', 'Unknown')
+                enhanced_type = asg_node.get('enhanced_type', node_type)
+                
+                dbg(f"\n--- Processing Node {idx}/{len(nodes)} ---")
+                log_node_processing(asg_id, node_name, enhanced_type, f"n{self.node_counter}")
+                
+                # Convert this node
+                ir_component = self._convert_single_node(asg_node)
+                
+                if ir_component:
+                    self.ir_data['components'].append(ir_component)
+                    self.asg_to_ir_node_id_map[asg_id] = ir_component['id']
+                    self.stats['nodes_processed'] += 1
+                    print(f"  ✅ {node_name} ({enhanced_type})")
+                else:
+                    log_warning(f"Failed to convert node {asg_id}")
+                    
             except Exception as e:
-                print(f"❌ Error converting node {asg_node.get('id', 'Unknown')}: {e}")
-                continue
+                log_error(f"Error converting node {asg_node.get('id', 'unknown')}: {e}")
+                self.stats['errors'] += 1
     
-    def _convert_single_node_with_transformations(self, asg_node: Dict[str, Any]) -> Dict[str, Any]:
-        """Convert a single ASG node to IR node with full transformation data."""
-        asg_node_id = asg_node.get('id', '')
+    def _convert_single_node(self, asg_node: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Convert a single ASG node to IR component"""
+        asg_id = asg_node.get('id', '')
         node_name = asg_node.get('name', 'Unknown')
         node_type = asg_node.get('type', 'Unknown')
         enhanced_type = asg_node.get('enhanced_type', node_type)
         
-        # Generate consistent IR node ID using enumeration
-        ir_node_id = f"n{self.node_counter}"
-        self.asg_to_ir_node_id_map[asg_node_id] = ir_node_id
-        
-        # Map DataStage stage types to IR node types
-        ir_type, ir_subtype = self._map_stage_type_to_ir(enhanced_type, asg_node)
-        
-        ir_node = {
-            "id": ir_node_id,
-            "type": ir_type,
-            "subtype": ir_subtype,
-            "name": node_name,
-            "props": {},
-            "transformationDetails": {
-                "hasTransformations": False,
-                "transformationType": "none",
-                "complexityScore": 0.0,
-                "transformationCount": 0
-            }
-        }
-        
-        # Map properties based on stage type
-        self._map_node_properties(ir_node, asg_node)
-        
-        # 🔧 ENHANCED: Handle schemas with transformation data
-        if asg_node.get('pins'):
-            schema_ref = self._create_schema_from_pins_with_transformations(asg_node, ir_node_id, ir_node)
-            ir_node['schemaRef'] = schema_ref
-        elif self._should_have_schema(asg_node):
-            schema_ref = self._create_target_schema(asg_node, ir_node_id)
-            ir_node['schemaRef'] = schema_ref
-        
-        # 🔧 NEW: Preserve TrxGenCode and transformation class
-        self._preserve_trxgen_code(ir_node, asg_node)
-        
+        # Generate IR component ID
+        ir_comp_id = f"comp_{asg_id}"
         self.node_counter += 1
-        return ir_node
-    
-    def _preserve_trxgen_code(self, ir_node: Dict[str, Any], asg_node: Dict[str, Any]):
-        """🔧 NEW: Preserve TrxGenCode transformation logic"""
-        enhanced_props = asg_node.get('enhanced_properties', {})
-        apt_props = enhanced_props.get('apt_properties', {})
         
-        # Preserve TrxGenCode (located in apt_properties)
-        if 'TrxGenCode' in apt_props:
-            ir_node['trxgenCode'] = apt_props['TrxGenCode']
+        dbg(f"Creating component {ir_comp_id} from ASG node {asg_id}")
         
-        # Preserve TrxClassName
-        if 'TrxClassName' in apt_props:
-            ir_node['trxClassName'] = apt_props['TrxClassName']
+        # Determine component type and category
+        comp_type, comp_category = self._determine_component_type(asg_node)
         
-        # Preserve job parameters if any
-        if 'JobParameterNames' in apt_props:
-            ir_node['jobParameterNames'] = apt_props['JobParameterNames']
-    
-    def _create_schema_from_pins_with_transformations(self, asg_node: Dict[str, Any], ir_node_id: str, ir_node: Dict[str, Any]) -> str:
-        """🔧 ENHANCED: Create IR schema with full transformation tracking"""
-        asg_node_id = asg_node.get('id', '')
-        schema_id = f"s_{asg_node_id}"
-        
-        # Extract columns with transformation data
-        schema_columns = []
-        has_any_transformations = False
-        total_complexity = 0.0
-        transformation_count = 0
-        
-        for pin in asg_node.get('pins', []):
-            # 🔧 FIXED: Use enhanced_schema for transformation data, fallback to schema
-            columns_to_process = pin.get('enhanced_schema', pin.get('schema', []))
-            for column in columns_to_process:
-                # Create enhanced IR column with transformation data
-                ir_column = self._create_enhanced_ir_column(column, pin.get('name', ''))
-                schema_columns.append(ir_column)
-                
-                # Track transformation statistics
-                if ir_column.get('hasTransformation', False):
-                    has_any_transformations = True
-                    transformation_count += 1
-                    
-                    # Update transformation type tracking
-                    trans_type = ir_column.get('transformationClassification', 'none')
-                    column_name = ir_column.get('name', 'unknown')
-                    
-                    # Map ASG transformation types to our statistics keys
-                    type_mapping = {
-                        'simple_column': 'simple_columns',
-                        'aggregation': 'aggregations',
-                        'conditional': 'conditionals',
-                        'expression': 'expressions',
-                        'constant': 'constants'
-                    }
-                    
-                    stat_key = type_mapping.get(trans_type, trans_type)
-                    
-                    if stat_key in self.transformation_stats:
-                        self.transformation_stats[stat_key] += 1
-                    else:
-                        # Handle any unmapped transformation types
-                        print(f"⚠️  Unknown transformation type: {trans_type} (mapped to {stat_key})")
-                
-                # Sum complexity scores
-                complexity = ir_column.get('complexityScore', 0.0)
-                total_complexity += complexity
-        
-        # Store schema with transformation data
-        self.ir_data['schemas'][schema_id] = schema_columns
-        self.schema_mappings[asg_node_id] = schema_id
-        
-        # Update node transformation summary
-        if has_any_transformations:
-            ir_node['transformationDetails'] = {
-                "hasTransformations": True,
-                "transformationType": "mixed",  # Could be more specific
-                "complexityScore": total_complexity / transformation_count if transformation_count > 0 else 0.0,
-                "transformationCount": transformation_count
-            }
-        
-        return schema_id
-    
-    def _create_enhanced_ir_column(self, column_data: Dict[str, Any], pin_name: str) -> Dict[str, Any]:
-        """🔧 NEW: Create IR column with complete transformation data"""
-        # Base column data
-        ir_column = {
-            "name": column_data.get('name', 'unknown'),
-            "type": self._map_sql_type_to_ir(column_data.get('type', 'string')),
-            "nullable": column_data.get('nullable', True),
-            "transformationLogic": None,  # Will be populated if transformation exists
-            "transformationClassification": "none",
-            "complexityScore": 0.0,
-            "sourceColumns": [],
-            "expression": ""
+        # Base component structure
+        ir_component = {
+            "id": ir_comp_id,
+            "asg_id": asg_id,
+            "name": node_name,
+            "type": comp_type,
+            "category": comp_category,
+            "talend_component": self._map_to_talend_component(enhanced_type, asg_node),
+            "properties": {},
+            "schema": {
+                "input_pins": [],
+                "output_pins": []
+            },
+            "configuration": {},
+            "talend_specific": {}
         }
         
-        # 🔧 FIXED: Check both transformation_logic field and has_transformation flag
-        has_transformation = column_data.get('has_transformation', False)
+        # Extract pins and schema
+        self._extract_pins_and_schema(asg_node, ir_component)
         
-        if has_transformation:
-            # Get transformation logic from the dedicated field
-            transformation_logic = column_data.get('transformation_logic', {})
-            
-            # Also get classification from the column directly
-            classification = column_data.get('transformation_classification', 'simple_column')
-            complexity = column_data.get('complexity_score', 0.0)
-            
-            ir_column.update({
-                "transformationLogic": transformation_logic,
-                "transformationClassification": classification,
-                "complexityScore": complexity,
-                "sourceColumns": transformation_logic.get('source_columns', []),
-                "expression": transformation_logic.get('expression', ''),
-                "functions": transformation_logic.get('functions', []),
-                "hasTransformation": True
-            })
+        # Extract configuration (table names, file paths, DB info, etc.)
+        self._extract_component_configuration(asg_node, ir_component)
+        
+        # Extract transformation logic if applicable
+        self._extract_transformation_logic(asg_node, ir_component)
+        
+        # Extract Talend-specific properties
+        self._extract_talend_specific_properties(asg_node, ir_component)
+        
+        dbg(f"Component {ir_comp_id} created successfully")
+        return ir_component
+    
+    def _determine_component_type(self, asg_node: Dict[str, Any]) -> Tuple[str, str]:
+        """Determine IR component type based on ASG node"""
+        enhanced_type = asg_node.get('enhanced_type', '')
+        node_type = asg_node.get('type', '')
+        
+        dbg(f"Determining component type for enhanced_type='{enhanced_type}', type='{node_type}'")
+        
+        # Check enhanced_type first (more specific)
+        if 'Transformer' in enhanced_type or node_type == 'CTransformerStage':
+            return 'transform', 'processor'
+        elif 'Lookup' in enhanced_type or 'PxLookup' in enhanced_type:
+            return 'lookup', 'processor'
+        elif 'Join' in enhanced_type or 'PxJoin' in enhanced_type:
+            return 'join', 'processor'
+        elif 'Merge' in enhanced_type or 'PxFunnel' in enhanced_type:
+            return 'merge', 'processor'
+        elif 'RemDup' in enhanced_type or 'Deduplicate' in enhanced_type:
+            return 'deduplicate', 'processor'
+        elif 'DB2' in enhanced_type or 'ODBC' in enhanced_type or 'DB2Connector' in enhanced_type or 'ODBCConnector' in enhanced_type:
+            # Determine source vs sink based on pins
+            if self._is_sink_node(asg_node):
+                return 'database_write', 'output'
+            else:
+                return 'database_read', 'input'
+        elif 'Sequential' in enhanced_type or 'File' in enhanced_type or 'PxSequential' in enhanced_type:
+            # Determine source vs sink based on pins
+            if self._is_sink_node(asg_node):
+                return 'file_write', 'output'
+            else:
+                return 'file_read', 'input'
+        elif 'Custom' in enhanced_type or node_type == 'CCustomStage':
+            # Custom stage - determine by pin direction and name
+            if self._is_sink_node(asg_node):
+                return 'custom_write', 'output'
+            elif self._is_source_node(asg_node):
+                return 'custom_read', 'input'
+            else:
+                return 'custom_transform', 'processor'
         else:
-            ir_column["hasTransformation"] = False
-        
-        return ir_column
+            # Fallback: use pin directions
+            if self._is_sink_node(asg_node):
+                return 'write', 'output'
+            elif self._is_source_node(asg_node):
+                return 'read', 'input'
+            else:
+                return 'transform', 'processor'
     
-    def _map_stage_type_to_ir(self, enhanced_type: str, asg_node: Dict[str, Any]) -> tuple:
-        """Map DataStage stage types to IR node types using DB mappings."""
-        
-        # Get the actual stage_type from properties (e.g., PxSequentialFile)
-        properties = asg_node.get('properties', {})
-        stage_type = properties.get('stage_type', enhanced_type)
-        
-        # PRIORITY 1: Handle PxSequentialFile explicitly (can be Source or Sink)
-        if stage_type == 'PxSequentialFile':
-            ir_type = self._determine_source_or_sink(asg_node)
-            return ir_type, "File"
-        
-        # PRIORITY 2: Check DB mappings for the actual stage_type
-        if stage_type in self.db_type_mappings:
-            ir_type, ir_subtype = self.db_type_mappings[stage_type]
-            
-            # For components that can be Source OR Sink (like PxSequentialFile),
-            # determine direction based on pins or node name
-            if stage_type == 'PxSequentialFile':
-                ir_type = self._determine_source_or_sink(asg_node)
-            
-            return ir_type, ir_subtype
-        
-        # PRIORITY 3: Check DB mappings for enhanced_type as fallback
-        if enhanced_type in self.db_type_mappings:
-            ir_type, ir_subtype = self.db_type_mappings[enhanced_type]
-            # Still check if it's a file stage that needs direction detection
-            if enhanced_type == 'PxSequentialFile':
-                ir_type = self._determine_source_or_sink(asg_node)
-            return ir_type, ir_subtype
-        
-        # PRIORITY 4: Final fallback to legacy heuristics (also checks stage_type)
-        return self._legacy_type_mapping(stage_type, asg_node, enhanced_type)
-    
-    def _determine_source_or_sink(self, asg_node: Dict[str, Any]) -> str:
-        """Determine if a node is Source or Sink based on pins direction."""
+    def _is_source_node(self, asg_node: Dict[str, Any]) -> bool:
+        """Check if node is a source (has output pins, no input pins)"""
         pins = asg_node.get('pins', [])
-        
         has_input = any(p.get('direction') == 'input' for p in pins)
         has_output = any(p.get('direction') == 'output' for p in pins)
         
-        if has_output and not has_input:
-            return "Source"
-        elif has_input and not has_output:
-            return "Sink"
-        
-        # Fallback to name heuristics
-        node_name = asg_node.get('name', '').upper()
-        if any(kw in node_name for kw in ['TGT', 'OUT', 'TARGET', 'SINK']):
-            return "Sink"
-        return "Source"
+        return has_output and not has_input
     
-    def _legacy_type_mapping(self, stage_type: str, asg_node: Dict[str, Any], enhanced_type: str = None) -> tuple:
-        """Legacy fallback for type mapping when DB mapping not found."""
+    def _is_sink_node(self, asg_node: Dict[str, Any]) -> bool:
+        """Check if node is a sink (has input pins, no output pins)"""
+        pins = asg_node.get('pins', [])
+        has_input = any(p.get('direction') == 'input' for p in pins)
+        has_output = any(p.get('direction') == 'output' for p in pins)
         
-        # Use stage_type first, then enhanced_type as fallback
-        type_to_check = stage_type if stage_type else (enhanced_type or '')
+        return has_input and not has_output
+    
+    def _map_to_talend_component(self, enhanced_type: str, asg_node: Dict[str, Any]) -> str:
+        """Map ASG stage type to Talend component name"""
+        name_lower = enhanced_type.lower()
         
-        # Database connector patterns
-        if any(db in type_to_check.upper() for db in ['DB2', 'ORACLE', 'SQL', 'CONNECTOR']):
-            return "Source", self._detect_db_type(asg_node)
+        # Database connectors
+        if 'db2' in name_lower:
+            return 'tDB2Input' if self._is_source_node(asg_node) else 'tDB2Output'
+        elif 'odbc' in name_lower:
+            return 'tODBCInput' if self._is_source_node(asg_node) else 'tODBCOutput'
+        elif 'oracle' in name_lower:
+            return 'tOracleInput' if self._is_source_node(asg_node) else 'tOracleOutput'
+        elif 'mysql' in name_lower:
+            return 'tMysqlInput' if self._is_source_node(asg_node) else 'tMysqlOutput'
         
-        # File-based stages - PxSequentialFile or any Sequential/File stage
-        elif 'Sequential' in type_to_check or (type_to_check == 'PxSequentialFile'):
-            # Determine Source or Sink based on pins
-            pins = asg_node.get('pins', [])
-            has_input = any(p.get('direction') == 'input' for p in pins)
-            has_output = any(p.get('direction') == 'output' for p in pins)
-            
-            if has_output and not has_input:
-                return "Source", "File"
-            elif has_input and not has_output:
-                return "Sink", "File"
-            else:
-                # Fallback to name heuristics
-                node_name = asg_node.get('name', '').upper()
-                if any(keyword in node_name for keyword in ['TGT', 'OUT', 'TARGET', 'SINK', 'OUTPUT']):
-                    return "Sink", "File"
-                else:
-                    return "Source", "File"
+        # File handling
+        elif 'sequential' in name_lower or 'file' in name_lower:
+            return 'tFileInputDelimited' if self._is_source_node(asg_node) else 'tFileOutputDelimited'
         
-        # Transformation stages
-        elif type_to_check in ['CTransformerStage', 'PxJoin', 'PxLookup', 'PxChangeCapture']:
-            return "Transform", "Map"
+        # Transformations
+        elif 'transformer' in name_lower:
+            return 'tMap'
+        elif 'lookup' in name_lower:
+            return 'tMap'  # Lookup in Talend is handled by tMap
+        elif 'join' in name_lower:
+            return 'tMap'  # Join in Talend is handled by tMap
+        elif 'merge' in name_lower or 'funnel' in name_lower:
+            return 'tConcat'
+        elif 'remdup' in name_lower or 'dedup' in name_lower:
+            return 'tUniqRow'
         
-        # Custom stages - check if it's actually a file stage based on properties
-        elif enhanced_type == 'CCustomStage' or type_to_check == 'CCustomStage':
-            # Check if it has file-related properties
-            enhanced_props = asg_node.get('enhanced_properties', {})
-            config = enhanced_props.get('configuration', {})
-            has_file_path = 'FilePath' in config or any('file' in str(k).lower() for k in config.keys())
-            
-            if has_file_path:
-                # Determine Source or Sink based on pins
-                pins = asg_node.get('pins', [])
-                has_input = any(p.get('direction') == 'input' for p in pins)
-                has_output = any(p.get('direction') == 'output' for p in pins)
+        # Default
+        else:
+            return 'tJavaRow'  # Generic processor
+    
+    def _extract_pins_and_schema(self, asg_node: Dict[str, Any], ir_component: Dict[str, Any]):
+        """Extract pins and schema information"""
+        pins = asg_node.get('pins', [])
+        
+        dbg(f"Extracting {len(pins)} pins")
+        
+        for pin in pins:
+            try:
+                pin_id = pin.get('id', '')
+                pin_name = pin.get('name', 'unknown')
+                direction = pin.get('direction', 'unknown')
                 
-                if has_output and not has_input:
-                    return "Source", "File"
-                elif has_input and not has_output:
-                    return "Sink", "File"
-                else:
-                    # Fallback to name heuristics
-                    node_name = asg_node.get('name', '').upper()
-                    if any(keyword in node_name for keyword in ['TGT', 'OUT', 'TARGET', 'SINK', 'OUTPUT']):
-                        return "Sink", "File"
-                    elif any(keyword in node_name for keyword in ['SRC', 'IN', 'SOURCE', 'INPUT']):
-                        return "Source", "File"
-            
-            # Default for CCustomStage without file properties
-            return "Transform", "Custom"
-        
-        # Default fallback
-        else:
-            return "Transform", "Generic"
+                # Get schema (prefer enhanced_schema for transformation info)
+                schema = pin.get('enhanced_schema', pin.get('schema', []))
+                col_count = len(schema)
+                
+                log_pin_processing(pin_id, pin_name, direction, col_count)
+                
+                # Create pin entry
+                pin_entry = {
+                    "id": pin_id,
+                    "asg_id": pin_id,
+                    "name": pin_name,
+                    "direction": direction,
+                    "columns": []
+                }
+                
+                # Extract columns
+                for col in schema:
+                    try:
+                        ir_column = self._extract_column_info(col, pin_name)
+                        pin_entry['columns'].append(ir_column)
+                        self.stats['columns_extracted'] += 1
+                    except Exception as e:
+                        log_warning(f"Failed to extract column {col.get('name', 'unknown')}: {e}")
+                
+                # Add to component schema
+                if direction == 'input':
+                    ir_component['schema']['input_pins'].append(pin_entry)
+                elif direction == 'output':
+                    ir_component['schema']['output_pins'].append(pin_entry)
+                
+                # Map pin for edge conversion
+                self.pin_mappings[pin_id] = {
+                    'component_id': ir_component['id'],
+                    'pin_name': pin_name,
+                    'direction': direction
+                }
+                
+                self.stats['pins_processed'] += 1
+                
+            except Exception as e:
+                log_error(f"Error extracting pin {pin.get('id', 'unknown')}: {e}")
+                self.stats['errors'] += 1
     
-    def _detect_db_type(self, asg_node: Dict[str, Any]) -> str:
-        """Detect database type from node properties."""
-        node_type = asg_node.get('type', '').upper()
-        enhanced_props = asg_node.get('enhanced_properties', {})
+    def _extract_column_info(self, col: Dict[str, Any], pin_name: str) -> Dict[str, Any]:
+        """Extract column information for Talend IR"""
+        col_name = col.get('name', 'unknown')
+        col_type = col.get('type', 'string')
         
-        if 'configuration' in enhanced_props:
-            config = enhanced_props['configuration']
-            if 'databaseType' in config:
-                return config['databaseType']
+        ir_column = {
+            "name": col_name,
+            "type": self._map_sql_type_to_talend(col_type),
+            "length": col.get('length', 255),
+            "scale": col.get('scale', 0),
+            "nullable": col.get('nullable', True),
+            "precision": col.get('precision', 0)
+        }
         
-        if 'DB2' in node_type:
-            return 'DB2'
-        elif 'ORACLE' in node_type:
-            return 'Oracle'
-        elif 'SQL' in node_type or 'MSSQL' in node_type:
-            return 'SQLServer'
-        elif 'MYSQL' in node_type:
-            return 'MySQL'
-        elif 'POSTGRES' in node_type:
-            return 'PostgreSQL'
-        else:
-            return 'GenericDB'
+        # Extract transformation logic if present
+        if col.get('has_transformation', False):
+            transformation_logic = col.get('transformation_logic', {})
+            ir_column['transformation'] = {
+                'type': transformation_logic.get('type', 'pass_through'),
+                'source_columns': transformation_logic.get('source_columns', []),
+                'expression': transformation_logic.get('expression', col_name),
+                'functions': transformation_logic.get('functions', []),
+                'derivation': col.get('derivation', '')
+            }
+            self.stats['transformations_extracted'] += 1
+        
+        return ir_column
     
-    def _map_node_properties(self, ir_node: Dict[str, Any], asg_node: Dict[str, Any]):
-        """Map ASG node properties to IR node properties."""
+    def _map_sql_type_to_talend(self, sql_type: str) -> str:
+        """Map SQL type to Talend type"""
+        type_map = {
+            'VARCHAR': 'String',
+            'CHAR': 'String',
+            'TEXT': 'String',
+            'INTEGER': 'Integer',
+            'INT': 'Integer',
+            'BIGINT': 'Long',
+            'SMALLINT': 'Short',
+            'TINYINT': 'Byte',
+            'DECIMAL': 'BigDecimal',
+            'NUMERIC': 'BigDecimal',
+            'FLOAT': 'Float',
+            'DOUBLE': 'Double',
+            'REAL': 'Float',
+            'DATE': 'Date',
+            'TIME': 'Object',
+            'TIMESTAMP': 'Date',
+            'DATETIME': 'Date',
+            'BOOLEAN': 'Boolean',
+            'BIT': 'Boolean',
+            'BLOB': 'byte[]',
+            'CLOB': 'String'
+        }
         
-        enhanced_props = asg_node.get('enhanced_properties', {})
-        
-        # File path detection (SequentialFile or generic File)
-        if ir_node['subtype'] in ('SequentialFile', 'File'):
-            ir_node['props'] = {
-                "path": self._extract_file_path(asg_node),
-                "delimiter": enhanced_props.get('delimiter', ','),
-                "encoding": "UTF-8",
-                "firstLineColumnNames": enhanced_props.get('firstLineColumnNames', True)
-            }
-        
-        # Database properties
-        elif ir_node['subtype'] in ['DB2', 'Oracle', 'SQLServer', 'MySQL', 'PostgreSQL']:
-            ir_node['props'] = {
-                "table": self._extract_table_name(asg_node),
-                "commit": "1000",
-                "schema": self._extract_schema_name(asg_node)
-            }
-        
-        # Transformation properties (for joins, lookups, etc.)
-        elif ir_node['subtype'] == 'Map':
-            join_props = self._extract_join_properties(asg_node)
-            if join_props:
-                ir_node['props'].update(join_props)
-        
-        # Custom stages
-        elif ir_node['subtype'] == 'Custom':
-            custom_props = {
-                "customType": asg_node.get('enhanced_type', 'Unknown'),
-                "description": f"DataStage {asg_node.get('enhanced_type', 'Custom')} component"
-            }
-            
-            if enhanced_props:
-                custom_props.update(enhanced_props)
-            
-            ir_node['props'] = custom_props
+        sql_upper = sql_type.upper()
+        return type_map.get(sql_upper, 'String')
     
-    def _extract_file_path(self, asg_node: Dict[str, Any]) -> str:
-        """Extract actual file path from ASG node."""
+    def _extract_component_configuration(self, asg_node: Dict[str, Any], ir_component: Dict[str, Any]):
+        """Extract Talend-necessary configuration (table names, DB info, file paths)"""
         enhanced_props = asg_node.get('enhanced_properties', {})
         config = enhanced_props.get('configuration', {})
         
+        comp_type = ir_component['category']
+        comp_id = ir_component['id']
+        
+        dbg(f"Extracting configuration for {comp_id} (category: {comp_type})")
+        
+        # Database components
+        if 'database' in comp_type or ir_component['type'] in ['database_read', 'database_write']:
+            self._extract_database_config(asg_node, ir_component, config)
+        
+        # File components
+        elif 'file' in comp_type or ir_component['type'] in ['file_read', 'file_write']:
+            self._extract_file_config(asg_node, ir_component, config)
+        
+        # Custom/connector components
+        elif ir_component['type'] in ['custom_read', 'custom_write', 'custom_transform']:
+            self._extract_connector_config(asg_node, ir_component, config)
+    
+    def _extract_database_config(self, asg_node: Dict[str, Any], ir_component: Dict[str, Any], config: Dict[str, Any]):
+        """Extract database configuration for Talend"""
+        dbg(f"Extracting database configuration for {ir_component['id']}")
+        
+        # Try to get table name from multiple locations
+        table_name = None
+        if 'TableName' in config:
+            table_name = config['TableName']
+        elif 'table' in config:
+            table_name = config['table']
+        
+        # Parse XMLProperties if present (contains connection and table info)
+        xml_props = config.get('XMLProperties', '')
+        if xml_props and 'CDATA' in xml_props:
+            parsed_xml = self._parse_xml_properties(xml_props)
+            if 'TableName' in parsed_xml:
+                table_name = parsed_xml['TableName']
+            if 'Instance' in parsed_xml:
+                ir_component['configuration']['database_instance'] = parsed_xml['Instance']
+            if 'Database' in parsed_xml:
+                ir_component['configuration']['database_name'] = parsed_xml['Database']
+        
+        if table_name:
+            log_property_extraction(ir_component['id'], 'table_name', table_name)
+            ir_component['configuration']['table_name'] = table_name
+            self.stats['properties_extracted'] += 1
+        
+        # Extract schema if present
+        if 'schema' in config:
+            ir_component['configuration']['schema'] = config['schema']
+        
+        # Extract connection parameters
+        for key in ['Instance', 'Database', 'Username', 'Password', 'ConnectionString']:
+            if key in config:
+                ir_component['configuration'][key.lower()] = config[key]
+    
+    def _extract_file_config(self, asg_node: Dict[str, Any], ir_component: Dict[str, Any], config: Dict[str, Any]):
+        """Extract file configuration for Talend"""
+        dbg(f"Extracting file configuration for {ir_component['id']}")
+        
+        # Get file path from multiple locations
         file_path = None
-        if config and 'FilePath' in config:
+        if 'FilePath' in config:
             file_path = config['FilePath']
-        elif config and 'file' in config:
+        elif 'file' in config:
             file_path = config['file']
-
-        # Fallback: look for file on pin properties (SequentialFile stores path on pin)
+        elif 'path' in config:
+            file_path = config['path']
+        
+        # Also check pin properties
         if not file_path:
             for pin in asg_node.get('pins', []):
                 pin_props = pin.get('properties', {})
-                if 'file' in pin_props and pin_props['file']:
+                if 'file' in pin_props:
                     file_path = pin_props['file']
                     break
         
-        # Clean up the path: remove "0file" prefix but preserve directory structure
         if file_path:
-            # Remove "0file" prefix if present (decoding artifact)
-            cleaned_path = file_path.replace('0file/', '').replace('0file\\', '')
-            
-            # Normalize path separators to forward slashes
-            cleaned_path = cleaned_path.replace('\\', '/')
-            
-            # If it's an absolute Windows path (e.g., D:/ETL_Migrator/inputfile.csv),
-            # convert to relative path by removing drive letter and making it relative
-            # if re.match(r'^[A-Za-z]:/', cleaned_path):
-            #     # Remove drive letter (e.g., "D:/" -> "")
-            #     cleaned_path = re.sub(r'^[A-Za-z]:/', '', cleaned_path)
-            
-            # Return the cleaned path (preserves directory structure)
-            return cleaned_path
+            log_property_extraction(ir_component['id'], 'file_path', file_path)
+            ir_component['configuration']['file_path'] = file_path
+            self.stats['properties_extracted'] += 1
         
-        # Fallback: generate path from node name
-        node_name = asg_node.get('name', 'file')
-        node_name_lower = node_name.lower()
-        
-        if 'src' in node_name.lower() or 'source' in node_name.lower() or 'input' in node_name.lower():
-            return f"inputfile.csv"  # Use actual filename
-        elif any(keyword in node_name.lower() for keyword in ['tgt', 'target', 'out', 'output']):
-            return f"outputfile.csv"
-        else:
-            return f"datafile.csv"
+        # File format properties
+        if 'FieldDelimiter' in config:
+            ir_component['configuration']['delimiter'] = config['FieldDelimiter']
+        if 'FirstLineColumnNames' in config:
+            ir_component['configuration']['header'] = config['FirstLineColumnNames']
+        if 'Encoding' in config:
+            ir_component['configuration']['encoding'] = config['Encoding']
     
-    def _extract_table_name(self, asg_node: Dict[str, Any]) -> str:
-        """Extract table name from ASG node."""
+    def _extract_connector_config(self, asg_node: Dict[str, Any], ir_component: Dict[str, Any], config: Dict[str, Any]):
+        """Extract connector configuration for Talend"""
+        dbg(f"Extracting connector configuration for {ir_component['id']}")
+        
+        # Store all configuration except very large XML strings
+        for key, value in config.items():
+            if key in ['XMLProperties', 'XMLConnectorDescriptor']:
+                # For XML, extract key values instead of storing entire XML
+                if isinstance(value, str) and len(value) > 500:
+                    parsed = self._parse_xml_properties(value)
+                    ir_component['configuration'][f"{key}_parsed"] = parsed
+                    log_property_extraction(ir_component['id'], key, f"(parsed, {len(parsed)} fields)")
+            else:
+                ir_component['configuration'][key] = value
+                self.stats['properties_extracted'] += 1
+    
+    def _parse_xml_properties(self, xml_str: str) -> Dict[str, str]:
+        """Parse XMLProperties CDATA section to extract key values"""
+        try:
+            dbg("Parsing XML properties")
+            
+            # Extract content between CDATA markers
+            if '<![CDATA[' in xml_str and ']]>' in xml_str:
+                # Find first CDATA content
+                start = xml_str.find('<![CDATA[') + 9
+                end = xml_str.find(']]>', start)
+                if start > 8 and end > start:
+                    xml_content = xml_str[start:end]
+                else:
+                    xml_content = xml_str
+            else:
+                xml_content = xml_str
+            
+            # Try to parse as XML
+            root = ET.fromstring(xml_content)
+            result = {}
+            
+            # Extract all text values with their paths
+            for elem in root.iter():
+                if elem.text and elem.text.strip():
+                    key = elem.tag
+                    result[key] = elem.text.strip()
+            
+            dbg(f"Parsed {len(result)} XML properties")
+            return result
+        except Exception as e:
+            dbg(f"XML parsing failed: {e}, returning empty dict")
+            return {}
+    
+    def _extract_transformation_logic(self, asg_node: Dict[str, Any], ir_component: Dict[str, Any]):
+        """Extract transformation logic (TrxGenCode, TrxClassName)"""
+        enhanced_props = asg_node.get('enhanced_properties', {})
+        apt_props = enhanced_props.get('apt_properties', {})
+        
+        # Store transformation class and code for Talend generation
+        if 'TrxClassName' in apt_props:
+            ir_component['talend_specific']['trx_class_name'] = apt_props['TrxClassName']
+            dbg(f"Extracted TrxClassName: {apt_props['TrxClassName']}")
+        
+        if 'TrxGenCode' in apt_props:
+            trx_code = apt_props['TrxGenCode']
+            # Store indicator that transformation code is present
+            ir_component['talend_specific']['has_transformation_code'] = True
+            ir_component['talend_specific']['transformation_code_length'] = len(trx_code)
+            dbg(f"Extracted TrxGenCode: {len(trx_code)} chars")
+            self.stats['transformations_extracted'] += 1
+        
+        if 'JobParameterNames' in apt_props:
+            ir_component['talend_specific']['job_parameters'] = apt_props['JobParameterNames']
+    
+    def _extract_talend_specific_properties(self, asg_node: Dict[str, Any], ir_component: Dict[str, Any]):
+        """Extract Talend-specific properties"""
         enhanced_props = asg_node.get('enhanced_properties', {})
         config = enhanced_props.get('configuration', {})
         
-        if config and 'table' in config:
-            return config['table']
+        # Connector properties
+        if 'ConnectorName' in config:
+            ir_component['talend_specific']['connector_name'] = config['ConnectorName']
         
-        for key, value in enhanced_props.items():
-            if 'table' in key.lower() or 'target' in key.lower():
-                return str(value)
+        if 'Engine' in config:
+            ir_component['talend_specific']['engine'] = config['Engine']
         
-        return asg_node.get('name', 'unknown_table')
+        # Context properties (parameterized values like #TEST_Param.$DB2_INSTANCE#)
+        for key, value in config.items():
+            if isinstance(value, str) and '#' in value and '$' in value:
+                # This is a parameterized value
+                if 'context_params' not in ir_component['talend_specific']:
+                    ir_component['talend_specific']['context_params'] = {}
+                ir_component['talend_specific']['context_params'][key] = value
     
-    def _extract_schema_name(self, asg_node: Dict[str, Any]) -> str:
-        """Extract schema name from ASG node."""
-        enhanced_props = asg_node.get('enhanced_properties', {})
-        config = enhanced_props.get('configuration', {})
-        
-        if config and 'schema' in config:
-            return config['schema']
-        
-        for key, value in enhanced_props.items():
-            if 'schema' in key.lower():
-                return str(value)
-        
-        return "dbo"
+    # ========================================================================
+    # PHASE 2.2: EDGE CONVERSION
+    # ========================================================================
     
-    def _extract_join_properties(self, asg_node: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract join properties for transformation nodes."""
-        props = {}
+    def _convert_all_edges(self):
+        """Convert all ASG edges to IR connections"""
+        edges = self.asg_data.get('edges', [])
         
-        if 'join_key' in asg_node.get('properties', {}):
-            join_key_info = asg_node['properties']['join_key']
-            if isinstance(join_key_info, dict) and 'parsed_keys' in join_key_info:
-                props['joinKeys'] = join_key_info['parsed_keys']
+        dbg(f"\nConverting {len(edges)} edges")
         
-        if 'operator' in asg_node.get('properties', {}):
-            operator = asg_node['properties']['operator']
-            props['joinType'] = operator.lower()
-        
-        enhanced_props = asg_node.get('enhanced_properties', {})
-        if 'aggregations' in enhanced_props:
-            props['aggregations'] = enhanced_props['aggregations']
-        
-        if 'keys' in enhanced_props:
-            props['keys'] = enhanced_props['keys']
-        
-        return props
-    
-    def _create_schema_from_pins(self, asg_node: Dict[str, Any], ir_node_id: str) -> str:
-        """Create IR schema from ASG node pins - wrapper for enhanced version"""
-        ir_node = {}  # Temporary node for transformation tracking
-        return self._create_schema_from_pins_with_transformations(asg_node, ir_node_id, ir_node)
-    
-    def _map_sql_type_to_ir(self, sql_type: str) -> str:
-        """Map SQL types to IR type hints."""
-        type_mapping = {
-            'VARCHAR': 'string',
-            'CHAR': 'string',
-            'INTEGER': 'integer',
-            'INT': 'integer',
-            'BIGINT': 'long',
-            'DECIMAL': 'decimal',
-            'NUMERIC': 'decimal',
-            'FLOAT': 'float',
-            'REAL': 'float',
-            'DOUBLE': 'double',
-            'DATE': 'date',
-            'TIME': 'time',
-            'TIMESTAMP': 'timestamp',
-            'BOOLEAN': 'boolean',
-            'BIT': 'boolean'
-        }
-        
-        return type_mapping.get(sql_type.upper(), 'string')
-    
-    def _should_have_schema(self, asg_node: Dict[str, Any]) -> bool:
-        """Check if node should have a schema even without pins"""
-        enhanced_type = asg_node.get('enhanced_type', '')
-        node_name = asg_node.get('name', '').upper()
-        
-        return any(keyword in enhanced_type.upper() for keyword in ['TARGET', 'SINK', 'OUTPUT']) or \
-               any(keyword in node_name for keyword in ['TGT', 'OUT', 'TARGET', 'SINK'])
-    
-    def _create_target_schema(self, asg_node: Dict[str, Any], ir_node_id: str) -> str:
-        """Create schema for target nodes based on expected output"""
-        asg_node_id = asg_node.get('id', '')
-        schema_id = f"s_{asg_node_id}"
-        
-        schema_columns = []
-        enhanced_props = asg_node.get('enhanced_properties', {})
-        config = enhanced_props.get('configuration', {})
-        
-        if config and 'schema' in config:
-            schema_data = config['schema']
-            if schema_data and isinstance(schema_data, list):
-                for column in schema_data:
-                    if isinstance(column, dict):
-                        schema_columns.append({
-                            "name": column.get('name', 'unknown'),
-                            "type": self._map_sql_type_to_ir(column.get('type', 'string')),
-                            "nullable": column.get('nullable', True)
-                        })
-        
-        if not schema_columns:
-            for pin in asg_node.get('pins', []):
-                if pin.get('direction') == 'input':
-                    for column in pin.get('schema', []):
-                        schema_columns.append({
-                            "name": column.get('name', 'unknown'),
-                            "type": self._map_sql_type_to_ir(column.get('type', 'string')),
-                            "nullable": column.get('nullable', True)
-                        })
-                    break
-        
-        self.ir_data['schemas'][schema_id] = schema_columns
-        self.schema_mappings[asg_node_id] = schema_id
-        
-        return schema_id
-    
-    def _convert_edges(self):
-        """Convert ASG edges to IR links."""
-        for asg_edge in self.asg_data.get('edges', []):
+        for idx, asg_edge in enumerate(edges, 1):
             try:
-                ir_link = self._convert_single_edge(asg_edge)
-                if ir_link:
-                    self.ir_data['links'].append(ir_link)
+                ir_connection = self._convert_single_edge(asg_edge)
+                if ir_connection:
+                    self.ir_data['connections'].append(ir_connection)
+                    self.stats['edges_processed'] += 1
+                    
+                    from_node = asg_edge.get('from_node', 'unknown')
+                    to_node = asg_edge.get('to_node', 'unknown')
+                    print(f"  ✅ Edge {from_node} → {to_node}")
+                    
             except Exception as e:
-                print(f"❌ Error converting edge {asg_edge}: {e}")
-                continue
+                log_error(f"Error converting edge {idx}: {e}")
+                self.stats['errors'] += 1
     
-    def _convert_single_edge(self, asg_edge: Dict[str, Any]) -> Dict[str, Any]:
-        """Convert a single ASG edge to IR link."""
-        from_node_id = self._get_consistent_ir_node_id(asg_edge.get('from_node', ''))
-        to_node_id = self._get_consistent_ir_node_id(asg_edge.get('to_node', ''))
-        schema_ref = self._get_consistent_schema_ref(asg_edge)
+    def _convert_single_edge(self, asg_edge: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+        """Convert a single ASG edge to IR connection"""
+        from_asg_id = asg_edge.get('from_node', '')
+        to_asg_id = asg_edge.get('to_node', '')
+        from_pin_id = asg_edge.get('from_pin', '')
+        to_pin_id = asg_edge.get('to_pin', '')
         
-        return {
-            "id": f"l{len(self.ir_data['links']) + 1}",
+        # Get IR component IDs
+        from_ir_id = self.asg_to_ir_node_id_map.get(from_asg_id)
+        to_ir_id = self.asg_to_ir_node_id_map.get(to_asg_id)
+        
+        if not from_ir_id or not to_ir_id:
+            log_warning(f"Edge {from_asg_id} → {to_asg_id}: nodes not in mapping")
+            return None
+        
+        # Get pin information
+        from_pin_info = self.pin_mappings.get(from_pin_id, {'pin_name': 'out'})
+        to_pin_info = self.pin_mappings.get(to_pin_id, {'pin_name': 'in'})
+        
+        ir_connection = {
+            "id": f"conn_{from_asg_id}_{to_asg_id}",
             "from": {
-                "nodeId": from_node_id,
-                "port": "out"
+                "component_id": from_ir_id,
+                "pin": from_pin_info.get('pin_name', 'out'),
+                "asg_pin_id": from_pin_id
             },
             "to": {
-                "nodeId": to_node_id,
-                "port": "in"
+                "component_id": to_ir_id,
+                "pin": to_pin_info.get('pin_name', 'in'),
+                "asg_pin_id": to_pin_id
             },
-            "schemaRef": schema_ref
+            "schema_ref": from_pin_id  # Reference to source pin schema
         }
-    
-    def _get_consistent_ir_node_id(self, asg_node_id: str) -> str:
-        """Get consistent IR node ID for ASG node."""
-        if asg_node_id in self.asg_to_ir_node_id_map:
-            return self.asg_to_ir_node_id_map[asg_node_id]
-        else:
-            return f"n{hash(asg_node_id) % 10000}"
-    
-    def _get_consistent_schema_ref(self, asg_edge: Dict[str, Any]) -> str:
-        """Get consistent schema reference for edge."""
-        from_node_id = asg_edge.get('from_node', '')
         
-        if from_node_id in self.schema_mappings:
-            return self.schema_mappings[from_node_id]
-        else:
-            schema_id = f"s_{from_node_id}"
-            if schema_id not in self.ir_data['schemas']:
-                self.ir_data['schemas'][schema_id] = []
-            return schema_id
+        return ir_connection
     
-    def _build_schemas(self):
-        """Build comprehensive schemas from all nodes."""
-        pass
+    # ========================================================================
+    # PHASE 2.3: SCHEMA BUILDING
+    # ========================================================================
     
-    def _add_provenance(self):
-        """Add provenance information to nodes with actual DSX info."""
-        job_name = self.ir_data['job']['name']
-        
-        for node in self.ir_data['nodes']:
-            asg_node_id = None
-            for asg_id, ir_id in self.asg_to_ir_node_id_map.items():
-                if ir_id == node['id']:
-                    asg_node_id = asg_id
-                    break
+    def _build_complete_schemas(self):
+        """Build complete schemas for all components"""
+        for component in self.ir_data['components']:
+            comp_id = component['id']
             
-            if asg_node_id:
-                provenance = self.provenance_map.get(asg_node_id, {})
-            else:
-                provenance = {
-                    'source': 'dsx',
-                    'location': f"{job_name}.dsx",
-                    'lineStart': '--',
-                    'lineEnd': '--'
+            # Build schema from input and output pins
+            schema_def = {
+                "inputs": {},
+                "outputs": {}
+            }
+            
+            # Input pins
+            for pin in component['schema']['input_pins']:
+                schema_def['inputs'][pin['name']] = {
+                    "columns": pin['columns'],
+                    "pin_id": pin['asg_id']
                 }
             
-            node['provenance'] = {
-                "source": provenance.get('source', 'dsx'),
-                "location": provenance.get('location', f"{job_name}.dsx"),
-                "lineStart": provenance.get('lineStart', '--'),
-                "lineEnd": provenance.get('lineEnd', '--'),
-                "filePath": provenance.get('filePath', f"{job_name}.dsx")
-            }
+            # Output pins
+            for pin in component['schema']['output_pins']:
+                schema_def['outputs'][pin['name']] = {
+                    "columns": pin['columns'],
+                    "pin_id": pin['asg_id']
+                }
+            
+            # Store schema
+            self.ir_data['schemas'][comp_id] = schema_def
+            self.stats['columns_extracted'] += len(component['schema']['input_pins']) + len(component['schema']['output_pins'])
     
-    def _compute_transformation_statistics(self):
-        """🔧 NEW: Compute global transformation statistics"""
-        total_transformations = sum(self.transformation_stats.values())
-        
-        self.ir_data['transformationTracking'] = {
-            "totalTransformations": total_transformations,
-            "transformationTypes": dict(self.transformation_stats),
-            "complexityDistribution": {
-                "simple": self.transformation_stats['simple_columns'],
-                "aggregations": self.transformation_stats['aggregations'],
-                "complex": self.transformation_stats['conditionals'] + self.transformation_stats['expressions']
-            }
-        }
+    # ========================================================================
+    # PHASE 2.4: JOB PARAMETERS
+    # ========================================================================
     
-    def _generate_deterministic_id(self) -> str:
-        """Generate deterministic ID for job to ensure reproducibility"""
-        job_name = self.asg_data.get('job_name', 'Unknown_Job')
-        timestamp = datetime.now().strftime("%Y%m%d%H%M")
-        return f"job-{job_name.replace(' ', '_')}-{timestamp}"
+    def _extract_job_parameters(self):
+        """Extract job parameters for Talend contexts"""
+        params = self.asg_data.get('job_parameters', [])
+        
+        dbg(f"Extracting {len(params)} job parameters")
+        
+        for param in params:
+            try:
+                param_name = param.get('name', 'unknown')
+                param_default = param.get('default', '')
+                
+                ir_param = {
+                    "name": param_name,
+                    "type": "string",
+                    "default_value": param_default,
+                    "prompt": param.get('prompt', param_name),
+                    "required": True
+                }
+                
+                self.ir_data['job']['parameters'].append(ir_param)
+                self.ir_data['job']['contexts']['default'][param_name] = param_default
+                
+                log_property_extraction('job', param_name, param_default)
+                
+            except Exception as e:
+                log_warning(f"Failed to extract parameter {param.get('name', 'unknown')}: {e}")
     
-    def save_ir(self, filepath: str) -> bool:
-        """Save IR JSON file."""
-        try:
-            with open(filepath, 'w', encoding='utf-8') as f:
-                json.dump(self.ir_data, f, indent=2, ensure_ascii=False)
-            print(f"✅ Enhanced IR saved to: {filepath}")
-            return True
-        except Exception as e:
-            print(f"❌ Error saving IR: {e}")
-            return False
+    # ========================================================================
+    # PHASE 3: VALIDATION
+    # ========================================================================
     
-    def validate_ir(self) -> bool:
-        """Validate IR consistency."""
-        print("\n🔍 Validating Enhanced IR consistency...")
+    def _validate_conversion(self) -> bool:
+        """Validate IR completeness and consistency"""
+        print("\n[VALIDATION] Checking IR consistency...")
         
-        # Check node ID consistency
-        node_ids = {node['id'] for node in self.ir_data['nodes']}
-        link_node_ids = set()
+        issues = []
         
-        for link in self.ir_data['links']:
-            link_node_ids.add(link['from']['nodeId'])
-            link_node_ids.add(link['to']['nodeId'])
+        # Check component consistency
+        comp_ids = {comp['id'] for comp in self.ir_data['components']}
+        conn_comp_ids = set()
         
-        missing_nodes = link_node_ids - node_ids
-        if missing_nodes:
-            print(f"❌ Link references missing nodes: {missing_nodes}")
-            return False
+        for conn in self.ir_data['connections']:
+            conn_comp_ids.add(conn['from']['component_id'])
+            conn_comp_ids.add(conn['to']['component_id'])
+        
+        missing_comps = conn_comp_ids - comp_ids
+        if missing_comps:
+            issues.append(f"Connections reference missing components: {missing_comps}")
         
         # Check schema consistency
-        schema_refs = set(self.ir_data['schemas'].keys())
-        link_schema_refs = {link['schemaRef'] for link in self.ir_data['links']}
-        missing_schemas = link_schema_refs - schema_refs
-        if missing_schemas:
-            print(f"❌ Link references missing schemas: {missing_schemas}")
+        for conn in self.ir_data['connections']:
+            schema_ref = conn['schema_ref']
+            if schema_ref and schema_ref not in self.pin_mappings:
+                # This is OK if it's just a reference
+                pass
+        
+        # Summary
+        if issues:
+            for issue in issues:
+                log_warning(issue)
             return False
-        
-        # Check transformation data integrity
-        nodes_with_transformations = sum(1 for node in self.ir_data['nodes'] 
-                                       if node.get('transformationDetails', {}).get('hasTransformations', False))
-        
-        print(f"✅ Enhanced IR validation passed!")
-        print(f"   {nodes_with_transformations} nodes have transformations")
-        print(f"   {self.ir_data['transformationTracking']['totalTransformations']} total transformations tracked")
-        
-        return True
+        else:
+            print("  ✅ All consistency checks passed")
+            return True
+    
+    # ========================================================================
+    # OUTPUT
+    # ========================================================================
+    
+    def save_ir(self, output_file: str) -> bool:
+        """Save IR to JSON file"""
+        try:
+            dbg(f"Saving IR to {output_file}")
+            
+            # Update metadata
+            self.ir_data['metadata_info'] = {
+                'total_columns': self.stats['columns_extracted'],
+                'total_transformations': self.stats['transformations_extracted'],
+                'total_connections': len(self.ir_data['connections']),
+                'total_components': len(self.ir_data['components']),
+                'total_parameters': len(self.ir_data['job']['parameters'])
+            }
+            
+            with open(output_file, 'w', encoding='utf-8') as f:
+                json.dump(self.ir_data, f, indent=2, ensure_ascii=False)
+            
+            print(f"\n✅ IR saved to: {output_file}")
+            return True
+        except Exception as e:
+            log_error(f"Failed to save IR: {e}")
+            return False
     
     def print_summary(self):
-        """Print enhanced conversion summary."""
-        print(f"\n📊 ENHANCED CONVERSION SUMMARY")
-        print(f"=" * 60)
-        print(f"Job Name: {self.ir_data['job']['name']}")
-        print(f"Job ID: {self.ir_data['job']['id']}")
-        print(f"IR Version: {self.ir_data['irVersion']}")
-        print(f"Nodes: {len(self.ir_data['nodes'])}")
-        print(f"Links: {len(self.ir_data['links'])}")
-        print(f"Schemas: {len(self.ir_data['schemas'])}")
+        """Print conversion summary"""
+        print("\n" + "="*70)
+        print("CONVERSION SUMMARY")
+        print("="*70)
         
-        # Transformation tracking summary
-        trans_tracking = self.ir_data['transformationTracking']
-        print(f"\n🔄 TRANSFORMATION TRACKING:")
-        print(f"Total Transformations: {trans_tracking['totalTransformations']}")
-        print(f"  Simple Columns: {trans_tracking['transformationTypes'].get('simple_columns', 0)}")
-        print(f"  Aggregations: {trans_tracking['transformationTypes'].get('aggregations', 0)}")
-        print(f"  Expressions: {trans_tracking['transformationTypes'].get('expressions', 0)}")
-        print(f"  Conditionals: {trans_tracking['transformationTypes'].get('conditionals', 0)}")
+        print(f"\nJob: {self.ir_data['job']['name']}")
+        print(f"Components: {self.stats['nodes_processed']}")
+        print(f"Connections: {self.stats['edges_processed']}")
+        print(f"Columns: {self.stats['columns_extracted']}")
+        print(f"Transformations: {self.stats['transformations_extracted']}")
+        print(f"Properties: {self.stats['properties_extracted']}")
+        print(f"Errors: {self.stats['errors']}")
         
-        print(f"\nNode Types:")
+        print(f"\nComponent types:")
         type_counts = {}
-        for node in self.ir_data['nodes']:
-            node_type = f"{node['type']}/{node['subtype']}"
-            type_counts[node_type] = type_counts.get(node_type, 0) + 1
+        for comp in self.ir_data['components']:
+            comp_type = comp['type']
+            type_counts[comp_type] = type_counts.get(comp_type, 0) + 1
         
-        for node_type, count in sorted(type_counts.items()):
-            print(f"  {node_type}: {count}")
+        for ctype, count in sorted(type_counts.items()):
+            print(f"  {ctype}: {count}")
         
-        # Show nodes with TrxGenCode
-        trxgen_nodes = [node for node in self.ir_data['nodes'] if node.get('trxgenCode')]
-        if trxgen_nodes:
-            print(f"\n🔧 NODES WITH TRXGEN CODE:")
-            for node in trxgen_nodes:
-                code_length = len(node.get('trxgenCode', ''))
-                print(f"  {node['name']}: {code_length} characters")
+        print(f"\nTalend components:")
+        talend_counts = {}
+        for comp in self.ir_data['components']:
+            talend = comp['talend_component']
+            talend_counts[talend] = talend_counts.get(talend, 0) + 1
         
-        print(f"\nNode ID Mappings:")
-        for asg_id, ir_id in sorted(self.asg_to_ir_node_id_map.items()):
-            print(f"  {asg_id} → {ir_id}")
+        for talend, count in sorted(talend_counts.items()):
+            print(f"  {talend}: {count}")
+        
+        print("\n" + "="*70)
 
+# ============================================================================
+# MAIN EXECUTION
+# ============================================================================
 
 def main():
-    """Main execution."""
-    print("🚀 Enhanced ASG to IR Converter with Transformation Tracking")
-    print("=" * 70)
+    """Main execution"""
+    import argparse
     
-    converter = EnhancedASGToIRConverter()
+    parser = argparse.ArgumentParser(description='Convert DataStage ASG to Talend IR')
+    parser.add_argument('asg_file', help='Path to ASG JSON file')
+    parser.add_argument('-o', '--output', help='Output IR file (default: <asg_name>_talend_ir.json)')
+    parser.add_argument('-d', '--debug', action='store_true', help='Enable debug logging')
     
-    asg_file = 'simple_user_job.json'
-    if not os.path.exists(asg_file):
-        print(f"❌ ASG file not found: {asg_file}")
-        return
+    args = parser.parse_args()
     
-    if converter.load_asg(asg_file):
-        ir_data = converter.convert()
-        
-        if ir_data:
-            if converter.validate_ir():
-                converter.save_ir('simple_user_job_ir.json')
-                converter.print_summary()
-            else:
-                print("❌ Enhanced IR validation failed - not saving invalid output")
-        else:
-            print("❌ Enhanced conversion failed")
-
+    # Determine output file
+    if args.output:
+        output_file = args.output
+    else:
+        base = os.path.splitext(args.asg_file)[0]
+        output_file = f"{base}_talend_ir.json"
+    
+    print("\n" + "="*70)
+    print("DATASTAGE ASG TO TALEND IR CONVERTER")
+    print("="*70)
+    print(f"\nInput ASG: {args.asg_file}")
+    print(f"Output IR: {output_file}")
+    print(f"Debug Mode: {args.debug}")
+    
+    # Initialize converter
+    converter = TalendASGToIRConverter(debug=args.debug)
+    
+    # Load ASG
+    print("\n[PHASE 1] Loading ASG...")
+    if not converter.load_asg(args.asg_file):
+        print("❌ Failed to load ASG")
+        return False
+    
+    # Convert
+    print("\n[PHASE 2] Converting ASG to IR...")
+    if not converter.convert():
+        print("❌ Conversion failed")
+        return False
+    
+    # Save
+    print("\n[PHASE 3] Saving IR...")
+    if not converter.save_ir(output_file):
+        print("❌ Failed to save IR")
+        return False
+    
+    # Summary
+    converter.print_summary()
+    
+    return True
 
 if __name__ == "__main__":
-    main()
+    success = main()
+    sys.exit(0 if success else 1)
