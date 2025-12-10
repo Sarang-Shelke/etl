@@ -212,7 +212,7 @@ class TalendASGToIRConverter:
                     "default": {}
                 }
             },
-            "components": [],
+            "nodes": [],
             "connections": [],
             "schemas": {},
             "metadata_info": {
@@ -246,7 +246,7 @@ class TalendASGToIRConverter:
                 ir_component = self._convert_single_node(asg_node)
                 
                 if ir_component:
-                    self.ir_data['components'].append(ir_component)
+                    self.ir_data['nodes'].append(ir_component)
                     self.asg_to_ir_node_id_map[asg_id] = ir_component['id']
                     self.stats['nodes_processed'] += 1
                     print(f"  ✅ {node_name} ({enhanced_type})")
@@ -763,7 +763,7 @@ class TalendASGToIRConverter:
     
     def _build_complete_schemas(self):
         """Build complete schemas for all components"""
-        for component in self.ir_data['components']:
+        for component in self.ir_data['nodes']:
             comp_id = component['id']
             
             # Build schema from input and output pins
@@ -832,7 +832,7 @@ class TalendASGToIRConverter:
         issues = []
         
         # Check component consistency
-        comp_ids = {comp['id'] for comp in self.ir_data['components']}
+        comp_ids = {comp['id'] for comp in self.ir_data['nodes']}
         conn_comp_ids = set()
         
         for conn in self.ir_data['connections']:
@@ -873,7 +873,7 @@ class TalendASGToIRConverter:
                 'total_columns': self.stats['columns_extracted'],
                 'total_transformations': self.stats['transformations_extracted'],
                 'total_connections': len(self.ir_data['connections']),
-                'total_components': len(self.ir_data['components']),
+                'total_nodes': len(self.ir_data['nodes']),
                 'total_parameters': len(self.ir_data['job']['parameters'])
             }
             
@@ -893,16 +893,16 @@ class TalendASGToIRConverter:
         print("="*70)
         
         print(f"\nJob: {self.ir_data['job']['name']}")
-        print(f"Components: {self.stats['nodes_processed']}")
+        print(f"Nodes: {self.stats['nodes_processed']}")
         print(f"Connections: {self.stats['edges_processed']}")
         print(f"Columns: {self.stats['columns_extracted']}")
         print(f"Transformations: {self.stats['transformations_extracted']}")
         print(f"Properties: {self.stats['properties_extracted']}")
         print(f"Errors: {self.stats['errors']}")
         
-        print(f"\nComponent types:")
+        print(f"\nNode types:")
         type_counts = {}
-        for comp in self.ir_data['components']:
+        for comp in self.ir_data['nodes']:
             comp_type = comp['type']
             type_counts[comp_type] = type_counts.get(comp_type, 0) + 1
         
@@ -911,7 +911,7 @@ class TalendASGToIRConverter:
         
         print(f"\nTalend components:")
         talend_counts = {}
-        for comp in self.ir_data['components']:
+        for comp in self.ir_data['nodes']:
             talend = comp['talend_component']
             talend_counts[talend] = talend_counts.get(talend, 0) + 1
         
@@ -923,58 +923,34 @@ class TalendASGToIRConverter:
 # ============================================================================
 # MAIN EXECUTION
 # ============================================================================
-
 def main():
-    """Main execution"""
-    import argparse
-    
-    parser = argparse.ArgumentParser(description='Convert DataStage ASG to Talend IR')
-    parser.add_argument('asg_file', help='Path to ASG JSON file')
-    parser.add_argument('-o', '--output', help='Output IR file (default: <asg_name>_talend_ir.json)')
-    parser.add_argument('-d', '--debug', action='store_true', help='Enable debug logging')
-    
-    args = parser.parse_args()
-    
-    # Determine output file
-    if args.output:
-        output_file = args.output
-    else:
-        base = os.path.splitext(args.asg_file)[0]
+    """Main execution with no parameters and no sys.argv."""
+
+    # >>> Set your configuration here <<<
+    asg_file = "simple_user_job.json"
+    output_file = "simple_user_job_new_ir.json"
+    debug = False
+    # -----------------------------------
+
+    # Auto-generate output file if not provided
+    if not output_file:
+        base = os.path.splitext(asg_file)[0]
         output_file = f"{base}_talend_ir.json"
-    
-    print("\n" + "="*70)
-    print("DATASTAGE ASG TO TALEND IR CONVERTER")
-    print("="*70)
-    print(f"\nInput ASG: {args.asg_file}")
-    print(f"Output IR: {output_file}")
-    print(f"Debug Mode: {args.debug}")
-    
-    # Initialize converter
-    converter = TalendASGToIRConverter(debug=args.debug)
-    
-    # Load ASG
-    print("\n[PHASE 1] Loading ASG...")
-    if not converter.load_asg(args.asg_file):
-        print("❌ Failed to load ASG")
+
+    converter = TalendASGToIRConverter(debug=debug)
+
+    if not converter.load_asg(asg_file):
         return False
-    
-    # Convert
-    print("\n[PHASE 2] Converting ASG to IR...")
+
     if not converter.convert():
-        print("❌ Conversion failed")
         return False
-    
-    # Save
-    print("\n[PHASE 3] Saving IR...")
+
     if not converter.save_ir(output_file):
-        print("❌ Failed to save IR")
         return False
-    
-    # Summary
+
     converter.print_summary()
-    
     return True
 
+
 if __name__ == "__main__":
-    success = main()
-    sys.exit(0 if success else 1)
+    main()

@@ -1,7 +1,7 @@
 {
   "metadata": {
     "version": "2.0",
-    "generated_at": "2025-12-10T18:03:34.566287Z",
+    "generated_at": "2025-12-10T18:30:34.111993Z",
     "generator": "TalendASGToIRConverter",
     "source": {
       "type": "datastage_asg",
@@ -51,7 +51,7 @@
       }
     }
   },
-  "components": [
+  "nodes": [
     {
       "id": "comp_V127S0",
       "asg_id": "V127S0",
@@ -4814,7 +4814,7 @@
     "total_columns": 145,
     "total_transformations": 94,
     "total_connections": 12,
-    "total_components": 7,
+    "total_nodes": 7,
     "total_parameters": 4
   }
 }
