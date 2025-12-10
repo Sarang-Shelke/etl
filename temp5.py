@@ -84,6 +84,13 @@ def decode_dsx_value(value: Any) -> Any:
     
     return decoded.strip()
 
+
+# Debug logging helper
+DEBUG = False
+def dbg(msg: str):
+    if DEBUG:
+        print(f"[DEBUG] {msg}", file=sys.stderr, flush=True)
+
 # ============================================================================
 # STAGE PROPERTIES TO PRESERVE
 # ============================================================================
@@ -170,74 +177,66 @@ def get_section_details(content: List[str]) -> List[str]:
     """Extract a complete BEGIN/END section block."""
     if not content:
         return []
-        
     try:
-        section = content[0].strip().split(' ')[1]
-        search_str = f'END {section}'
-        
+        # Determine section token after BEGIN
+        first = content[0].strip()
+        parts = first.split()
+        if len(parts) < 2:
+            return []
+        section = parts[1]
+        target = f'END {section}'
+
+        # Walk lines until we find the matching END <SECTION>
         for i, line in enumerate(content):
-            if line.strip().endswith(search_str):
+            if line is None:
+                continue
+            if line.strip().upper().startswith(target.upper()):
                 return content[:i+1]
-    except (IndexError, AttributeError):
+    except Exception:
         pass
-    
+
     return []
 
 def parse_heredoc_value(content: List[str], start_idx: int) -> Tuple[str, int]:
     """Parse heredoc values with proper handling."""
     if start_idx >= len(content):
         return '', start_idx
-        
-    line = content[start_idx].strip()
-    
-    # Check if this is a heredoc block
-    if '=+=+=+=' in line:
-        heredoc_lines = []
-        i = start_idx
-        
-        # Check if content is on the same line as the delimiter
-        if '=+=+=+=' in line:
-            # Extract content after the first delimiter
-            match = re.search(r'=+=+=+=(.*)', line)
-            if match:
-                # Content is on the same line
-                immediate_content = match.group(1)
-                if immediate_content and not immediate_content.strip().startswith('=+=+=+='):
-                    heredoc_lines.append(immediate_content)
-                
-                # Look for closing delimiter on subsequent lines
-                i = start_idx + 1
-                while i < len(content):
-                    current_line = content[i].strip()
-                    if current_line.startswith('=+=+=+='):
-                        heredoc_content = '\n'.join(heredoc_lines).rstrip()
-                        return heredoc_content, i + 1
-                    heredoc_lines.append(content[i])
+    line = content[start_idx]
+
+    delim = '=+=+=='
+    # If this line contains the heredoc delimiter
+    if delim in line:
+        # Content after the first delimiter
+        after = line.split(delim, 1)[1]
+        # If nothing after the delimiter, the heredoc starts on next line
+        if after.strip() == '':
+            i = start_idx + 1
+            collected = []
+            while i < len(content):
+                cur = content[i]
+                if cur is None:
                     i += 1
-                
-                # No closing delimiter found - return what we have
-                return '\n'.join(heredoc_lines), len(content)
-        
-        # Standard heredoc block with delimiter on its own line
-        i = start_idx + 1
-        while i < len(content):
-            current_line = content[i].strip()
-            if '=+=+=+=' in current_line and current_line.lstrip().startswith('=+=+=+='):
-                heredoc_content = '\n'.join(heredoc_lines).rstrip()
-                return heredoc_content, i + 1
-            heredoc_lines.append(content[i])
-            i += 1
-        
-        # No closing delimiter found - return what we have
-        return '\n'.join(heredoc_lines), len(content)
-    
+                    continue
+                if cur.strip().startswith(delim):
+                    return '\n'.join(collected).rstrip(), i + 1
+                collected.append(content[i])
+                i += 1
+            return '\n'.join(collected).rstrip(), len(content)
+        else:
+            # There is content on the same line after the opening delimiter
+            # Possibly includes the closing delimiter on the same line
+            if delim in after:
+                inner = after.split(delim, 1)[0]
+                return inner.rstrip(), start_idx + 1
+            return after.rstrip(), start_idx + 1
+
     # Not a heredoc - try to extract inline quoted value
-    if 'Value "' in line:
-        match = re.search(r'Value "(.*?)"', line)
-        return match.group(1) if match else '', start_idx + 1
-    
-    # Raw line value
-    return line, start_idx + 1
+    m = re.search(r'Value "(.*?)"', line)
+    if m:
+        return m.group(1), start_idx + 1
+
+    # Raw line value (return line as-is)
+    return line.strip(), start_idx + 1
 
 def parse_complex_sql_heredoc(value_str: str) -> Dict[str, Any]:
     """Parse complex SQL/XML heredoc values."""
@@ -345,9 +344,10 @@ def should_omit_property(property_name: str, context: str = 'stage') -> bool:
 
 def is_apt_property(sub_record: List[str]) -> bool:
     """Check if a subrecord is an APT-owned property."""
-    if len(sub_record) > 1:
-        return 'Owner "APT"' in sub_record[1]
-    return False
+    try:
+        return any('Owner "APT"' in (line or '') for line in sub_record)
+    except Exception:
+        return False
 
 def extract_property_name(line: str) -> Optional[str]:
     """Extract property name from a Name line."""
@@ -569,35 +569,12 @@ def process_subrecord_values(sub_record: List[str]) -> List[str]:
     
     while i < len(sub_record):
         line = sub_record[i]
-        
-        # Check if this is a Value line with heredoc
-        if 'Value =+=+=+=' in line:
-            # The line contains the entire heredoc content as a single string
-            # Extract the heredoc content from this string
-            if line.startswith('      Value =+=+=+='):
-                # Extract content after the opening delimiter
-                start_marker = '      Value =+=+=+='
-                end_marker = '+=+=+=+'
-                
-                start_pos = len(start_marker)
-                end_pos = line.rfind(end_marker)
-                
-                if end_pos > start_pos:
-                    value_content = line[start_pos:end_pos]
-                    processed.append(f'      Value =+=+=+={value_content}=+=+=+=}}')
-                else:
-                    # Fallback - the closing delimiter might not be found
-                    value_content = line[start_pos:]
-                    processed.append(f'      Value =+=+=+={value_content}')
-            
-            elif line.strip() == '=+=+=+=':
-            # This is a standalone delimiter - continue to next line
-                processed.append(line)
-            else:
-                # Other heredoc format
-                processed.append(line)
-            
-            i += 1
+        # If this is a Value line with heredoc, delegate to parse_heredoc_value
+        if line and 'Value' in line and '=+=+=+=' in line:
+            val, next_idx = parse_heredoc_value(sub_record, i)
+            # store as a normalized inline Value
+            processed.append(f'Value "{val}"')
+            i = next_idx
         else:
             processed.append(line)
             i += 1
@@ -871,9 +848,8 @@ class ASGBuilder:
             # Skip ROOT and V0 (container) records
             if identifier in ['ROOT', 'V0'] or not identifier:
                 continue
-            
-            # Check if this is a pin record (V0S*P*)
-            if identifier.startswith('V0S') and 'P' in identifier:
+            # Check if this is a pin record (pattern: V<digits>S<digits>P<digits>)
+            if re.match(r'^V\d+S\d+P\d+$', identifier):
                 self.pin_records[identifier] = record
                 
                 # Extract Partner ID from pin record
@@ -884,8 +860,8 @@ class ASGBuilder:
                             self.pin_partner_map[identifier] = match.group(1)
                             break
             
-            # Check if this is a stage record (V0S* without P)
-            elif identifier.startswith('V0S') and 'P' not in identifier:
+            # Check if this is a stage record (pattern: V<digits>S<digits>)
+            elif re.match(r'^V\d+S\d+$', identifier):
                 self.stage_records[identifier] = record
                 
                 # Extract InputPins and OutputPins
@@ -1536,13 +1512,22 @@ class ASGBuilder:
 # ============================================================================
 
 if __name__ == "__main__":
-    # Load the DSX file
-    file_path = 'simple_user_job.dsx'
-    
+    # CLI: accept filepath and optional -d/--debug
+    file_path = 'INERACTIVE_TEST_HEADER_DATA 1.dsx'
+    if len(sys.argv) > 1:
+        # Allow flags and the first non-flag as file
+        for arg in sys.argv[1:]:
+            if arg in ('-d', '--debug'):
+                DEBUG = True
+            elif arg.startswith('-'):
+                continue
+            else:
+                file_path = arg
+
     print("=" * 70)
     print("IBM DATASTAGE DSX PARSER - ENHANCED v5.0")
     print("=" * 70)
-    
+
     try:
         lines = get_lines(file_path)
         print(f"Loaded DSX file: {file_path}")
@@ -1647,8 +1632,10 @@ if __name__ == "__main__":
             print(f"  Enrichment Stages: {evolution_summary.get('stages_with_enrichment', 0)}")
             print(f"  Filtering Stages: {evolution_summary.get('stages_with_filtering', 0)}")
         
-        # Save enhanced ASG to file
-        output_file = 'workingdsx.json'
+        # Save enhanced ASG to file (based on input filename)
+        import os
+        base = os.path.basename(file_path)
+        output_file = os.path.splitext(base)[0] + '.json'
         builder.save_to_file(output_file)
         print(f"\n✓ Enhanced ASG saved to: {output_file}")
         

@@ -55,7 +55,7 @@
           "VarUsername": null
         },
         "apt_properties": {
-          "TrxGenCode": "//\n// Generated file to implement the V0S1_SIMPLE_USER_PROCESS_User_Transformer transform operator.\n//\n// define our input/output link names\ninputname 0 UserLink;\noutputname 0 TransformedLink;\n\nmainloop {\nTransformedLink.USERID = UserLink.USERID;\nTransformedLink.USERNAME = upcase(UserLink.USERNAME);\nTransformedLink.EMAIL = UserLink.EMAIL;\nTransformedLink.STATUS = UserLink.STATUS;\nwriterecord 0;\n}\n\nfinish {\n}",
+          "TrxGenCode": "Value =+=+=+=",
           "TrxClassName": "V0S1_SIMPLE_USER_PROCESS_User_Transformer",
           "JobParameterNames": "ENVIRONMENT"
         },
@@ -126,8 +126,8 @@
                 "type": "simple_column",
                 "source_columns": [
                   "UserLink",
-                  "USERID",
-                  "UserLink.USERID"
+                  "UserLink.USERID",
+                  "USERID"
                 ],
                 "functions": [],
                 "expression": "UserLink.USERID"
@@ -168,8 +168,8 @@
                 "type": "simple_column",
                 "source_columns": [
                   "UserLink",
-                  "EMAIL",
-                  "UserLink.EMAIL"
+                  "UserLink.EMAIL",
+                  "EMAIL"
                 ],
                 "functions": [],
                 "expression": "UserLink.EMAIL"
@@ -189,8 +189,8 @@
                 "type": "simple_column",
                 "source_columns": [
                   "UserLink",
-                  "STATUS",
-                  "UserLink.STATUS"
+                  "UserLink.STATUS",
+                  "STATUS"
                 ],
                 "functions": [],
                 "expression": "UserLink.STATUS"
@@ -299,10 +299,10 @@
         ],
         "schema_changes": {
           "added": [
-            "EMAIL",
             "STATUS",
-            "USERID",
-            "USERNAME"
+            "USERNAME",
+            "EMAIL",
+            "USERID"
           ],
           "removed": [],
           "modified": []

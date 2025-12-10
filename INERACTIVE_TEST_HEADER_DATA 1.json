@@ -1,0 +1,4834 @@
+{
+  "job_name": "J_DEMO_001",
+  "job_parameters": [
+    {
+      "name": "TEST_Param",
+      "prompt": "TEST_Param parameters",
+      "default": "(As pre-defined)"
+    },
+    {
+      "name": "STMT_START",
+      "prompt": "STMT_START",
+      "default": "2016-03-01"
+    },
+    {
+      "name": "STMT_END",
+      "prompt": "STMT_END",
+      "default": "2016-03-31"
+    },
+    {
+      "name": "PRODUCT_CODE",
+      "prompt": "PRODUCT_CODE",
+      "default": "\\\\'HF41\\\\',\\\\'HF42\\\\',\\\\'HF43\\\\',\\\\'HF44\\\\',\\\\'HF45\\\\',\\\\'HF46\\\\',\\\\'HF47\\\\',\\\\'HF49\\\\',\\\\'HF50\\\\',\\\\'HF51\\\\',\\\\'HF52\\\\',\\\\'HF53\\\\',\\\\'HF54\\\\',\\\\'HF57\\\\',\\\\'IJ46\\\\',\\\\'MB41\\\\',\\\\'MB43\\\\',\\\\'MO51\\\\',\\\\'MO52\\\\',\\\\'MO53\\\\',\\\\'MO54\\\\',\\\\'MS41\\\\',\\\\'NB21\\\\',\\\\'NB22\\\\',\\\\'NB23\\\\',\\\\'NB24\\\\',\\\\'NB25\\\\',\\\\'NB26\\\\',\\\\'NB27\\\\',\\\\'NF41\\\\',\\\\'TW01\\\\',\\\\'TW02\\\\',\\\\'TW03\\\\',\\\\'TW04\\\\',\\\\'TW05\\\\',\\\\'TW06\\\\',\\\\'TW07\\\\',\\\\'TW08\\\\',\\\\'WK41\\\\'"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "V127S0",
+      "name": "IJARA_HEADER",
+      "type": "CCustomStage",
+      "enhanced_type": "DB2ConnectorPX",
+      "properties": {
+        "stage_type": "DB2ConnectorPX"
+      },
+      "enhanced_properties": {
+        "configuration": {
+          "VariantName": "9.1",
+          "VariantLibrary": "ccdb2",
+          "VariantVersion": "1.0",
+          "SupportedVariants": "V1;9.1::ccdb2",
+          "SupportedVariantsLibraries": "ccdb2",
+          "SupportedVariantsVersions": "1.0",
+          "XMLConnectorDescriptor": "<?xml version=\\",
+          "XMLProperties": "<?xml version='1.0' encoding='UTF-16'?><Properties version='1.1'><Common><Context type='int'>2</Context><Variant type='string'>9.1</Variant><DescriptorVersion type='string'>1.0</DescriptorVersion><PartitionType type='int'>3</PartitionType><RCP type='int'>0</RCP></Common><Connection><Instance type='string'><![CDATA[#TEST_Param.$DB2_INSTANCE#]]></Instance><Database type='string'><![CDATA[#TEST_Param.$DB2_DATABASE#]]></Database><Username type='string'><![CDATA[#TEST_Param.$DB2_USERNAME#]]></Username><Password type='string'><![CDATA[#TEST_Param.$DB2_PASSWORD#]]></Password><DB2ClientLibFile type='string'><![CDATA[#TEST_Param.$DB2_LOCATION#]]></DB2ClientLibFile><Conductor collapsed='1' type='bool'><![CDATA[0]]></Conductor><UseDirectConnections type='bool'><![CDATA[0]]></UseDirectConnections><KeepConductorConnectionAlive type='bool'><![CDATA[1]]></KeepConductorConnectionAlive></Connection><Usage><MigratedJob type='bool'><![CDATA[0]]></MigratedJob><WriteMode modified='1' type='int'><![CDATA[0]]></WriteMode><GenerateSQL modified='1' type='bool'><![CDATA[1]]></GenerateSQL><EnableQuotedIDs type='bool'><![CDATA[0]]></EnableQuotedIDs><TableName modified='1' type='string'><![CDATA[#TEST_Param.$DB2_WRK_SCHEMA#.INERACTIVE_IJARA_HEADER_DATA]]></TableName><XMLColumnAsLOB type='bool'><![CDATA[0]]></XMLColumnAsLOB><PrefixForExpressionColumns type='string'><![CDATA[EXPR]]></PrefixForExpressionColumns><SQL><DirectInsert type='bool'><![CDATA[1]]></DirectInsert></SQL><TableAction collapsed='1' modified='1' type='int'><![CDATA[0]]></TableAction><Transaction><RecordCount modified='1' type='int'><![CDATA[20000]]></RecordCount></Transaction><Session><IsolationLevel type='int'><![CDATA[1]]></IsolationLevel><AutocommitMode type='int'><![CDATA[0]]></AutocommitMode><ArraySize modified='1' type='int'><![CDATA[20000]]></ArraySize><SchemaReconciliation><FailOnSizeMismatch type='bool'><![CDATA[0]]></FailOnSizeMismatch><FailOnTypeMismatch type='bool'><![CDATA[0]]></FailOnTypeMismatch><FailOnCodePageMismatch type='bool'><![CDATA[0]]></FailOnCodePageMismatch><DropUnmatchedFields type='bool'><![CDATA[1]]></DropUnmatchedFields></SchemaReconciliation><FailOnRowErrorPX type='bool'><![CDATA[1]]></FailOnRowErrorPX><InsertBuffering type='int'><![CDATA[0]]><AtomicArrays type='int'><![CDATA[0]]></AtomicArrays></InsertBuffering></Session><Logging><LogColumnValues collapsed='1' type='bool'><![CDATA[0]]></LogColumnValues></Logging><BeforeAfter collapsed='1' modified='1' type='bool'><![CDATA[0]]></BeforeAfter><ReOptimization type='int'><![CDATA[2]]></ReOptimization><LockWaitMode collapsed='1' type='int'><![CDATA[1]]></LockWaitMode></Usage></Properties >",
+          "Orientation": "link",
+          "RejectFromLink": "-1",
+          "RejectThreshold": "0",
+          "RejectNumber": "0",
+          "RejectUsesPercentage": "false",
+          "RejectConditions": null,
+          "RejectDataElements": null,
+          "XMLRejectSettings": null,
+          "ConnectorName": "DB2Connector",
+          "Engine": "EE",
+          "Context": "target",
+          "ConnectionString": "/Connection/Database",
+          "Username": "/Connection/Username",
+          "Password": "/Connection/Password",
+          "Instance": "/Connection/Instance",
+          "DB2ClientLibFile": "/Connection/DB2ClientLibFile",
+          "Conductor": "/Connection/Conductor",
+          "ConductorInstance": "/Connection/Conductor/Instance",
+          "ConductorDatabase": "/Connection/Conductor/Database",
+          "ConductorUsername": "/Connection/Conductor/Username",
+          "ConductorPassword": "/Connection/Conductor/Password",
+          "ConductorDB2ClientLibFile": "/Connection/Conductor/DB2ClientLibFile",
+          "transactionModel": "0",
+          "transactionManager": null
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transactional_properties": {},
+      "pins": [
+        {
+          "id": "V127S0P2",
+          "name": "lnk_tgt",
+          "direction": "input",
+          "schema": [],
+          "enhanced_schema": [],
+          "properties": {
+            "VariantName": "9.1",
+            "VariantLibrary": "ccdb2",
+            "VariantVersion": "1.0",
+            "RejectFromLink": "-1",
+            "RejectThreshold": "0",
+            "RejectNumber": "0",
+            "RejectUsesPercentage": "false",
+            "ConnectorName": "DB2Connector"
+          }
+        }
+      ],
+      "schema_lineage": {}
+    },
+    {
+      "id": "V221S0",
+      "name": "INERACTIVE_IJARA_HEADER_DATA",
+      "type": "CCustomStage",
+      "enhanced_type": "TransactionalCustomStage",
+      "properties": {
+        "stage_type": "ODBCConnectorPX"
+      },
+      "enhanced_properties": {
+        "configuration": {
+          "VariantName": "3.5",
+          "VariantLibrary": "ccodbc",
+          "VariantVersion": "1.0",
+          "SupportedVariants": "V1;3.5::ccodbc",
+          "SupportedVariantsLibraries": "ccodbc",
+          "SupportedVariantsVersions": "1.0",
+          "Orientation": "link",
+          "RejectFromLink": "-1",
+          "RejectThreshold": "0",
+          "RejectNumber": "0",
+          "RejectUsesPercentage": "false",
+          "ConnectorName": "ODBCConnector",
+          "Engine": "EE",
+          "Context": "target",
+          "ConnectionString": "/Connection/DataSource",
+          "Username": "/Connection/Username",
+          "Password": "/Connection/Password",
+          "XMLProperties": "<?xml version='1.0' encoding='UTF-16'?><Properties version='1.1'><Common><Context type='int'>2</Context><Variant type='string'>3.5</Variant><DescriptorVersion type='string'>1.0</DescriptorVersion><PartitionType type='int'>-1</PartitionType><RCP type='int'>0</RCP></Common><Connection><DataSource modified='1' type='string'><![CDATA[#TEST_Param.$iSTATEMENT_SID#]]></DataSource><Username modified='1' type='string'><![CDATA[#TEST_Param.$iSTATEMENT_USERNAME#]]></Username><Password modified='1' type='string'><![CDATA[#TEST_Param.$iSTATEMENT_PASSWORD#]]></Password></Connection><Usage><WriteMode type='int'><![CDATA[0]]></WriteMode><GenerateSQL modified='1' type='bool'><![CDATA[1]]></GenerateSQL><TableName modified='1' type='string'><![CDATA[TEST.DBO.INERACTIVE_IJARA_HEADER_DATA]]></TableName><EnableQuotedIDs modified='1' type='bool'><![CDATA[0]]></EnableQuotedIDs><SQL></SQL><TableAction collapsed='1' modified='1' type='int'><![CDATA[0]]></TableAction><Transaction><RecordCount type='int'><![CDATA[2000]]></RecordCount></Transaction><Session><IsolationLevel type='int'><![CDATA[1]]></IsolationLevel><AutocommitMode type='int'><![CDATA[0]]></AutocommitMode><ArraySize type='int'><![CDATA[2000]]></ArraySize><SchemaReconciliation><FailOnSizeMismatch type='bool'><![CDATA[1]]></FailOnSizeMismatch><FailOnTypeMismatch type='bool'><![CDATA[1]]></FailOnTypeMismatch><FailOnCodePageMismatch type='bool'><![CDATA[0]]></FailOnCodePageMismatch><DropUnmatchedFields type='bool'><![CDATA[1]]></DropUnmatchedFields></SchemaReconciliation><CodePage collapsed='1' type='int'><![CDATA[0]]></CodePage><FailOnRowErrorPX type='bool'><![CDATA[1]]></FailOnRowErrorPX></Session><Logging collapsed='1'><LogColumnValues collapsed='1' type='bool'><![CDATA[0]]></LogColumnValues></Logging><BeforeAfter modified='1' type='bool'><![CDATA[1]]><before modified='1' type='string'><![CDATA[DELETE FROM TEST.DBO.INERACTIVE_IJARA_HEADER_DATA;]]><ReadFromFileBeforeSQL type='bool'><![CDATA[0]]></ReadFromFileBeforeSQL><FailOnError type='bool'><![CDATA[1]]></FailOnError></before><after type='string'><![CDATA[]]><ReadFromFileAfterSQL type='bool'><![CDATA[0]]></ReadFromFileAfterSQL><FailOnError type='bool'><![CDATA[1]]></FailOnError></after><beforeNode type='string'><![CDATA[]]><ReadFromFileBeforeSQLNode type='bool'><![CDATA[0]]></ReadFromFileBeforeSQLNode><FailOnError type='bool'><![CDATA[1]]></FailOnError></beforeNode><afterNode type='string'><![CDATA[]]><ReadFromFileAfterSQLNode type='bool'><![CDATA[0]]></ReadFromFileAfterSQLNode><FailOnError type='bool'><![CDATA[1]]></FailOnError></afterNode></BeforeAfter></Usage></Properties >"
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transactional_properties": {},
+      "pins": [
+        {
+          "id": "V221S0P1",
+          "name": "lnk_tgt1",
+          "direction": "input",
+          "schema": [],
+          "enhanced_schema": [],
+          "properties": {
+            "VariantName": "3.5",
+            "VariantLibrary": "ccodbc",
+            "VariantVersion": "1.0",
+            "RejectFromLink": "-1",
+            "RejectThreshold": "0",
+            "RejectNumber": "0",
+            "RejectUsesPercentage": "false",
+            "ConnectorName": "ODBCConnector"
+          }
+        }
+      ],
+      "schema_lineage": {}
+    },
+    {
+      "id": "V228S0",
+      "name": "Lookup_62",
+      "type": "CCustomStage",
+      "enhanced_type": "PxLookup",
+      "properties": {
+        "stage_type": "PxLookup"
+      },
+      "enhanced_properties": {
+        "configuration": {
+          "compileopt": null,
+          "linkopt": null
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transactional_properties": {},
+      "pins": [
+        {
+          "id": "V228S0P1",
+          "name": "READ_CORE_SOURCE1",
+          "direction": "input",
+          "schema": [],
+          "enhanced_schema": [],
+          "properties": {
+            "allow_dups": ""
+          }
+        },
+        {
+          "id": "V228S0P2",
+          "name": "L13",
+          "direction": "input",
+          "schema": [],
+          "enhanced_schema": [],
+          "properties": {
+            "allow_dups": "",
+            "save": null,
+            "diskpool": null
+          }
+        },
+        {
+          "id": "V228S0P5",
+          "name": "L14",
+          "direction": "input",
+          "schema": [],
+          "enhanced_schema": [],
+          "properties": {
+            "allow_dups": "",
+            "save": null,
+            "diskpool": null
+          }
+        },
+        {
+          "id": "V228S0P3",
+          "name": "READ_CORE_SOURCE",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "CONTRACT_REF_NO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+            },
+            {
+              "name": "CUSTOMERNAME1",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.CUSTOMERNAME1"
+            },
+            {
+              "name": "MAILING_POBOX",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.MAILING_POBOX"
+            },
+            {
+              "name": "MAILING_COUNTRY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.MAILING_COUNTRY"
+            },
+            {
+              "name": "MOBILE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.MOBILE"
+            },
+            {
+              "name": "CUSTOMERID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.CUSTOMERID"
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.APPLICATIONID"
+            },
+            {
+              "name": "MAILING_CITY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.MAILING_CITY"
+            },
+            {
+              "name": "PROPERTYNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.PROPERTYNAME"
+            },
+            {
+              "name": "PROPERTYDETAILS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.PROPERTYDETAILS"
+            },
+            {
+              "name": "SPREAD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.SPREAD"
+            },
+            {
+              "name": "BASERATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.BASERATE"
+            },
+            {
+              "name": "LAST_RATE_CHANGE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.LAST_RATE_CHANGE"
+            },
+            {
+              "name": "CURRENT_RATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.CURRENT_RATE"
+            },
+            {
+              "name": "REPAYMENT_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.REPAYMENT_TENOR"
+            },
+            {
+              "name": "BALANCE_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.BALANCE_TENOR"
+            },
+            {
+              "name": "START_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.START_DATE"
+            },
+            {
+              "name": "END_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.END_DATE"
+            },
+            {
+              "name": "BRANCH",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.BRANCH"
+            },
+            {
+              "name": "PERSONAL_EMAIL",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.PERSONAL_EMAIL"
+            },
+            {
+              "name": "PRODUCT_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.PRODUCT_CODE"
+            },
+            {
+              "name": "PRODUCT_GROUP",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.PRODUCT_GROUP"
+            },
+            {
+              "name": "PORTFOLIO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.PORTFOLIO"
+            },
+            {
+              "name": "RATE_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.RATE_CODE"
+            },
+            {
+              "name": "FIX_PROFIT_FLG",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.FIX_PROFIT_FLG"
+            },
+            {
+              "name": "DR_SETL_AC",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.DR_SETL_AC"
+            },
+            {
+              "name": "STMT_DT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.STMT_DT"
+            },
+            {
+              "name": "USER_REF_NO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.USER_REF_NO"
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE"
+            },
+            {
+              "name": "REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.REPLENISHMENT_DATE"
+            },
+            {
+              "name": "LAST_RATE_CHANGE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "L14.RATE_CHANGE_DATE"
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE_CHAR"
+            },
+            {
+              "name": "REPLENISHMENT_DATE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.REPLENISHMENT_DATE_CHAR"
+            },
+            {
+              "name": "STMT_DT_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.STMT_DT_CHAR"
+            },
+            {
+              "name": "TOTAL_OS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.TOTAL_OS"
+            },
+            {
+              "name": "TOTAL_OS_N",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "L13.TOTAL_OS_N"
+            }
+          ],
+          "enhanced_schema": [
+            {
+              "name": "CONTRACT_REF_NO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.CONTRACT_REF_NO",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CONTRACT_REF_NO",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "CUSTOMERNAME1",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.CUSTOMERNAME1",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CUSTOMERNAME1",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.CUSTOMERNAME1"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.CUSTOMERNAME1"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "MAILING_POBOX",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.MAILING_POBOX",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.MAILING_POBOX",
+                  "READ_CORE_SOURCE1",
+                  "MAILING_POBOX"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.MAILING_POBOX"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "MAILING_COUNTRY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.MAILING_COUNTRY",
+              "transformation_logic": {
+                "type": "aggregation",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "MAILING_COUNTRY",
+                  "READ_CORE_SOURCE1.MAILING_COUNTRY"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.MAILING_COUNTRY"
+              },
+              "has_transformation": true,
+              "transformation_classification": "aggregation"
+            },
+            {
+              "name": "MOBILE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.MOBILE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.MOBILE",
+                  "READ_CORE_SOURCE1",
+                  "MOBILE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.MOBILE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "CUSTOMERID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.CUSTOMERID",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CUSTOMERID",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.CUSTOMERID"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.CUSTOMERID"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.APPLICATIONID",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.APPLICATIONID",
+                  "APPLICATIONID"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.APPLICATIONID"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "MAILING_CITY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.MAILING_CITY",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "MAILING_CITY",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.MAILING_CITY"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.MAILING_CITY"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PROPERTYNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.PROPERTYNAME",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.PROPERTYNAME",
+                  "READ_CORE_SOURCE1",
+                  "PROPERTYNAME"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.PROPERTYNAME"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PROPERTYDETAILS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.PROPERTYDETAILS",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PROPERTYDETAILS",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.PROPERTYDETAILS"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.PROPERTYDETAILS"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "SPREAD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.SPREAD",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "SPREAD",
+                  "READ_CORE_SOURCE1.SPREAD"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.SPREAD"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "BASERATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.BASERATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "BASERATE",
+                  "READ_CORE_SOURCE1.BASERATE",
+                  "READ_CORE_SOURCE1"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.BASERATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "LAST_RATE_CHANGE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.LAST_RATE_CHANGE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.LAST_RATE_CHANGE",
+                  "READ_CORE_SOURCE1",
+                  "LAST_RATE_CHANGE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.LAST_RATE_CHANGE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "CURRENT_RATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.CURRENT_RATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "CURRENT_RATE",
+                  "READ_CORE_SOURCE1.CURRENT_RATE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.CURRENT_RATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "REPAYMENT_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.REPAYMENT_TENOR",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.REPAYMENT_TENOR",
+                  "READ_CORE_SOURCE1",
+                  "REPAYMENT_TENOR"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.REPAYMENT_TENOR"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "BALANCE_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.BALANCE_TENOR",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "BALANCE_TENOR",
+                  "READ_CORE_SOURCE1.BALANCE_TENOR",
+                  "READ_CORE_SOURCE1"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.BALANCE_TENOR"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "START_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.START_DATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "START_DATE",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.START_DATE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.START_DATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "END_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.END_DATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.END_DATE",
+                  "READ_CORE_SOURCE1",
+                  "END_DATE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.END_DATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "BRANCH",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.BRANCH",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.BRANCH",
+                  "READ_CORE_SOURCE1",
+                  "BRANCH"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.BRANCH"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PERSONAL_EMAIL",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.PERSONAL_EMAIL",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.PERSONAL_EMAIL",
+                  "PERSONAL_EMAIL"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.PERSONAL_EMAIL"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PRODUCT_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.PRODUCT_CODE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.PRODUCT_CODE",
+                  "READ_CORE_SOURCE1",
+                  "PRODUCT_CODE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.PRODUCT_CODE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PRODUCT_GROUP",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.PRODUCT_GROUP",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PRODUCT_GROUP",
+                  "READ_CORE_SOURCE1.PRODUCT_GROUP",
+                  "READ_CORE_SOURCE1"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.PRODUCT_GROUP"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PORTFOLIO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.PORTFOLIO",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PORTFOLIO",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.PORTFOLIO"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.PORTFOLIO"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "RATE_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.RATE_CODE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.RATE_CODE",
+                  "READ_CORE_SOURCE1",
+                  "RATE_CODE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.RATE_CODE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "FIX_PROFIT_FLG",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.FIX_PROFIT_FLG",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.FIX_PROFIT_FLG",
+                  "FIX_PROFIT_FLG",
+                  "READ_CORE_SOURCE1"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.FIX_PROFIT_FLG"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "DR_SETL_AC",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.DR_SETL_AC",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.DR_SETL_AC",
+                  "DR_SETL_AC"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.DR_SETL_AC"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "STMT_DT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.STMT_DT",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "STMT_DT",
+                  "READ_CORE_SOURCE1.STMT_DT",
+                  "READ_CORE_SOURCE1"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.STMT_DT"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "USER_REF_NO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.USER_REF_NO",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.USER_REF_NO",
+                  "READ_CORE_SOURCE1",
+                  "USER_REF_NO"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.USER_REF_NO"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "INS_REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.REPLENISHMENT_DATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1",
+                  "REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE1.REPLENISHMENT_DATE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.REPLENISHMENT_DATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "LAST_RATE_CHANGE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "L14.RATE_CHANGE_DATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "L14.RATE_CHANGE_DATE",
+                  "RATE_CHANGE_DATE",
+                  "L14"
+                ],
+                "functions": [],
+                "expression": "L14.RATE_CHANGE_DATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE_CHAR",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE_CHAR",
+                  "READ_CORE_SOURCE1",
+                  "INS_REPLENISHMENT_DATE_CHAR"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE_CHAR"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "REPLENISHMENT_DATE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.REPLENISHMENT_DATE_CHAR",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "REPLENISHMENT_DATE_CHAR",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.REPLENISHMENT_DATE_CHAR"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.REPLENISHMENT_DATE_CHAR"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "STMT_DT_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.STMT_DT_CHAR",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "STMT_DT_CHAR",
+                  "READ_CORE_SOURCE1.STMT_DT_CHAR",
+                  "READ_CORE_SOURCE1"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.STMT_DT_CHAR"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "TOTAL_OS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.TOTAL_OS",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "TOTAL_OS",
+                  "READ_CORE_SOURCE1.TOTAL_OS",
+                  "READ_CORE_SOURCE1"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.TOTAL_OS"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "TOTAL_OS_N",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "L13.TOTAL_OS_N",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "L13",
+                  "TOTAL_OS_N",
+                  "L13.TOTAL_OS_N"
+                ],
+                "functions": [],
+                "expression": "L13.TOTAL_OS_N"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            }
+          ],
+          "properties": {
+            "CONTRACT_REF_NO": null,
+            "CUSTOMERNAME1": null,
+            "MAILING_POBOX": null,
+            "MAILING_COUNTRY": null,
+            "MOBILE": null,
+            "CUSTOMERID": null,
+            "APPLICATIONID": null,
+            "MAILING_CITY": null,
+            "PROPERTYNAME": null,
+            "PROPERTYDETAILS": null,
+            "SPREAD": null,
+            "BASERATE": null,
+            "LAST_RATE_CHANGE": null,
+            "CURRENT_RATE": null,
+            "REPAYMENT_TENOR": null,
+            "BALANCE_TENOR": null,
+            "START_DATE": null,
+            "END_DATE": null,
+            "BRANCH": null,
+            "PERSONAL_EMAIL": null,
+            "PRODUCT_CODE": null,
+            "PRODUCT_GROUP": null,
+            "PORTFOLIO": null,
+            "RATE_CODE": null,
+            "FIX_PROFIT_FLG": null,
+            "DR_SETL_AC": null,
+            "STMT_DT": null,
+            "USER_REF_NO": null,
+            "INS_REPLENISHMENT_DATE": null,
+            "REPLENISHMENT_DATE": null,
+            "LAST_RATE_CHANGE_CHAR": null,
+            "INS_REPLENISHMENT_DATE_CHAR": null,
+            "REPLENISHMENT_DATE_CHAR": null,
+            "STMT_DT_CHAR": null,
+            "TOTAL_OS": null,
+            "TOTAL_OS_N": null
+          }
+        }
+      ],
+      "schema_lineage": {}
+    },
+    {
+      "id": "V228S2",
+      "name": "CARRIED_FORWARD",
+      "type": "CCustomStage",
+      "enhanced_type": "DB2ConnectorPX",
+      "properties": {
+        "stage_type": "DB2ConnectorPX"
+      },
+      "enhanced_properties": {
+        "configuration": {
+          "VariantName": "9.1",
+          "VariantLibrary": "ccdb2",
+          "VariantVersion": "1.0",
+          "SupportedVariants": "V1;9.1::ccdb2",
+          "SupportedVariantsLibraries": "ccdb2",
+          "SupportedVariantsVersions": "1.0",
+          "XMLConnectorDescriptor": "<?xml version=\\",
+          "XMLProperties": "Value =+=+=+=",
+          "Orientation": "link",
+          "RejectFromLink": "-1",
+          "RejectThreshold": "0",
+          "RejectNumber": "0",
+          "RejectUsesPercentage": "false",
+          "RejectConditions": null,
+          "RejectDataElements": null,
+          "XMLRejectSettings": null,
+          "ConnectorName": "DB2Connector",
+          "Engine": "EE",
+          "Context": "source",
+          "ConnectionString": "/Connection/Database",
+          "Username": "/Connection/Username",
+          "Password": "/Connection/Password",
+          "Instance": "/Connection/Instance",
+          "DB2ClientLibFile": "/Connection/DB2ClientLibFile",
+          "Conductor": "/Connection/Conductor",
+          "ConductorInstance": "/Connection/Conductor/Instance",
+          "ConductorDatabase": "/Connection/Conductor/Database",
+          "ConductorUsername": "/Connection/Conductor/Username",
+          "ConductorPassword": "/Connection/Conductor/Password",
+          "ConductorDB2ClientLibFile": "/Connection/Conductor/DB2ClientLibFile",
+          "transactionModel": "0",
+          "transactionManager": null
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transactional_properties": {},
+      "pins": [
+        {
+          "id": "V228S2P1",
+          "name": "L13",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "CONTRACT_REF_NO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+            },
+            {
+              "name": "TOTAL_OS_N",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true
+            }
+          ],
+          "enhanced_schema": [
+            {
+              "name": "CONTRACT_REF_NO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.CONTRACT_REF_NO",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CONTRACT_REF_NO",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "TOTAL_OS_N",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            }
+          ],
+          "properties": {
+            "lookup\\\\type": null,
+            "VariantName": "9.1",
+            "VariantLibrary": "ccdb2",
+            "VariantVersion": "1.0",
+            "RejectFromLink": "-1",
+            "RejectThreshold": "0",
+            "RejectNumber": "0",
+            "RejectUsesPercentage": "false",
+            "ConnectorName": "DB2Connector",
+            "CONTRACT_REF_NO": null,
+            "TOTAL_OS_N": null
+          }
+        }
+      ],
+      "schema_lineage": {}
+    },
+    {
+      "id": "V231S0",
+      "name": "SOURCE",
+      "type": "CCustomStage",
+      "enhanced_type": "DB2ConnectorPX",
+      "properties": {
+        "stage_type": "DB2ConnectorPX"
+      },
+      "enhanced_properties": {
+        "configuration": {
+          "VariantName": "9.1",
+          "VariantLibrary": "ccdb2",
+          "VariantVersion": "1.0",
+          "SupportedVariants": "V1;9.1::ccdb2",
+          "SupportedVariantsLibraries": "ccdb2",
+          "SupportedVariantsVersions": "1.0",
+          "XMLConnectorDescriptor": "<?xml version=\\",
+          "XMLProperties": "Value =+=+=+=",
+          "Orientation": "link",
+          "RejectFromLink": "-1",
+          "RejectThreshold": "0",
+          "RejectNumber": "0",
+          "RejectUsesPercentage": "false",
+          "RejectConditions": null,
+          "RejectDataElements": null,
+          "XMLRejectSettings": null,
+          "ConnectorName": "DB2Connector",
+          "Engine": "EE",
+          "Context": "source",
+          "ConnectionString": "/Connection/Database",
+          "Username": "/Connection/Username",
+          "Password": "/Connection/Password",
+          "Instance": "/Connection/Instance",
+          "DB2ClientLibFile": "/Connection/DB2ClientLibFile",
+          "Conductor": "/Connection/Conductor",
+          "ConductorInstance": "/Connection/Conductor/Instance",
+          "ConductorDatabase": "/Connection/Conductor/Database",
+          "ConductorUsername": "/Connection/Conductor/Username",
+          "ConductorPassword": "/Connection/Conductor/Password",
+          "ConductorDB2ClientLibFile": "/Connection/Conductor/DB2ClientLibFile",
+          "transactionModel": "0",
+          "transactionManager": null
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transactional_properties": {},
+      "pins": [
+        {
+          "id": "V231S0P2",
+          "name": "READ_CORE_SOURCE1",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "CONTRACT_REF_NO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "CUSTOMERNAME1",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "MAILING_POBOX",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "MAILING_COUNTRY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "MOBILE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "CUSTOMERID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "MAILING_CITY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "PROPERTYNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "PROPERTYDETAILS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "SPREAD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "BASERATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "LAST_RATE_CHANGE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "CURRENT_RATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "REPAYMENT_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "BALANCE_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "START_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "END_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "BRANCH",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "PERSONAL_EMAIL",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "PRODUCT_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "PRODUCT_GROUP",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "PORTFOLIO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "RATE_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "FIX_PROFIT_FLG",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "DR_SETL_AC",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "STMT_DT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "USER_REF_NO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "LAST_RATE_CHANGE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "REPLENISHMENT_DATE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "STMT_DT_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "TOTAL_OS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true
+            }
+          ],
+          "enhanced_schema": [
+            {
+              "name": "CONTRACT_REF_NO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "CUSTOMERNAME1",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "MAILING_POBOX",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "MAILING_COUNTRY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "MOBILE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "CUSTOMERID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "MAILING_CITY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "PROPERTYNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "PROPERTYDETAILS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "SPREAD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "BASERATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "LAST_RATE_CHANGE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "CURRENT_RATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "REPAYMENT_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "BALANCE_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "START_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "END_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "BRANCH",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "PERSONAL_EMAIL",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "PRODUCT_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "PRODUCT_GROUP",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "PORTFOLIO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "RATE_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "FIX_PROFIT_FLG",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "DR_SETL_AC",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "STMT_DT",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "USER_REF_NO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "LAST_RATE_CHANGE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "REPLENISHMENT_DATE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "STMT_DT_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "TOTAL_OS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            }
+          ],
+          "properties": {
+            "lookup\\\\type": null,
+            "VariantName": "9.1",
+            "VariantLibrary": "ccdb2",
+            "VariantVersion": "1.0",
+            "RejectFromLink": "-1",
+            "RejectThreshold": "0",
+            "RejectNumber": "0",
+            "RejectUsesPercentage": "false",
+            "ConnectorName": "DB2Connector",
+            "CONTRACT_REF_NO": null,
+            "CUSTOMERNAME1": null,
+            "MAILING_POBOX": null,
+            "MAILING_COUNTRY": null,
+            "MOBILE": null,
+            "CUSTOMERID": null,
+            "APPLICATIONID": null,
+            "MAILING_CITY": null,
+            "PROPERTYNAME": null,
+            "PROPERTYDETAILS": null,
+            "SPREAD": null,
+            "BASERATE": null,
+            "LAST_RATE_CHANGE": null,
+            "CURRENT_RATE": null,
+            "REPAYMENT_TENOR": null,
+            "BALANCE_TENOR": null,
+            "START_DATE": null,
+            "END_DATE": null,
+            "BRANCH": null,
+            "PERSONAL_EMAIL": null,
+            "PRODUCT_CODE": null,
+            "PRODUCT_GROUP": null,
+            "PORTFOLIO": null,
+            "RATE_CODE": null,
+            "FIX_PROFIT_FLG": null,
+            "DR_SETL_AC": null,
+            "STMT_DT": null,
+            "USER_REF_NO": null,
+            "INS_REPLENISHMENT_DATE": null,
+            "REPLENISHMENT_DATE": null,
+            "LAST_RATE_CHANGE_CHAR": null,
+            "INS_REPLENISHMENT_DATE_CHAR": null,
+            "REPLENISHMENT_DATE_CHAR": null,
+            "STMT_DT_CHAR": null,
+            "TOTAL_OS": null
+          }
+        }
+      ],
+      "schema_lineage": {}
+    },
+    {
+      "id": "V232S0",
+      "name": "LAST_RATE_CHANGE_DATE",
+      "type": "CCustomStage",
+      "enhanced_type": "DB2ConnectorPX",
+      "properties": {
+        "stage_type": "DB2ConnectorPX"
+      },
+      "enhanced_properties": {
+        "configuration": {
+          "VariantName": "9.1",
+          "VariantLibrary": "ccdb2",
+          "VariantVersion": "1.0",
+          "SupportedVariants": "V1;9.1::ccdb2",
+          "SupportedVariantsLibraries": "ccdb2",
+          "SupportedVariantsVersions": "1.0",
+          "XMLConnectorDescriptor": "<?xml version=\\",
+          "XMLProperties": "Value =+=+=+=",
+          "Orientation": "link",
+          "RejectFromLink": "-1",
+          "RejectThreshold": "0",
+          "RejectNumber": "0",
+          "RejectUsesPercentage": "false",
+          "RejectConditions": null,
+          "RejectDataElements": null,
+          "XMLRejectSettings": null,
+          "ConnectorName": "DB2Connector",
+          "Engine": "EE",
+          "Context": "source",
+          "ConnectionString": "/Connection/Database",
+          "Username": "/Connection/Username",
+          "Password": "/Connection/Password",
+          "Instance": "/Connection/Instance",
+          "DB2ClientLibFile": "/Connection/DB2ClientLibFile",
+          "Conductor": "/Connection/Conductor",
+          "ConductorInstance": "/Connection/Conductor/Instance",
+          "ConductorDatabase": "/Connection/Conductor/Database",
+          "ConductorUsername": "/Connection/Conductor/Username",
+          "ConductorPassword": "/Connection/Conductor/Password",
+          "ConductorDB2ClientLibFile": "/Connection/Conductor/DB2ClientLibFile",
+          "transactionModel": "0",
+          "transactionManager": null
+        },
+        "apt_properties": {},
+        "metadata": {}
+      },
+      "transactional_properties": {},
+      "pins": [
+        {
+          "id": "V232S0P1",
+          "name": "L14",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "IND",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "ARR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "V_CONTRACT_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+            },
+            {
+              "name": "RATE_CHANGE_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true
+            },
+            {
+              "name": "FIXED_RATE",
+              "type": "DECIMAL",
+              "sql_type_code": "3",
+              "length": "0",
+              "scale": "8",
+              "nullable": true
+            }
+          ],
+          "enhanced_schema": [
+            {
+              "name": "IND",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "ARR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "V_CONTRACT_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE1.CONTRACT_REF_NO",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CONTRACT_REF_NO",
+                  "READ_CORE_SOURCE1",
+                  "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "RATE_CHANGE_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            },
+            {
+              "name": "FIXED_RATE",
+              "type": "DECIMAL",
+              "sql_type_code": "3",
+              "length": "0",
+              "scale": "8",
+              "nullable": true,
+              "has_transformation": false,
+              "transformation_classification": "none"
+            }
+          ],
+          "properties": {
+            "lookup\\\\type": null,
+            "VariantName": "9.1",
+            "VariantLibrary": "ccdb2",
+            "VariantVersion": "1.0",
+            "RejectFromLink": "-1",
+            "RejectThreshold": "0",
+            "RejectNumber": "0",
+            "RejectUsesPercentage": "false",
+            "ConnectorName": "DB2Connector",
+            "IND": null,
+            "ARR": null,
+            "V_CONTRACT_CODE": null,
+            "RATE_CHANGE_DATE": null,
+            "FIXED_RATE": null
+          }
+        }
+      ],
+      "schema_lineage": {}
+    },
+    {
+      "id": "V47S2",
+      "name": "xfm",
+      "type": "CTransformerStage",
+      "enhanced_type": "CTransformerStage",
+      "properties": {
+        "stage_type": "CTransformerStage"
+      },
+      "enhanced_properties": {
+        "configuration": {},
+        "apt_properties": {
+          "TrxGenCode": "Value =+=+=+=",
+          "TrxClassName": "V47S2_INERACTIVE_IJARA_HEADER_DATA_xfm"
+        },
+        "metadata": {}
+      },
+      "transactional_properties": {},
+      "pins": [
+        {
+          "id": "V47S2P9",
+          "name": "READ_CORE_SOURCE",
+          "direction": "input",
+          "schema": [],
+          "enhanced_schema": [],
+          "properties": {}
+        },
+        {
+          "id": "V47S2P2",
+          "name": "lnk_tgt",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "CONTRACT_REF_NO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.CONTRACT_REF_NO"
+            },
+            {
+              "name": "CUSTOMERNAME1",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.CUSTOMERNAME1"
+            },
+            {
+              "name": "MAILING_POBOX",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MAILING_POBOX"
+            },
+            {
+              "name": "MAILING_CITY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MAILING_CITY"
+            },
+            {
+              "name": "MAILING_COUNTRY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MAILING_COUNTRY"
+            },
+            {
+              "name": "MOBILE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MOBILE"
+            },
+            {
+              "name": "CUSTOMERID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.CUSTOMERID"
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.APPLICATIONID"
+            },
+            {
+              "name": "PROPERTYNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PROPERTYNAME"
+            },
+            {
+              "name": "PROPERTYDETAILS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PROPERTYDETAILS"
+            },
+            {
+              "name": "SPREAD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.SPREAD"
+            },
+            {
+              "name": "BASERATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.BASERATE"
+            },
+            {
+              "name": "LAST_RATE_CHANGE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.LAST_RATE_CHANGE"
+            },
+            {
+              "name": "CURRENT_RATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.CURRENT_RATE"
+            },
+            {
+              "name": "REPAYMENT_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.REPAYMENT_TENOR"
+            },
+            {
+              "name": "REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE"
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE"
+            },
+            {
+              "name": "TOTAL_OS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))"
+            },
+            {
+              "name": "BALANCE_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.BALANCE_TENOR"
+            },
+            {
+              "name": "START_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.START_DATE"
+            },
+            {
+              "name": "END_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.END_DATE"
+            },
+            {
+              "name": "BRANCH",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.BRANCH"
+            },
+            {
+              "name": "PERSONAL_EMAIL",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PERSONAL_EMAIL"
+            },
+            {
+              "name": "PRODUCT_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PRODUCT_CODE"
+            },
+            {
+              "name": "PRODUCT_GROUP",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PRODUCT_GROUP"
+            },
+            {
+              "name": "PORTFOLIO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PORTFOLIO"
+            },
+            {
+              "name": "LAST_RATE_CHANGE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))"
+            },
+            {
+              "name": "REPLENISHMENT_DATE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR"
+            }
+          ],
+          "enhanced_schema": [
+            {
+              "name": "CONTRACT_REF_NO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.CONTRACT_REF_NO",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "CONTRACT_REF_NO",
+                  "READ_CORE_SOURCE.CONTRACT_REF_NO",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.CONTRACT_REF_NO"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "CUSTOMERNAME1",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.CUSTOMERNAME1",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.CUSTOMERNAME1",
+                  "CUSTOMERNAME1",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.CUSTOMERNAME1"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "MAILING_POBOX",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MAILING_POBOX",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "MAILING_POBOX",
+                  "READ_CORE_SOURCE.MAILING_POBOX",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.MAILING_POBOX"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "MAILING_CITY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MAILING_CITY",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "MAILING_CITY",
+                  "READ_CORE_SOURCE.MAILING_CITY",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.MAILING_CITY"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "MAILING_COUNTRY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MAILING_COUNTRY",
+              "transformation_logic": {
+                "type": "aggregation",
+                "source_columns": [
+                  "READ_CORE_SOURCE.MAILING_COUNTRY",
+                  "MAILING_COUNTRY",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.MAILING_COUNTRY"
+              },
+              "has_transformation": true,
+              "transformation_classification": "aggregation"
+            },
+            {
+              "name": "MOBILE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MOBILE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "MOBILE",
+                  "READ_CORE_SOURCE.MOBILE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.MOBILE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "CUSTOMERID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.CUSTOMERID",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.CUSTOMERID",
+                  "CUSTOMERID",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.CUSTOMERID"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.APPLICATIONID",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.APPLICATIONID",
+                  "APPLICATIONID",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.APPLICATIONID"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PROPERTYNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PROPERTYNAME",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.PROPERTYNAME",
+                  "PROPERTYNAME",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.PROPERTYNAME"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PROPERTYDETAILS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PROPERTYDETAILS",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PROPERTYDETAILS",
+                  "READ_CORE_SOURCE.PROPERTYDETAILS",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.PROPERTYDETAILS"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "SPREAD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.SPREAD",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.SPREAD",
+                  "SPREAD",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.SPREAD"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "BASERATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.BASERATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "BASERATE",
+                  "READ_CORE_SOURCE.BASERATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.BASERATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "LAST_RATE_CHANGE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "LAST_RATE_CHANGE",
+                  "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.LAST_RATE_CHANGE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "CURRENT_RATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.CURRENT_RATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.CURRENT_RATE",
+                  "CURRENT_RATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.CURRENT_RATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "REPAYMENT_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.REPAYMENT_TENOR",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE",
+                  "REPAYMENT_TENOR",
+                  "READ_CORE_SOURCE.REPAYMENT_TENOR"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.REPAYMENT_TENOR"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "INS_REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "TOTAL_OS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))",
+              "transformation_logic": {
+                "type": "conditional",
+                "source_columns": [
+                  "IF",
+                  "READ_CORE_SOURCE",
+                  "READ_CORE_SOURCE.TOTAL_OS_N",
+                  "TOTAL_OS",
+                  "READ_CORE_SOURCE.TOTAL_OS",
+                  "TOTAL_OS_N"
+                ],
+                "functions": [
+                  "IsNotNull",
+                  "THEN",
+                  "ELSE"
+                ],
+                "expression": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))"
+              },
+              "has_transformation": true,
+              "transformation_classification": "conditional"
+            },
+            {
+              "name": "BALANCE_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.BALANCE_TENOR",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "BALANCE_TENOR",
+                  "READ_CORE_SOURCE.BALANCE_TENOR",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.BALANCE_TENOR"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "START_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.START_DATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "START_DATE",
+                  "READ_CORE_SOURCE.START_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.START_DATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "END_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.END_DATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.END_DATE",
+                  "END_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.END_DATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "BRANCH",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.BRANCH",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.BRANCH",
+                  "BRANCH",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.BRANCH"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PERSONAL_EMAIL",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PERSONAL_EMAIL",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.PERSONAL_EMAIL",
+                  "PERSONAL_EMAIL",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.PERSONAL_EMAIL"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PRODUCT_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PRODUCT_CODE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PRODUCT_CODE",
+                  "READ_CORE_SOURCE.PRODUCT_CODE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.PRODUCT_CODE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PRODUCT_GROUP",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PRODUCT_GROUP",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PRODUCT_GROUP",
+                  "READ_CORE_SOURCE.PRODUCT_GROUP",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.PRODUCT_GROUP"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PORTFOLIO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PORTFOLIO",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.PORTFOLIO",
+                  "PORTFOLIO",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.PORTFOLIO"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "LAST_RATE_CHANGE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))",
+              "transformation_logic": {
+                "type": "conditional",
+                "source_columns": [
+                  "IF",
+                  "READ_CORE_SOURCE",
+                  "JUN",
+                  "READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR",
+                  "LAST_RATE_CHANGE_CHAR"
+                ],
+                "functions": [
+                  "IsNotNull",
+                  "THEN",
+                  "ELSE"
+                ],
+                "expression": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))"
+              },
+              "has_transformation": true,
+              "transformation_classification": "conditional"
+            },
+            {
+              "name": "REPLENISHMENT_DATE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "0",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "REPLENISHMENT_DATE_CHAR",
+                  "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            }
+          ],
+          "properties": {
+            "CONTRACT_REF_NO": null,
+            "CUSTOMERNAME1": null,
+            "MAILING_POBOX": null,
+            "MAILING_CITY": null,
+            "MAILING_COUNTRY": null,
+            "MOBILE": null,
+            "CUSTOMERID": null,
+            "APPLICATIONID": null,
+            "PROPERTYNAME": null,
+            "PROPERTYDETAILS": null,
+            "SPREAD": null,
+            "BASERATE": null,
+            "LAST_RATE_CHANGE": null,
+            "CURRENT_RATE": null,
+            "REPAYMENT_TENOR": null,
+            "REPLENISHMENT_DATE": null,
+            "INS_REPLENISHMENT_DATE": null,
+            "TOTAL_OS": null,
+            "BALANCE_TENOR": null,
+            "START_DATE": null,
+            "END_DATE": null,
+            "BRANCH": null,
+            "PERSONAL_EMAIL": null,
+            "PRODUCT_CODE": null,
+            "PRODUCT_GROUP": null,
+            "PORTFOLIO": null,
+            "LAST_RATE_CHANGE_CHAR": null,
+            "REPLENISHMENT_DATE_CHAR": null
+          }
+        },
+        {
+          "id": "V47S2P8",
+          "name": "lnk_tgt1",
+          "direction": "output",
+          "schema": [
+            {
+              "name": "CUSTOMERNAME1",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.CUSTOMERNAME1"
+            },
+            {
+              "name": "MAILING_POBOX",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MAILING_POBOX"
+            },
+            {
+              "name": "MAILING_CITY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MAILING_CITY"
+            },
+            {
+              "name": "MAILING_COUNTRY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MAILING_COUNTRY"
+            },
+            {
+              "name": "MOBILE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MOBILE"
+            },
+            {
+              "name": "CUSTOMERID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.CUSTOMERID"
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.APPLICATIONID"
+            },
+            {
+              "name": "PROPERTYNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PROPERTYNAME"
+            },
+            {
+              "name": "PROPERTYDETAILS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PROPERTYDETAILS"
+            },
+            {
+              "name": "SPREAD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.SPREAD"
+            },
+            {
+              "name": "BASERATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.BASERATE"
+            },
+            {
+              "name": "LAST_RATE_CHANGE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.LAST_RATE_CHANGE"
+            },
+            {
+              "name": "CURRENT_RATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.CURRENT_RATE"
+            },
+            {
+              "name": "REPAYMENT_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.REPAYMENT_TENOR"
+            },
+            {
+              "name": "REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE"
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE"
+            },
+            {
+              "name": "TOTAL_OS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))"
+            },
+            {
+              "name": "BALANCE_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.BALANCE_TENOR"
+            },
+            {
+              "name": "START_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.START_DATE"
+            },
+            {
+              "name": "END_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.END_DATE"
+            },
+            {
+              "name": "BRANCH",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.BRANCH"
+            },
+            {
+              "name": "PERSONAL_EMAIL",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PERSONAL_EMAIL"
+            },
+            {
+              "name": "PRODUCT_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PRODUCT_CODE"
+            },
+            {
+              "name": "PRODUCT_GROUP",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PRODUCT_GROUP"
+            },
+            {
+              "name": "PORTFOLIO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PORTFOLIO"
+            },
+            {
+              "name": "LAST_RATE_CHANGE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))"
+            },
+            {
+              "name": "REPLENISHMENT_DATE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR"
+            }
+          ],
+          "enhanced_schema": [
+            {
+              "name": "CUSTOMERNAME1",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.CUSTOMERNAME1",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.CUSTOMERNAME1",
+                  "CUSTOMERNAME1",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.CUSTOMERNAME1"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "MAILING_POBOX",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MAILING_POBOX",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "MAILING_POBOX",
+                  "READ_CORE_SOURCE.MAILING_POBOX",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.MAILING_POBOX"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "MAILING_CITY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MAILING_CITY",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "MAILING_CITY",
+                  "READ_CORE_SOURCE.MAILING_CITY",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.MAILING_CITY"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "MAILING_COUNTRY",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MAILING_COUNTRY",
+              "transformation_logic": {
+                "type": "aggregation",
+                "source_columns": [
+                  "READ_CORE_SOURCE.MAILING_COUNTRY",
+                  "MAILING_COUNTRY",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.MAILING_COUNTRY"
+              },
+              "has_transformation": true,
+              "transformation_classification": "aggregation"
+            },
+            {
+              "name": "MOBILE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.MOBILE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "MOBILE",
+                  "READ_CORE_SOURCE.MOBILE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.MOBILE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "CUSTOMERID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.CUSTOMERID",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.CUSTOMERID",
+                  "CUSTOMERID",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.CUSTOMERID"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "APPLICATIONID",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.APPLICATIONID",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.APPLICATIONID",
+                  "APPLICATIONID",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.APPLICATIONID"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PROPERTYNAME",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PROPERTYNAME",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.PROPERTYNAME",
+                  "PROPERTYNAME",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.PROPERTYNAME"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PROPERTYDETAILS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PROPERTYDETAILS",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PROPERTYDETAILS",
+                  "READ_CORE_SOURCE.PROPERTYDETAILS",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.PROPERTYDETAILS"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "SPREAD",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.SPREAD",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.SPREAD",
+                  "SPREAD",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.SPREAD"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "BASERATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.BASERATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "BASERATE",
+                  "READ_CORE_SOURCE.BASERATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.BASERATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "LAST_RATE_CHANGE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "LAST_RATE_CHANGE",
+                  "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.LAST_RATE_CHANGE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "CURRENT_RATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.CURRENT_RATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.CURRENT_RATE",
+                  "CURRENT_RATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.CURRENT_RATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "REPAYMENT_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.REPAYMENT_TENOR",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE",
+                  "REPAYMENT_TENOR",
+                  "READ_CORE_SOURCE.REPAYMENT_TENOR"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.REPAYMENT_TENOR"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "INS_REPLENISHMENT_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "INS_REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "TOTAL_OS",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))",
+              "transformation_logic": {
+                "type": "conditional",
+                "source_columns": [
+                  "IF",
+                  "READ_CORE_SOURCE",
+                  "READ_CORE_SOURCE.TOTAL_OS_N",
+                  "TOTAL_OS",
+                  "READ_CORE_SOURCE.TOTAL_OS",
+                  "TOTAL_OS_N"
+                ],
+                "functions": [
+                  "IsNotNull",
+                  "THEN",
+                  "ELSE"
+                ],
+                "expression": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))"
+              },
+              "has_transformation": true,
+              "transformation_classification": "conditional"
+            },
+            {
+              "name": "BALANCE_TENOR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.BALANCE_TENOR",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "BALANCE_TENOR",
+                  "READ_CORE_SOURCE.BALANCE_TENOR",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.BALANCE_TENOR"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "START_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.START_DATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "START_DATE",
+                  "READ_CORE_SOURCE.START_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.START_DATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "END_DATE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.END_DATE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.END_DATE",
+                  "END_DATE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.END_DATE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "BRANCH",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.BRANCH",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.BRANCH",
+                  "BRANCH",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.BRANCH"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PERSONAL_EMAIL",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PERSONAL_EMAIL",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.PERSONAL_EMAIL",
+                  "PERSONAL_EMAIL",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.PERSONAL_EMAIL"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PRODUCT_CODE",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PRODUCT_CODE",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PRODUCT_CODE",
+                  "READ_CORE_SOURCE.PRODUCT_CODE",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.PRODUCT_CODE"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PRODUCT_GROUP",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PRODUCT_GROUP",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "PRODUCT_GROUP",
+                  "READ_CORE_SOURCE.PRODUCT_GROUP",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.PRODUCT_GROUP"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "PORTFOLIO",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.PORTFOLIO",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "READ_CORE_SOURCE.PORTFOLIO",
+                  "PORTFOLIO",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.PORTFOLIO"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            },
+            {
+              "name": "LAST_RATE_CHANGE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))",
+              "transformation_logic": {
+                "type": "conditional",
+                "source_columns": [
+                  "IF",
+                  "READ_CORE_SOURCE",
+                  "JUN",
+                  "READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR",
+                  "LAST_RATE_CHANGE_CHAR"
+                ],
+                "functions": [
+                  "IsNotNull",
+                  "THEN",
+                  "ELSE"
+                ],
+                "expression": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))"
+              },
+              "has_transformation": true,
+              "transformation_classification": "conditional"
+            },
+            {
+              "name": "REPLENISHMENT_DATE_CHAR",
+              "type": "VARCHAR",
+              "sql_type_code": "12",
+              "length": "1",
+              "scale": "0",
+              "nullable": true,
+              "derivation": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+              "transformation_logic": {
+                "type": "simple_column",
+                "source_columns": [
+                  "REPLENISHMENT_DATE_CHAR",
+                  "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+                  "READ_CORE_SOURCE"
+                ],
+                "functions": [],
+                "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR"
+              },
+              "has_transformation": true,
+              "transformation_classification": "simple_column"
+            }
+          ],
+          "properties": {
+            "CUSTOMERNAME1": null,
+            "MAILING_POBOX": null,
+            "MAILING_CITY": null,
+            "MAILING_COUNTRY": null,
+            "MOBILE": null,
+            "CUSTOMERID": null,
+            "APPLICATIONID": null,
+            "PROPERTYNAME": null,
+            "PROPERTYDETAILS": null,
+            "SPREAD": null,
+            "BASERATE": null,
+            "LAST_RATE_CHANGE": null,
+            "CURRENT_RATE": null,
+            "REPAYMENT_TENOR": null,
+            "REPLENISHMENT_DATE": null,
+            "INS_REPLENISHMENT_DATE": null,
+            "TOTAL_OS": null,
+            "BALANCE_TENOR": null,
+            "START_DATE": null,
+            "END_DATE": null,
+            "BRANCH": null,
+            "PERSONAL_EMAIL": null,
+            "PRODUCT_CODE": null,
+            "PRODUCT_GROUP": null,
+            "PORTFOLIO": null,
+            "LAST_RATE_CHANGE_CHAR": null,
+            "REPLENISHMENT_DATE_CHAR": null
+          }
+        }
+      ],
+      "schema_lineage": {}
+    }
+  ],
+  "edges": [
+    {
+      "from_node": "V127S0",
+      "from_pin": "V127S0P2",
+      "from_pin_name": "lnk_tgt",
+      "to_node": "V47S2",
+      "to_pin": "V47S2P2",
+      "to_pin_name": "lnk_tgt",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V221S0",
+      "from_pin": "V221S0P1",
+      "from_pin_name": "lnk_tgt1",
+      "to_node": "V47S2",
+      "to_pin": "V47S2P8",
+      "to_pin_name": "lnk_tgt1",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V228S0",
+      "from_pin": "V228S0P1",
+      "from_pin_name": "READ_CORE_SOURCE1",
+      "to_node": "V231S0",
+      "to_pin": "V231S0P2",
+      "to_pin_name": "READ_CORE_SOURCE1",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V228S0",
+      "from_pin": "V228S0P2",
+      "from_pin_name": "L13",
+      "to_node": "V228S2",
+      "to_pin": "V228S2P1",
+      "to_pin_name": "L13",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V228S0",
+      "from_pin": "V228S0P3",
+      "from_pin_name": "READ_CORE_SOURCE",
+      "to_node": "V47S2",
+      "to_pin": "V47S2P9",
+      "to_pin_name": "READ_CORE_SOURCE",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V228S0",
+      "from_pin": "V228S0P5",
+      "from_pin_name": "L14",
+      "to_node": "V232S0",
+      "to_pin": "V232S0P1",
+      "to_pin_name": "L14",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V228S2",
+      "from_pin": "V228S2P1",
+      "from_pin_name": "L13",
+      "to_node": "V228S0",
+      "to_pin": "V228S0P2",
+      "to_pin_name": "L13",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V231S0",
+      "from_pin": "V231S0P2",
+      "from_pin_name": "READ_CORE_SOURCE1",
+      "to_node": "V228S0",
+      "to_pin": "V228S0P1",
+      "to_pin_name": "READ_CORE_SOURCE1",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V232S0",
+      "from_pin": "V232S0P1",
+      "from_pin_name": "L14",
+      "to_node": "V228S0",
+      "to_pin": "V228S0P5",
+      "to_pin_name": "L14",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V47S2",
+      "from_pin": "V47S2P2",
+      "from_pin_name": "lnk_tgt",
+      "to_node": "V127S0",
+      "to_pin": "V127S0P2",
+      "to_pin_name": "lnk_tgt",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V47S2",
+      "from_pin": "V47S2P8",
+      "from_pin_name": "lnk_tgt1",
+      "to_node": "V221S0",
+      "to_pin": "V221S0P1",
+      "to_pin_name": "lnk_tgt1",
+      "join_type": "unknown"
+    },
+    {
+      "from_node": "V47S2",
+      "from_pin": "V47S2P9",
+      "from_pin_name": "READ_CORE_SOURCE",
+      "to_node": "V228S0",
+      "to_pin": "V228S0P3",
+      "to_pin_name": "READ_CORE_SOURCE",
+      "join_type": "unknown"
+    }
+  ],
+  "schema_lineage": {
+    "evolution_events": [
+      {
+        "node_id": "V127S0",
+        "input_columns": 0,
+        "output_columns": 0,
+        "transformations": [],
+        "schema_changes": {
+          "added": [],
+          "removed": [],
+          "modified": []
+        }
+      },
+      {
+        "node_id": "V221S0",
+        "input_columns": 0,
+        "output_columns": 0,
+        "transformations": [],
+        "schema_changes": {
+          "added": [],
+          "removed": [],
+          "modified": []
+        }
+      },
+      {
+        "node_id": "V228S0",
+        "input_columns": 0,
+        "output_columns": 36,
+        "transformations": [
+          {
+            "column": "CONTRACT_REF_NO",
+            "type": "simple_column"
+          },
+          {
+            "column": "CUSTOMERNAME1",
+            "type": "simple_column"
+          },
+          {
+            "column": "MAILING_POBOX",
+            "type": "simple_column"
+          },
+          {
+            "column": "MAILING_COUNTRY",
+            "type": "aggregation"
+          },
+          {
+            "column": "MOBILE",
+            "type": "simple_column"
+          },
+          {
+            "column": "CUSTOMERID",
+            "type": "simple_column"
+          },
+          {
+            "column": "APPLICATIONID",
+            "type": "simple_column"
+          },
+          {
+            "column": "MAILING_CITY",
+            "type": "simple_column"
+          },
+          {
+            "column": "PROPERTYNAME",
+            "type": "simple_column"
+          },
+          {
+            "column": "PROPERTYDETAILS",
+            "type": "simple_column"
+          },
+          {
+            "column": "SPREAD",
+            "type": "simple_column"
+          },
+          {
+            "column": "BASERATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "LAST_RATE_CHANGE",
+            "type": "simple_column"
+          },
+          {
+            "column": "CURRENT_RATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "REPAYMENT_TENOR",
+            "type": "simple_column"
+          },
+          {
+            "column": "BALANCE_TENOR",
+            "type": "simple_column"
+          },
+          {
+            "column": "START_DATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "END_DATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "BRANCH",
+            "type": "simple_column"
+          },
+          {
+            "column": "PERSONAL_EMAIL",
+            "type": "simple_column"
+          },
+          {
+            "column": "PRODUCT_CODE",
+            "type": "simple_column"
+          },
+          {
+            "column": "PRODUCT_GROUP",
+            "type": "simple_column"
+          },
+          {
+            "column": "PORTFOLIO",
+            "type": "simple_column"
+          },
+          {
+            "column": "RATE_CODE",
+            "type": "simple_column"
+          },
+          {
+            "column": "FIX_PROFIT_FLG",
+            "type": "simple_column"
+          },
+          {
+            "column": "DR_SETL_AC",
+            "type": "simple_column"
+          },
+          {
+            "column": "STMT_DT",
+            "type": "simple_column"
+          },
+          {
+            "column": "USER_REF_NO",
+            "type": "simple_column"
+          },
+          {
+            "column": "INS_REPLENISHMENT_DATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "REPLENISHMENT_DATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "LAST_RATE_CHANGE_CHAR",
+            "type": "simple_column"
+          },
+          {
+            "column": "INS_REPLENISHMENT_DATE_CHAR",
+            "type": "simple_column"
+          },
+          {
+            "column": "REPLENISHMENT_DATE_CHAR",
+            "type": "simple_column"
+          },
+          {
+            "column": "STMT_DT_CHAR",
+            "type": "simple_column"
+          },
+          {
+            "column": "TOTAL_OS",
+            "type": "simple_column"
+          },
+          {
+            "column": "TOTAL_OS_N",
+            "type": "simple_column"
+          }
+        ],
+        "schema_changes": {
+          "added": [
+            "BASERATE",
+            "PORTFOLIO",
+            "CURRENT_RATE",
+            "PERSONAL_EMAIL",
+            "STMT_DT",
+            "RATE_CODE",
+            "DR_SETL_AC",
+            "TOTAL_OS_N",
+            "START_DATE",
+            "MAILING_CITY",
+            "FIX_PROFIT_FLG",
+            "REPLENISHMENT_DATE_CHAR",
+            "CUSTOMERID",
+            "PROPERTYDETAILS",
+            "PRODUCT_GROUP",
+            "TOTAL_OS",
+            "STMT_DT_CHAR",
+            "MOBILE",
+            "SPREAD",
+            "LAST_RATE_CHANGE",
+            "REPLENISHMENT_DATE",
+            "PRODUCT_CODE",
+            "INS_REPLENISHMENT_DATE_CHAR",
+            "BALANCE_TENOR",
+            "MAILING_COUNTRY",
+            "USER_REF_NO",
+            "INS_REPLENISHMENT_DATE",
+            "MAILING_POBOX",
+            "PROPERTYNAME",
+            "REPAYMENT_TENOR",
+            "BRANCH",
+            "CONTRACT_REF_NO",
+            "END_DATE",
+            "CUSTOMERNAME1",
+            "LAST_RATE_CHANGE_CHAR",
+            "APPLICATIONID"
+          ],
+          "removed": [],
+          "modified": []
+        }
+      },
+      {
+        "node_id": "V228S2",
+        "input_columns": 0,
+        "output_columns": 2,
+        "transformations": [
+          {
+            "column": "CONTRACT_REF_NO",
+            "type": "simple_column"
+          }
+        ],
+        "schema_changes": {
+          "added": [
+            "CONTRACT_REF_NO",
+            "TOTAL_OS_N"
+          ],
+          "removed": [],
+          "modified": []
+        }
+      },
+      {
+        "node_id": "V231S0",
+        "input_columns": 0,
+        "output_columns": 35,
+        "transformations": [],
+        "schema_changes": {
+          "added": [
+            "BASERATE",
+            "PORTFOLIO",
+            "CURRENT_RATE",
+            "PERSONAL_EMAIL",
+            "STMT_DT",
+            "RATE_CODE",
+            "DR_SETL_AC",
+            "START_DATE",
+            "MAILING_CITY",
+            "FIX_PROFIT_FLG",
+            "REPLENISHMENT_DATE_CHAR",
+            "CUSTOMERID",
+            "PROPERTYDETAILS",
+            "PRODUCT_GROUP",
+            "TOTAL_OS",
+            "STMT_DT_CHAR",
+            "MOBILE",
+            "SPREAD",
+            "LAST_RATE_CHANGE",
+            "REPLENISHMENT_DATE",
+            "PRODUCT_CODE",
+            "INS_REPLENISHMENT_DATE_CHAR",
+            "BALANCE_TENOR",
+            "MAILING_COUNTRY",
+            "USER_REF_NO",
+            "INS_REPLENISHMENT_DATE",
+            "MAILING_POBOX",
+            "PROPERTYNAME",
+            "REPAYMENT_TENOR",
+            "BRANCH",
+            "CONTRACT_REF_NO",
+            "END_DATE",
+            "CUSTOMERNAME1",
+            "LAST_RATE_CHANGE_CHAR",
+            "APPLICATIONID"
+          ],
+          "removed": [],
+          "modified": []
+        }
+      },
+      {
+        "node_id": "V232S0",
+        "input_columns": 0,
+        "output_columns": 5,
+        "transformations": [
+          {
+            "column": "V_CONTRACT_CODE",
+            "type": "simple_column"
+          }
+        ],
+        "schema_changes": {
+          "added": [
+            "RATE_CHANGE_DATE",
+            "FIXED_RATE",
+            "ARR",
+            "IND",
+            "V_CONTRACT_CODE"
+          ],
+          "removed": [],
+          "modified": []
+        }
+      },
+      {
+        "node_id": "V47S2",
+        "input_columns": 0,
+        "output_columns": 55,
+        "transformations": [
+          {
+            "column": "CONTRACT_REF_NO",
+            "type": "simple_column"
+          },
+          {
+            "column": "CUSTOMERNAME1",
+            "type": "simple_column"
+          },
+          {
+            "column": "MAILING_POBOX",
+            "type": "simple_column"
+          },
+          {
+            "column": "MAILING_CITY",
+            "type": "simple_column"
+          },
+          {
+            "column": "MAILING_COUNTRY",
+            "type": "aggregation"
+          },
+          {
+            "column": "MOBILE",
+            "type": "simple_column"
+          },
+          {
+            "column": "CUSTOMERID",
+            "type": "simple_column"
+          },
+          {
+            "column": "APPLICATIONID",
+            "type": "simple_column"
+          },
+          {
+            "column": "PROPERTYNAME",
+            "type": "simple_column"
+          },
+          {
+            "column": "PROPERTYDETAILS",
+            "type": "simple_column"
+          },
+          {
+            "column": "SPREAD",
+            "type": "simple_column"
+          },
+          {
+            "column": "BASERATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "LAST_RATE_CHANGE",
+            "type": "simple_column"
+          },
+          {
+            "column": "CURRENT_RATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "REPAYMENT_TENOR",
+            "type": "simple_column"
+          },
+          {
+            "column": "REPLENISHMENT_DATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "INS_REPLENISHMENT_DATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "TOTAL_OS",
+            "type": "conditional"
+          },
+          {
+            "column": "BALANCE_TENOR",
+            "type": "simple_column"
+          },
+          {
+            "column": "START_DATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "END_DATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "BRANCH",
+            "type": "simple_column"
+          },
+          {
+            "column": "PERSONAL_EMAIL",
+            "type": "simple_column"
+          },
+          {
+            "column": "PRODUCT_CODE",
+            "type": "simple_column"
+          },
+          {
+            "column": "PRODUCT_GROUP",
+            "type": "simple_column"
+          },
+          {
+            "column": "PORTFOLIO",
+            "type": "simple_column"
+          },
+          {
+            "column": "LAST_RATE_CHANGE_CHAR",
+            "type": "conditional"
+          },
+          {
+            "column": "REPLENISHMENT_DATE_CHAR",
+            "type": "simple_column"
+          },
+          {
+            "column": "CUSTOMERNAME1",
+            "type": "simple_column"
+          },
+          {
+            "column": "MAILING_POBOX",
+            "type": "simple_column"
+          },
+          {
+            "column": "MAILING_CITY",
+            "type": "simple_column"
+          },
+          {
+            "column": "MAILING_COUNTRY",
+            "type": "aggregation"
+          },
+          {
+            "column": "MOBILE",
+            "type": "simple_column"
+          },
+          {
+            "column": "CUSTOMERID",
+            "type": "simple_column"
+          },
+          {
+            "column": "APPLICATIONID",
+            "type": "simple_column"
+          },
+          {
+            "column": "PROPERTYNAME",
+            "type": "simple_column"
+          },
+          {
+            "column": "PROPERTYDETAILS",
+            "type": "simple_column"
+          },
+          {
+            "column": "SPREAD",
+            "type": "simple_column"
+          },
+          {
+            "column": "BASERATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "LAST_RATE_CHANGE",
+            "type": "simple_column"
+          },
+          {
+            "column": "CURRENT_RATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "REPAYMENT_TENOR",
+            "type": "simple_column"
+          },
+          {
+            "column": "REPLENISHMENT_DATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "INS_REPLENISHMENT_DATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "TOTAL_OS",
+            "type": "conditional"
+          },
+          {
+            "column": "BALANCE_TENOR",
+            "type": "simple_column"
+          },
+          {
+            "column": "START_DATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "END_DATE",
+            "type": "simple_column"
+          },
+          {
+            "column": "BRANCH",
+            "type": "simple_column"
+          },
+          {
+            "column": "PERSONAL_EMAIL",
+            "type": "simple_column"
+          },
+          {
+            "column": "PRODUCT_CODE",
+            "type": "simple_column"
+          },
+          {
+            "column": "PRODUCT_GROUP",
+            "type": "simple_column"
+          },
+          {
+            "column": "PORTFOLIO",
+            "type": "simple_column"
+          },
+          {
+            "column": "LAST_RATE_CHANGE_CHAR",
+            "type": "conditional"
+          },
+          {
+            "column": "REPLENISHMENT_DATE_CHAR",
+            "type": "simple_column"
+          }
+        ],
+        "schema_changes": {
+          "added": [
+            "BASERATE",
+            "PORTFOLIO",
+            "REPLENISHMENT_DATE",
+            "CURRENT_RATE",
+            "PERSONAL_EMAIL",
+            "PRODUCT_CODE",
+            "BALANCE_TENOR",
+            "CUSTOMERNAME1",
+            "MAILING_COUNTRY",
+            "START_DATE",
+            "MAILING_CITY",
+            "INS_REPLENISHMENT_DATE",
+            "MAILING_POBOX",
+            "REPLENISHMENT_DATE_CHAR",
+            "CUSTOMERID",
+            "PROPERTYDETAILS",
+            "PRODUCT_GROUP",
+            "PROPERTYNAME",
+            "REPAYMENT_TENOR",
+            "TOTAL_OS",
+            "BRANCH",
+            "APPLICATIONID",
+            "CONTRACT_REF_NO",
+            "END_DATE",
+            "MOBILE",
+            "LAST_RATE_CHANGE_CHAR",
+            "SPREAD",
+            "LAST_RATE_CHANGE"
+          ],
+          "removed": [],
+          "modified": []
+        }
+      }
+    ],
+    "summary": {
+      "stages_analyzed": 7,
+      "total_input_columns": 0,
+      "total_output_columns": 133,
+      "net_column_change": 133,
+      "stages_with_enrichment": 5,
+      "stages_with_filtering": 0
+    }
+  }
+}

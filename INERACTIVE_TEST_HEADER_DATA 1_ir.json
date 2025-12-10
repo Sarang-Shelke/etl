@@ -1,0 +1,3151 @@
+{
+  "irVersion": "1.0",
+  "generatedAt": "2025-12-10T17:37:56.937702Z",
+  "job": {
+    "id": "job-J_DEMO_001-202512101737",
+    "name": "J_DEMO_001"
+  },
+  "nodes": [
+    {
+      "id": "n0",
+      "type": "Source",
+      "subtype": "GenericDB",
+      "name": "IJARA_HEADER",
+      "props": {},
+      "transformationDetails": {
+        "hasTransformations": false,
+        "transformationType": "none",
+        "complexityScore": 0.0,
+        "transformationCount": 0
+      },
+      "schemaRef": "s_V127S0",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "J_DEMO_001.dsx"
+      }
+    },
+    {
+      "id": "n1",
+      "type": "Source",
+      "subtype": "GenericDB",
+      "name": "INERACTIVE_IJARA_HEADER_DATA",
+      "props": {},
+      "transformationDetails": {
+        "hasTransformations": false,
+        "transformationType": "none",
+        "complexityScore": 0.0,
+        "transformationCount": 0
+      },
+      "schemaRef": "s_V221S0",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "J_DEMO_001.dsx"
+      }
+    },
+    {
+      "id": "n2",
+      "type": "Transform",
+      "subtype": "Map",
+      "name": "Lookup_62",
+      "props": {},
+      "transformationDetails": {
+        "hasTransformations": true,
+        "transformationType": "mixed",
+        "complexityScore": 0.0,
+        "transformationCount": 36
+      },
+      "schemaRef": "s_V228S0",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "J_DEMO_001.dsx"
+      }
+    },
+    {
+      "id": "n3",
+      "type": "Source",
+      "subtype": "GenericDB",
+      "name": "CARRIED_FORWARD",
+      "props": {},
+      "transformationDetails": {
+        "hasTransformations": true,
+        "transformationType": "mixed",
+        "complexityScore": 0.0,
+        "transformationCount": 1
+      },
+      "schemaRef": "s_V228S2",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "J_DEMO_001.dsx"
+      }
+    },
+    {
+      "id": "n4",
+      "type": "Source",
+      "subtype": "GenericDB",
+      "name": "SOURCE",
+      "props": {},
+      "transformationDetails": {
+        "hasTransformations": false,
+        "transformationType": "none",
+        "complexityScore": 0.0,
+        "transformationCount": 0
+      },
+      "schemaRef": "s_V231S0",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "J_DEMO_001.dsx"
+      }
+    },
+    {
+      "id": "n5",
+      "type": "Source",
+      "subtype": "GenericDB",
+      "name": "LAST_RATE_CHANGE_DATE",
+      "props": {},
+      "transformationDetails": {
+        "hasTransformations": true,
+        "transformationType": "mixed",
+        "complexityScore": 0.0,
+        "transformationCount": 1
+      },
+      "schemaRef": "s_V232S0",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "J_DEMO_001.dsx"
+      }
+    },
+    {
+      "id": "n6",
+      "type": "Transform",
+      "subtype": "Map",
+      "name": "xfm",
+      "props": {},
+      "transformationDetails": {
+        "hasTransformations": true,
+        "transformationType": "mixed",
+        "complexityScore": 0.0,
+        "transformationCount": 55
+      },
+      "schemaRef": "s_V47S2",
+      "trxgenCode": "Value =+=+=+=",
+      "trxClassName": "V47S2_INERACTIVE_IJARA_HEADER_DATA_xfm",
+      "provenance": {
+        "source": "dsx",
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "J_DEMO_001.dsx"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "l1",
+      "from": {
+        "nodeId": "n0",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n6",
+        "port": "in"
+      },
+      "schemaRef": "s_V127S0"
+    },
+    {
+      "id": "l2",
+      "from": {
+        "nodeId": "n1",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n6",
+        "port": "in"
+      },
+      "schemaRef": "s_V221S0"
+    },
+    {
+      "id": "l3",
+      "from": {
+        "nodeId": "n2",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n4",
+        "port": "in"
+      },
+      "schemaRef": "s_V228S0"
+    },
+    {
+      "id": "l4",
+      "from": {
+        "nodeId": "n2",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n3",
+        "port": "in"
+      },
+      "schemaRef": "s_V228S0"
+    },
+    {
+      "id": "l5",
+      "from": {
+        "nodeId": "n2",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n6",
+        "port": "in"
+      },
+      "schemaRef": "s_V228S0"
+    },
+    {
+      "id": "l6",
+      "from": {
+        "nodeId": "n2",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n5",
+        "port": "in"
+      },
+      "schemaRef": "s_V228S0"
+    },
+    {
+      "id": "l7",
+      "from": {
+        "nodeId": "n3",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n2",
+        "port": "in"
+      },
+      "schemaRef": "s_V228S2"
+    },
+    {
+      "id": "l8",
+      "from": {
+        "nodeId": "n4",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n2",
+        "port": "in"
+      },
+      "schemaRef": "s_V231S0"
+    },
+    {
+      "id": "l9",
+      "from": {
+        "nodeId": "n5",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n2",
+        "port": "in"
+      },
+      "schemaRef": "s_V232S0"
+    },
+    {
+      "id": "l10",
+      "from": {
+        "nodeId": "n6",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n0",
+        "port": "in"
+      },
+      "schemaRef": "s_V47S2"
+    },
+    {
+      "id": "l11",
+      "from": {
+        "nodeId": "n6",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n1",
+        "port": "in"
+      },
+      "schemaRef": "s_V47S2"
+    },
+    {
+      "id": "l12",
+      "from": {
+        "nodeId": "n6",
+        "port": "out"
+      },
+      "to": {
+        "nodeId": "n2",
+        "port": "in"
+      },
+      "schemaRef": "s_V47S2"
+    }
+  ],
+  "schemas": {
+    "s_V127S0": [],
+    "s_V221S0": [],
+    "s_V228S0": [
+      {
+        "name": "CONTRACT_REF_NO",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "CONTRACT_REF_NO",
+            "READ_CORE_SOURCE1",
+            "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "CONTRACT_REF_NO",
+          "READ_CORE_SOURCE1",
+          "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+        ],
+        "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "CUSTOMERNAME1",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "CUSTOMERNAME1",
+            "READ_CORE_SOURCE1",
+            "READ_CORE_SOURCE1.CUSTOMERNAME1"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.CUSTOMERNAME1"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "CUSTOMERNAME1",
+          "READ_CORE_SOURCE1",
+          "READ_CORE_SOURCE1.CUSTOMERNAME1"
+        ],
+        "expression": "READ_CORE_SOURCE1.CUSTOMERNAME1",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "MAILING_POBOX",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1.MAILING_POBOX",
+            "READ_CORE_SOURCE1",
+            "MAILING_POBOX"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.MAILING_POBOX"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1.MAILING_POBOX",
+          "READ_CORE_SOURCE1",
+          "MAILING_POBOX"
+        ],
+        "expression": "READ_CORE_SOURCE1.MAILING_POBOX",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "MAILING_COUNTRY",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "aggregation",
+          "source_columns": [
+            "READ_CORE_SOURCE1",
+            "MAILING_COUNTRY",
+            "READ_CORE_SOURCE1.MAILING_COUNTRY"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.MAILING_COUNTRY"
+        },
+        "transformationClassification": "aggregation",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1",
+          "MAILING_COUNTRY",
+          "READ_CORE_SOURCE1.MAILING_COUNTRY"
+        ],
+        "expression": "READ_CORE_SOURCE1.MAILING_COUNTRY",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "MOBILE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1.MOBILE",
+            "READ_CORE_SOURCE1",
+            "MOBILE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.MOBILE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1.MOBILE",
+          "READ_CORE_SOURCE1",
+          "MOBILE"
+        ],
+        "expression": "READ_CORE_SOURCE1.MOBILE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "CUSTOMERID",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "CUSTOMERID",
+            "READ_CORE_SOURCE1",
+            "READ_CORE_SOURCE1.CUSTOMERID"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.CUSTOMERID"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "CUSTOMERID",
+          "READ_CORE_SOURCE1",
+          "READ_CORE_SOURCE1.CUSTOMERID"
+        ],
+        "expression": "READ_CORE_SOURCE1.CUSTOMERID",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "APPLICATIONID",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1",
+            "READ_CORE_SOURCE1.APPLICATIONID",
+            "APPLICATIONID"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.APPLICATIONID"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1",
+          "READ_CORE_SOURCE1.APPLICATIONID",
+          "APPLICATIONID"
+        ],
+        "expression": "READ_CORE_SOURCE1.APPLICATIONID",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "MAILING_CITY",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "MAILING_CITY",
+            "READ_CORE_SOURCE1",
+            "READ_CORE_SOURCE1.MAILING_CITY"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.MAILING_CITY"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "MAILING_CITY",
+          "READ_CORE_SOURCE1",
+          "READ_CORE_SOURCE1.MAILING_CITY"
+        ],
+        "expression": "READ_CORE_SOURCE1.MAILING_CITY",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PROPERTYNAME",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1.PROPERTYNAME",
+            "READ_CORE_SOURCE1",
+            "PROPERTYNAME"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.PROPERTYNAME"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1.PROPERTYNAME",
+          "READ_CORE_SOURCE1",
+          "PROPERTYNAME"
+        ],
+        "expression": "READ_CORE_SOURCE1.PROPERTYNAME",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PROPERTYDETAILS",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "PROPERTYDETAILS",
+            "READ_CORE_SOURCE1",
+            "READ_CORE_SOURCE1.PROPERTYDETAILS"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.PROPERTYDETAILS"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "PROPERTYDETAILS",
+          "READ_CORE_SOURCE1",
+          "READ_CORE_SOURCE1.PROPERTYDETAILS"
+        ],
+        "expression": "READ_CORE_SOURCE1.PROPERTYDETAILS",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "SPREAD",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1",
+            "SPREAD",
+            "READ_CORE_SOURCE1.SPREAD"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.SPREAD"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1",
+          "SPREAD",
+          "READ_CORE_SOURCE1.SPREAD"
+        ],
+        "expression": "READ_CORE_SOURCE1.SPREAD",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "BASERATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "BASERATE",
+            "READ_CORE_SOURCE1.BASERATE",
+            "READ_CORE_SOURCE1"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.BASERATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "BASERATE",
+          "READ_CORE_SOURCE1.BASERATE",
+          "READ_CORE_SOURCE1"
+        ],
+        "expression": "READ_CORE_SOURCE1.BASERATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "LAST_RATE_CHANGE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1.LAST_RATE_CHANGE",
+            "READ_CORE_SOURCE1",
+            "LAST_RATE_CHANGE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.LAST_RATE_CHANGE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1.LAST_RATE_CHANGE",
+          "READ_CORE_SOURCE1",
+          "LAST_RATE_CHANGE"
+        ],
+        "expression": "READ_CORE_SOURCE1.LAST_RATE_CHANGE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "CURRENT_RATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1",
+            "CURRENT_RATE",
+            "READ_CORE_SOURCE1.CURRENT_RATE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.CURRENT_RATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1",
+          "CURRENT_RATE",
+          "READ_CORE_SOURCE1.CURRENT_RATE"
+        ],
+        "expression": "READ_CORE_SOURCE1.CURRENT_RATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "REPAYMENT_TENOR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1.REPAYMENT_TENOR",
+            "READ_CORE_SOURCE1",
+            "REPAYMENT_TENOR"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.REPAYMENT_TENOR"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1.REPAYMENT_TENOR",
+          "READ_CORE_SOURCE1",
+          "REPAYMENT_TENOR"
+        ],
+        "expression": "READ_CORE_SOURCE1.REPAYMENT_TENOR",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "BALANCE_TENOR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "BALANCE_TENOR",
+            "READ_CORE_SOURCE1.BALANCE_TENOR",
+            "READ_CORE_SOURCE1"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.BALANCE_TENOR"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "BALANCE_TENOR",
+          "READ_CORE_SOURCE1.BALANCE_TENOR",
+          "READ_CORE_SOURCE1"
+        ],
+        "expression": "READ_CORE_SOURCE1.BALANCE_TENOR",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "START_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "START_DATE",
+            "READ_CORE_SOURCE1",
+            "READ_CORE_SOURCE1.START_DATE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.START_DATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "START_DATE",
+          "READ_CORE_SOURCE1",
+          "READ_CORE_SOURCE1.START_DATE"
+        ],
+        "expression": "READ_CORE_SOURCE1.START_DATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "END_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1.END_DATE",
+            "READ_CORE_SOURCE1",
+            "END_DATE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.END_DATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1.END_DATE",
+          "READ_CORE_SOURCE1",
+          "END_DATE"
+        ],
+        "expression": "READ_CORE_SOURCE1.END_DATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "BRANCH",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1.BRANCH",
+            "READ_CORE_SOURCE1",
+            "BRANCH"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.BRANCH"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1.BRANCH",
+          "READ_CORE_SOURCE1",
+          "BRANCH"
+        ],
+        "expression": "READ_CORE_SOURCE1.BRANCH",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PERSONAL_EMAIL",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1",
+            "READ_CORE_SOURCE1.PERSONAL_EMAIL",
+            "PERSONAL_EMAIL"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.PERSONAL_EMAIL"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1",
+          "READ_CORE_SOURCE1.PERSONAL_EMAIL",
+          "PERSONAL_EMAIL"
+        ],
+        "expression": "READ_CORE_SOURCE1.PERSONAL_EMAIL",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PRODUCT_CODE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1.PRODUCT_CODE",
+            "READ_CORE_SOURCE1",
+            "PRODUCT_CODE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.PRODUCT_CODE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1.PRODUCT_CODE",
+          "READ_CORE_SOURCE1",
+          "PRODUCT_CODE"
+        ],
+        "expression": "READ_CORE_SOURCE1.PRODUCT_CODE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PRODUCT_GROUP",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "PRODUCT_GROUP",
+            "READ_CORE_SOURCE1.PRODUCT_GROUP",
+            "READ_CORE_SOURCE1"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.PRODUCT_GROUP"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "PRODUCT_GROUP",
+          "READ_CORE_SOURCE1.PRODUCT_GROUP",
+          "READ_CORE_SOURCE1"
+        ],
+        "expression": "READ_CORE_SOURCE1.PRODUCT_GROUP",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PORTFOLIO",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "PORTFOLIO",
+            "READ_CORE_SOURCE1",
+            "READ_CORE_SOURCE1.PORTFOLIO"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.PORTFOLIO"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "PORTFOLIO",
+          "READ_CORE_SOURCE1",
+          "READ_CORE_SOURCE1.PORTFOLIO"
+        ],
+        "expression": "READ_CORE_SOURCE1.PORTFOLIO",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "RATE_CODE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1.RATE_CODE",
+            "READ_CORE_SOURCE1",
+            "RATE_CODE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.RATE_CODE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1.RATE_CODE",
+          "READ_CORE_SOURCE1",
+          "RATE_CODE"
+        ],
+        "expression": "READ_CORE_SOURCE1.RATE_CODE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "FIX_PROFIT_FLG",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1.FIX_PROFIT_FLG",
+            "FIX_PROFIT_FLG",
+            "READ_CORE_SOURCE1"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.FIX_PROFIT_FLG"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1.FIX_PROFIT_FLG",
+          "FIX_PROFIT_FLG",
+          "READ_CORE_SOURCE1"
+        ],
+        "expression": "READ_CORE_SOURCE1.FIX_PROFIT_FLG",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "DR_SETL_AC",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1",
+            "READ_CORE_SOURCE1.DR_SETL_AC",
+            "DR_SETL_AC"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.DR_SETL_AC"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1",
+          "READ_CORE_SOURCE1.DR_SETL_AC",
+          "DR_SETL_AC"
+        ],
+        "expression": "READ_CORE_SOURCE1.DR_SETL_AC",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "STMT_DT",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "STMT_DT",
+            "READ_CORE_SOURCE1.STMT_DT",
+            "READ_CORE_SOURCE1"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.STMT_DT"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "STMT_DT",
+          "READ_CORE_SOURCE1.STMT_DT",
+          "READ_CORE_SOURCE1"
+        ],
+        "expression": "READ_CORE_SOURCE1.STMT_DT",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "USER_REF_NO",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1.USER_REF_NO",
+            "READ_CORE_SOURCE1",
+            "USER_REF_NO"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.USER_REF_NO"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1.USER_REF_NO",
+          "READ_CORE_SOURCE1",
+          "USER_REF_NO"
+        ],
+        "expression": "READ_CORE_SOURCE1.USER_REF_NO",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "INS_REPLENISHMENT_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1",
+            "INS_REPLENISHMENT_DATE",
+            "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1",
+          "INS_REPLENISHMENT_DATE",
+          "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE"
+        ],
+        "expression": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "REPLENISHMENT_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1",
+            "REPLENISHMENT_DATE",
+            "READ_CORE_SOURCE1.REPLENISHMENT_DATE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.REPLENISHMENT_DATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1",
+          "REPLENISHMENT_DATE",
+          "READ_CORE_SOURCE1.REPLENISHMENT_DATE"
+        ],
+        "expression": "READ_CORE_SOURCE1.REPLENISHMENT_DATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "LAST_RATE_CHANGE_CHAR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "L14.RATE_CHANGE_DATE",
+            "RATE_CHANGE_DATE",
+            "L14"
+          ],
+          "functions": [],
+          "expression": "L14.RATE_CHANGE_DATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "L14.RATE_CHANGE_DATE",
+          "RATE_CHANGE_DATE",
+          "L14"
+        ],
+        "expression": "L14.RATE_CHANGE_DATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "INS_REPLENISHMENT_DATE_CHAR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE_CHAR",
+            "READ_CORE_SOURCE1",
+            "INS_REPLENISHMENT_DATE_CHAR"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE_CHAR"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE_CHAR",
+          "READ_CORE_SOURCE1",
+          "INS_REPLENISHMENT_DATE_CHAR"
+        ],
+        "expression": "READ_CORE_SOURCE1.INS_REPLENISHMENT_DATE_CHAR",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "REPLENISHMENT_DATE_CHAR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "REPLENISHMENT_DATE_CHAR",
+            "READ_CORE_SOURCE1",
+            "READ_CORE_SOURCE1.REPLENISHMENT_DATE_CHAR"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.REPLENISHMENT_DATE_CHAR"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "REPLENISHMENT_DATE_CHAR",
+          "READ_CORE_SOURCE1",
+          "READ_CORE_SOURCE1.REPLENISHMENT_DATE_CHAR"
+        ],
+        "expression": "READ_CORE_SOURCE1.REPLENISHMENT_DATE_CHAR",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "STMT_DT_CHAR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "STMT_DT_CHAR",
+            "READ_CORE_SOURCE1.STMT_DT_CHAR",
+            "READ_CORE_SOURCE1"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.STMT_DT_CHAR"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "STMT_DT_CHAR",
+          "READ_CORE_SOURCE1.STMT_DT_CHAR",
+          "READ_CORE_SOURCE1"
+        ],
+        "expression": "READ_CORE_SOURCE1.STMT_DT_CHAR",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "TOTAL_OS",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "TOTAL_OS",
+            "READ_CORE_SOURCE1.TOTAL_OS",
+            "READ_CORE_SOURCE1"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.TOTAL_OS"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "TOTAL_OS",
+          "READ_CORE_SOURCE1.TOTAL_OS",
+          "READ_CORE_SOURCE1"
+        ],
+        "expression": "READ_CORE_SOURCE1.TOTAL_OS",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "TOTAL_OS_N",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "L13",
+            "TOTAL_OS_N",
+            "L13.TOTAL_OS_N"
+          ],
+          "functions": [],
+          "expression": "L13.TOTAL_OS_N"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "L13",
+          "TOTAL_OS_N",
+          "L13.TOTAL_OS_N"
+        ],
+        "expression": "L13.TOTAL_OS_N",
+        "functions": [],
+        "hasTransformation": true
+      }
+    ],
+    "s_V228S2": [
+      {
+        "name": "CONTRACT_REF_NO",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "CONTRACT_REF_NO",
+            "READ_CORE_SOURCE1",
+            "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "CONTRACT_REF_NO",
+          "READ_CORE_SOURCE1",
+          "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+        ],
+        "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "TOTAL_OS_N",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      }
+    ],
+    "s_V231S0": [
+      {
+        "name": "CONTRACT_REF_NO",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "CUSTOMERNAME1",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "MAILING_POBOX",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "MAILING_COUNTRY",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "MOBILE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "CUSTOMERID",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "APPLICATIONID",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "MAILING_CITY",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "PROPERTYNAME",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "PROPERTYDETAILS",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "SPREAD",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "BASERATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "LAST_RATE_CHANGE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "CURRENT_RATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "REPAYMENT_TENOR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "BALANCE_TENOR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "START_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "END_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "BRANCH",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "PERSONAL_EMAIL",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "PRODUCT_CODE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "PRODUCT_GROUP",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "PORTFOLIO",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "RATE_CODE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "FIX_PROFIT_FLG",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "DR_SETL_AC",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "STMT_DT",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "USER_REF_NO",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "INS_REPLENISHMENT_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "REPLENISHMENT_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "LAST_RATE_CHANGE_CHAR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "INS_REPLENISHMENT_DATE_CHAR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "REPLENISHMENT_DATE_CHAR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "STMT_DT_CHAR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "TOTAL_OS",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      }
+    ],
+    "s_V232S0": [
+      {
+        "name": "IND",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "ARR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "V_CONTRACT_CODE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "CONTRACT_REF_NO",
+            "READ_CORE_SOURCE1",
+            "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "CONTRACT_REF_NO",
+          "READ_CORE_SOURCE1",
+          "READ_CORE_SOURCE1.CONTRACT_REF_NO"
+        ],
+        "expression": "READ_CORE_SOURCE1.CONTRACT_REF_NO",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "RATE_CHANGE_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      },
+      {
+        "name": "FIXED_RATE",
+        "type": "decimal",
+        "nullable": true,
+        "transformationLogic": null,
+        "transformationClassification": "none",
+        "complexityScore": 0.0,
+        "sourceColumns": [],
+        "expression": "",
+        "hasTransformation": false
+      }
+    ],
+    "s_V47S2": [
+      {
+        "name": "CONTRACT_REF_NO",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "CONTRACT_REF_NO",
+            "READ_CORE_SOURCE.CONTRACT_REF_NO",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.CONTRACT_REF_NO"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "CONTRACT_REF_NO",
+          "READ_CORE_SOURCE.CONTRACT_REF_NO",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.CONTRACT_REF_NO",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "CUSTOMERNAME1",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.CUSTOMERNAME1",
+            "CUSTOMERNAME1",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.CUSTOMERNAME1"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.CUSTOMERNAME1",
+          "CUSTOMERNAME1",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.CUSTOMERNAME1",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "MAILING_POBOX",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "MAILING_POBOX",
+            "READ_CORE_SOURCE.MAILING_POBOX",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.MAILING_POBOX"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "MAILING_POBOX",
+          "READ_CORE_SOURCE.MAILING_POBOX",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.MAILING_POBOX",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "MAILING_CITY",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "MAILING_CITY",
+            "READ_CORE_SOURCE.MAILING_CITY",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.MAILING_CITY"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "MAILING_CITY",
+          "READ_CORE_SOURCE.MAILING_CITY",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.MAILING_CITY",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "MAILING_COUNTRY",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "aggregation",
+          "source_columns": [
+            "READ_CORE_SOURCE.MAILING_COUNTRY",
+            "MAILING_COUNTRY",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.MAILING_COUNTRY"
+        },
+        "transformationClassification": "aggregation",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.MAILING_COUNTRY",
+          "MAILING_COUNTRY",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.MAILING_COUNTRY",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "MOBILE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "MOBILE",
+            "READ_CORE_SOURCE.MOBILE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.MOBILE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "MOBILE",
+          "READ_CORE_SOURCE.MOBILE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.MOBILE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "CUSTOMERID",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.CUSTOMERID",
+            "CUSTOMERID",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.CUSTOMERID"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.CUSTOMERID",
+          "CUSTOMERID",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.CUSTOMERID",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "APPLICATIONID",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.APPLICATIONID",
+            "APPLICATIONID",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.APPLICATIONID"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.APPLICATIONID",
+          "APPLICATIONID",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.APPLICATIONID",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PROPERTYNAME",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.PROPERTYNAME",
+            "PROPERTYNAME",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.PROPERTYNAME"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.PROPERTYNAME",
+          "PROPERTYNAME",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.PROPERTYNAME",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PROPERTYDETAILS",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "PROPERTYDETAILS",
+            "READ_CORE_SOURCE.PROPERTYDETAILS",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.PROPERTYDETAILS"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "PROPERTYDETAILS",
+          "READ_CORE_SOURCE.PROPERTYDETAILS",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.PROPERTYDETAILS",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "SPREAD",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.SPREAD",
+            "SPREAD",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.SPREAD"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.SPREAD",
+          "SPREAD",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.SPREAD",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "BASERATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "BASERATE",
+            "READ_CORE_SOURCE.BASERATE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.BASERATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "BASERATE",
+          "READ_CORE_SOURCE.BASERATE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.BASERATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "LAST_RATE_CHANGE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "LAST_RATE_CHANGE",
+            "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.LAST_RATE_CHANGE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "LAST_RATE_CHANGE",
+          "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "CURRENT_RATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.CURRENT_RATE",
+            "CURRENT_RATE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.CURRENT_RATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.CURRENT_RATE",
+          "CURRENT_RATE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.CURRENT_RATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "REPAYMENT_TENOR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE",
+            "REPAYMENT_TENOR",
+            "READ_CORE_SOURCE.REPAYMENT_TENOR"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.REPAYMENT_TENOR"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE",
+          "REPAYMENT_TENOR",
+          "READ_CORE_SOURCE.REPAYMENT_TENOR"
+        ],
+        "expression": "READ_CORE_SOURCE.REPAYMENT_TENOR",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "REPLENISHMENT_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "REPLENISHMENT_DATE",
+            "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "REPLENISHMENT_DATE",
+          "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "INS_REPLENISHMENT_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "INS_REPLENISHMENT_DATE",
+            "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "INS_REPLENISHMENT_DATE",
+          "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "TOTAL_OS",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "conditional",
+          "source_columns": [
+            "IF",
+            "READ_CORE_SOURCE",
+            "READ_CORE_SOURCE.TOTAL_OS_N",
+            "TOTAL_OS",
+            "READ_CORE_SOURCE.TOTAL_OS",
+            "TOTAL_OS_N"
+          ],
+          "functions": [
+            "IsNotNull",
+            "THEN",
+            "ELSE"
+          ],
+          "expression": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))"
+        },
+        "transformationClassification": "conditional",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "IF",
+          "READ_CORE_SOURCE",
+          "READ_CORE_SOURCE.TOTAL_OS_N",
+          "TOTAL_OS",
+          "READ_CORE_SOURCE.TOTAL_OS",
+          "TOTAL_OS_N"
+        ],
+        "expression": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))",
+        "functions": [
+          "IsNotNull",
+          "THEN",
+          "ELSE"
+        ],
+        "hasTransformation": true
+      },
+      {
+        "name": "BALANCE_TENOR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "BALANCE_TENOR",
+            "READ_CORE_SOURCE.BALANCE_TENOR",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.BALANCE_TENOR"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "BALANCE_TENOR",
+          "READ_CORE_SOURCE.BALANCE_TENOR",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.BALANCE_TENOR",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "START_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "START_DATE",
+            "READ_CORE_SOURCE.START_DATE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.START_DATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "START_DATE",
+          "READ_CORE_SOURCE.START_DATE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.START_DATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "END_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.END_DATE",
+            "END_DATE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.END_DATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.END_DATE",
+          "END_DATE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.END_DATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "BRANCH",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.BRANCH",
+            "BRANCH",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.BRANCH"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.BRANCH",
+          "BRANCH",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.BRANCH",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PERSONAL_EMAIL",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.PERSONAL_EMAIL",
+            "PERSONAL_EMAIL",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.PERSONAL_EMAIL"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.PERSONAL_EMAIL",
+          "PERSONAL_EMAIL",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.PERSONAL_EMAIL",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PRODUCT_CODE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "PRODUCT_CODE",
+            "READ_CORE_SOURCE.PRODUCT_CODE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.PRODUCT_CODE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "PRODUCT_CODE",
+          "READ_CORE_SOURCE.PRODUCT_CODE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.PRODUCT_CODE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PRODUCT_GROUP",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "PRODUCT_GROUP",
+            "READ_CORE_SOURCE.PRODUCT_GROUP",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.PRODUCT_GROUP"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "PRODUCT_GROUP",
+          "READ_CORE_SOURCE.PRODUCT_GROUP",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.PRODUCT_GROUP",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PORTFOLIO",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.PORTFOLIO",
+            "PORTFOLIO",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.PORTFOLIO"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.PORTFOLIO",
+          "PORTFOLIO",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.PORTFOLIO",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "LAST_RATE_CHANGE_CHAR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "conditional",
+          "source_columns": [
+            "IF",
+            "READ_CORE_SOURCE",
+            "JUN",
+            "READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR",
+            "LAST_RATE_CHANGE_CHAR"
+          ],
+          "functions": [
+            "IsNotNull",
+            "THEN",
+            "ELSE"
+          ],
+          "expression": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))"
+        },
+        "transformationClassification": "conditional",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "IF",
+          "READ_CORE_SOURCE",
+          "JUN",
+          "READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR",
+          "LAST_RATE_CHANGE_CHAR"
+        ],
+        "expression": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))",
+        "functions": [
+          "IsNotNull",
+          "THEN",
+          "ELSE"
+        ],
+        "hasTransformation": true
+      },
+      {
+        "name": "REPLENISHMENT_DATE_CHAR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "REPLENISHMENT_DATE_CHAR",
+            "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "REPLENISHMENT_DATE_CHAR",
+          "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "CUSTOMERNAME1",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.CUSTOMERNAME1",
+            "CUSTOMERNAME1",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.CUSTOMERNAME1"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.CUSTOMERNAME1",
+          "CUSTOMERNAME1",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.CUSTOMERNAME1",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "MAILING_POBOX",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "MAILING_POBOX",
+            "READ_CORE_SOURCE.MAILING_POBOX",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.MAILING_POBOX"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "MAILING_POBOX",
+          "READ_CORE_SOURCE.MAILING_POBOX",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.MAILING_POBOX",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "MAILING_CITY",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "MAILING_CITY",
+            "READ_CORE_SOURCE.MAILING_CITY",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.MAILING_CITY"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "MAILING_CITY",
+          "READ_CORE_SOURCE.MAILING_CITY",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.MAILING_CITY",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "MAILING_COUNTRY",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "aggregation",
+          "source_columns": [
+            "READ_CORE_SOURCE.MAILING_COUNTRY",
+            "MAILING_COUNTRY",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.MAILING_COUNTRY"
+        },
+        "transformationClassification": "aggregation",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.MAILING_COUNTRY",
+          "MAILING_COUNTRY",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.MAILING_COUNTRY",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "MOBILE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "MOBILE",
+            "READ_CORE_SOURCE.MOBILE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.MOBILE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "MOBILE",
+          "READ_CORE_SOURCE.MOBILE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.MOBILE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "CUSTOMERID",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.CUSTOMERID",
+            "CUSTOMERID",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.CUSTOMERID"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.CUSTOMERID",
+          "CUSTOMERID",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.CUSTOMERID",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "APPLICATIONID",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.APPLICATIONID",
+            "APPLICATIONID",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.APPLICATIONID"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.APPLICATIONID",
+          "APPLICATIONID",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.APPLICATIONID",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PROPERTYNAME",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.PROPERTYNAME",
+            "PROPERTYNAME",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.PROPERTYNAME"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.PROPERTYNAME",
+          "PROPERTYNAME",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.PROPERTYNAME",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PROPERTYDETAILS",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "PROPERTYDETAILS",
+            "READ_CORE_SOURCE.PROPERTYDETAILS",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.PROPERTYDETAILS"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "PROPERTYDETAILS",
+          "READ_CORE_SOURCE.PROPERTYDETAILS",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.PROPERTYDETAILS",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "SPREAD",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.SPREAD",
+            "SPREAD",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.SPREAD"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.SPREAD",
+          "SPREAD",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.SPREAD",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "BASERATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "BASERATE",
+            "READ_CORE_SOURCE.BASERATE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.BASERATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "BASERATE",
+          "READ_CORE_SOURCE.BASERATE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.BASERATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "LAST_RATE_CHANGE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "LAST_RATE_CHANGE",
+            "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.LAST_RATE_CHANGE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "LAST_RATE_CHANGE",
+          "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.LAST_RATE_CHANGE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "CURRENT_RATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.CURRENT_RATE",
+            "CURRENT_RATE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.CURRENT_RATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.CURRENT_RATE",
+          "CURRENT_RATE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.CURRENT_RATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "REPAYMENT_TENOR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE",
+            "REPAYMENT_TENOR",
+            "READ_CORE_SOURCE.REPAYMENT_TENOR"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.REPAYMENT_TENOR"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE",
+          "REPAYMENT_TENOR",
+          "READ_CORE_SOURCE.REPAYMENT_TENOR"
+        ],
+        "expression": "READ_CORE_SOURCE.REPAYMENT_TENOR",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "REPLENISHMENT_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "REPLENISHMENT_DATE",
+            "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "REPLENISHMENT_DATE",
+          "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "INS_REPLENISHMENT_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "INS_REPLENISHMENT_DATE",
+            "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "INS_REPLENISHMENT_DATE",
+          "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.INS_REPLENISHMENT_DATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "TOTAL_OS",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "conditional",
+          "source_columns": [
+            "IF",
+            "READ_CORE_SOURCE",
+            "READ_CORE_SOURCE.TOTAL_OS_N",
+            "TOTAL_OS",
+            "READ_CORE_SOURCE.TOTAL_OS",
+            "TOTAL_OS_N"
+          ],
+          "functions": [
+            "IsNotNull",
+            "THEN",
+            "ELSE"
+          ],
+          "expression": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))"
+        },
+        "transformationClassification": "conditional",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "IF",
+          "READ_CORE_SOURCE",
+          "READ_CORE_SOURCE.TOTAL_OS_N",
+          "TOTAL_OS",
+          "READ_CORE_SOURCE.TOTAL_OS",
+          "TOTAL_OS_N"
+        ],
+        "expression": "( IF IsNotNull((READ_CORE_SOURCE.TOTAL_OS_N)) THEN (READ_CORE_SOURCE.TOTAL_OS_N) ELSE (READ_CORE_SOURCE.TOTAL_OS))",
+        "functions": [
+          "IsNotNull",
+          "THEN",
+          "ELSE"
+        ],
+        "hasTransformation": true
+      },
+      {
+        "name": "BALANCE_TENOR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "BALANCE_TENOR",
+            "READ_CORE_SOURCE.BALANCE_TENOR",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.BALANCE_TENOR"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "BALANCE_TENOR",
+          "READ_CORE_SOURCE.BALANCE_TENOR",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.BALANCE_TENOR",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "START_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "START_DATE",
+            "READ_CORE_SOURCE.START_DATE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.START_DATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "START_DATE",
+          "READ_CORE_SOURCE.START_DATE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.START_DATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "END_DATE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.END_DATE",
+            "END_DATE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.END_DATE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.END_DATE",
+          "END_DATE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.END_DATE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "BRANCH",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.BRANCH",
+            "BRANCH",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.BRANCH"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.BRANCH",
+          "BRANCH",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.BRANCH",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PERSONAL_EMAIL",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.PERSONAL_EMAIL",
+            "PERSONAL_EMAIL",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.PERSONAL_EMAIL"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.PERSONAL_EMAIL",
+          "PERSONAL_EMAIL",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.PERSONAL_EMAIL",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PRODUCT_CODE",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "PRODUCT_CODE",
+            "READ_CORE_SOURCE.PRODUCT_CODE",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.PRODUCT_CODE"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "PRODUCT_CODE",
+          "READ_CORE_SOURCE.PRODUCT_CODE",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.PRODUCT_CODE",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PRODUCT_GROUP",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "PRODUCT_GROUP",
+            "READ_CORE_SOURCE.PRODUCT_GROUP",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.PRODUCT_GROUP"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "PRODUCT_GROUP",
+          "READ_CORE_SOURCE.PRODUCT_GROUP",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.PRODUCT_GROUP",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "PORTFOLIO",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "READ_CORE_SOURCE.PORTFOLIO",
+            "PORTFOLIO",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.PORTFOLIO"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "READ_CORE_SOURCE.PORTFOLIO",
+          "PORTFOLIO",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.PORTFOLIO",
+        "functions": [],
+        "hasTransformation": true
+      },
+      {
+        "name": "LAST_RATE_CHANGE_CHAR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "conditional",
+          "source_columns": [
+            "IF",
+            "READ_CORE_SOURCE",
+            "JUN",
+            "READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR",
+            "LAST_RATE_CHANGE_CHAR"
+          ],
+          "functions": [
+            "IsNotNull",
+            "THEN",
+            "ELSE"
+          ],
+          "expression": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))"
+        },
+        "transformationClassification": "conditional",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "IF",
+          "READ_CORE_SOURCE",
+          "JUN",
+          "READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR",
+          "LAST_RATE_CHANGE_CHAR"
+        ],
+        "expression": "( IF IsNotNull((READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR)) THEN (READ_CORE_SOURCE.LAST_RATE_CHANGE_CHAR) ELSE ('18-JUN-2024'))",
+        "functions": [
+          "IsNotNull",
+          "THEN",
+          "ELSE"
+        ],
+        "hasTransformation": true
+      },
+      {
+        "name": "REPLENISHMENT_DATE_CHAR",
+        "type": "string",
+        "nullable": true,
+        "transformationLogic": {
+          "type": "simple_column",
+          "source_columns": [
+            "REPLENISHMENT_DATE_CHAR",
+            "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+            "READ_CORE_SOURCE"
+          ],
+          "functions": [],
+          "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR"
+        },
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "REPLENISHMENT_DATE_CHAR",
+          "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+          "READ_CORE_SOURCE"
+        ],
+        "expression": "READ_CORE_SOURCE.REPLENISHMENT_DATE_CHAR",
+        "functions": [],
+        "hasTransformation": true
+      }
+    ]
+  },
+  "transformationTracking": {
+    "totalTransformations": 93,
+    "transformationTypes": {
+      "simple_columns": 86,
+      "aggregations": 3,
+      "conditionals": 4,
+      "expressions": 0,
+      "constants": 0
+    },
+    "complexityDistribution": {
+      "simple": 86,
+      "aggregations": 3,
+      "complex": 4
+    }
+  }
+}
