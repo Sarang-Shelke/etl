@@ -177,6 +177,36 @@ BEGIN DSJOB
          Value "true"
       END DSSUBRECORD
 
+      BEGIN DSSUBRECORD
+         Name "RowSeparator"
+         Value "\n"
+      END DSSUBRECORD
+
+      BEGIN DSSUBRECORD
+         Name "HeaderLines"
+         Value "1"
+      END DSSUBRECORD
+
+      BEGIN DSSUBRECORD
+         Name "FooterLines"
+         Value "0"
+      END DSSUBRECORD
+
+      BEGIN DSSUBRECORD
+         Name "RowLimit"
+         Value ""
+      END DSSUBRECORD
+
+      BEGIN DSSUBRECORD
+         Name "RemoveEmptyRow"
+         Value "true"
+      END DSSUBRECORD
+
+      BEGIN DSSUBRECORD
+         Name "DieOnError"
+         Value "false"
+      END DSSUBRECORD
+
       Columns "CInputColumn"
       BEGIN DSFILECOLUMN
          BEGIN DSSUBRECORD
@@ -439,6 +469,10 @@ record
       Readonly "0"
       Name "Output_File"
       NextID "5"
+      OutputPins ""
+      StageType "PxSequentialFile"
+      AllowColumnMapping "0"
+      NextRecordID "0"
 
       BEGIN DSSUBRECORD
          Name "FilePath"
@@ -455,6 +489,31 @@ record
          Value "true"
       END DSSUBRECORD
 
+      BEGIN DSSUBRECORD
+         Name "RowSeparator"
+         Value "\\n"
+      END DSSUBRECORD
+
+      BEGIN DSSUBRECORD
+         Name "IncludeHeader"
+         Value "true"
+      END DSSUBRECORD
+
+      BEGIN DSSUBRECORD
+         Name "Append"
+         Value "false"
+      END DSSUBRECORD
+
+      BEGIN DSSUBRECORD
+         Name "Compress"
+         Value "false"
+      END DSSUBRECORD
+
+      BEGIN DSSUBRECORD
+         Name "AdvancedSeparator"
+         Value "false"
+      END DSSUBRECORD
+
       Columns "COutputColumn"
       BEGIN DSFILECOLUMN
          BEGIN DSSUBRECORD
@@ -465,6 +524,7 @@ record
             Nullable "1"
          END DSSUBRECORD
       END DSFILECOLUMN
+
       BEGIN DSFILECOLUMN
          BEGIN DSSUBRECORD
             Name "USERNAME"
@@ -474,6 +534,7 @@ record
             Nullable "1"
          END DSSUBRECORD
       END DSFILECOLUMN
+
       BEGIN DSFILECOLUMN
          BEGIN DSSUBRECORD
             Name "EMAIL"
@@ -483,6 +544,7 @@ record
             Nullable "1"
          END DSSUBRECORD
       END DSFILECOLUMN
+
       BEGIN DSFILECOLUMN
          BEGIN DSSUBRECORD
             Name "STATUS"

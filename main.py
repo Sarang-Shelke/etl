@@ -27,8 +27,9 @@ from translation_service import TranslationService
 from db import get_db
 
 async def main() -> None:
-    svc = TranslationService(db=get_db())
-    with open("simple_user_job_ir.json", "r", encoding="utf-8") as f:
+    # Enable debug to get detailed diagnostics during IR->Talend generation
+    svc = TranslationService(db=get_db(), debug=True)
+    with open("simple_user_job_new_ir.json", "r", encoding="utf-8") as f:
         ir = json.load(f)
         
         # IR structure should be: { "irVersion": "...", "job": {...}, "nodes": [...], "links": [...] }

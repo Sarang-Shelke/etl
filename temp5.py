@@ -645,6 +645,11 @@ def get_records(content: List[str]) -> List[Dict[str, Any]]:
                     for sr_line in sub_record:
                         if 'Name "' in sr_line:
                             property_name = extract_property_name(sr_line)
+                            
+                            if property_name == "FirstLineColumnNames":
+                                 # Optimization or explicit handling if needed
+                                 pass
+                                 
                             break
                     
                     if property_name and should_omit_property(property_name, context):
@@ -1513,7 +1518,7 @@ class ASGBuilder:
 
 if __name__ == "__main__":
     # CLI: accept filepath and optional -d/--debug
-    file_path = 'INERACTIVE_TEST_HEADER_DATA 1.dsx'
+    file_path = 'simple_user_job.dsx'
     if len(sys.argv) > 1:
         # Allow flags and the first non-flag as file
         for arg in sys.argv[1:]:

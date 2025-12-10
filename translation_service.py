@@ -38,8 +38,12 @@ def generate_talend_id():
     return "_" + safe_b64
 
 class TranslationService:
-    def __init__(self, db: AsyncSession):
+    def __init__(self, db: AsyncSession, include_db_components: bool = True, debug: bool = False):
         self.db = db
+        # Control whether DB components (tDBInput/tDBOutput) are preserved in output
+        self.include_db_components = include_db_components
+        # Debug flag to enable more verbose diagnostics
+        self.debug = debug
         # self.settings = get_settings()
         # self.client = OpenAI(api_key=self.settings.openai_api_key, base_url=self.settings.llm_gateway_url)
     
@@ -476,17 +480,30 @@ class TranslationService:
 
         zip_path = os.path.join(target_dir, zip_filename)
 
-        with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        # Use allowZip64=True to handle large files, force_zip64 for ZIP64 format
+        with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED, allowZip64=True) as zipf:
             # Walk the workspace_dir and add files preserving relative paths
-            for root, _, files in os.walk(workspace_dir):
+            for root, dirs, files in os.walk(workspace_dir):
+                # Skip the output_base_dir and new_generated_job directories to prevent circular references
+                dirs[:] = [d for d in dirs if d not in ['new_generated_job', output_base_dir]]
+                
                 for file in files:
-                    # Skip markdown files
-                    if file.lower().endswith('.md'):
+                    # Skip unwanted files to reduce size
+                    if file.lower().endswith(('.md', '.pyc', '.pyo', '.pyd', '.zip')):
                         continue
+                    
                     file_path = os.path.join(root, file)
+                    # Skip if file doesn't exist or is a directory (safety check)
+                    if not os.path.isfile(file_path):
+                        continue
+                    
                     # Compute archive name relative to the workspace_dir
                     arcname = os.path.relpath(file_path, start=workspace_dir)
-                    zipf.write(file_path, arcname)
+                    try:
+                        zipf.write(file_path, arcname)
+                    except Exception as e:
+                        print(f"Warning: Could not add {file_path} to zip: {e}")
+                        continue
 
         print(f"Created zip package: {zip_path}")
         return zip_path
@@ -494,7 +511,18 @@ class TranslationService:
     def _build_talend_job_from_ir(self, job_ir: Dict[str, Any], mappings: Dict[tuple, str]) -> Dict[str, Any]:
         """Build Talend job structure from IR nodes and links."""
         nodes = job_ir.get("nodes", [])
-        links = job_ir.get("links", [])
+        # Accept either 'links' or 'connections' key (older IR used 'connections')
+        links = job_ir.get("links", []) or job_ir.get("connections", [])
+        # Keep a reference to the original nodes list for lookups (names/ids)
+        original_nodes = list(nodes)
+        # Diagnostic logging
+        if self.debug:
+            print(f"DEBUG: _build_talend_job_from_ir called with {len(nodes)} IR nodes and {len(links)} IR links")
+            type_counts = {}
+            for n in nodes:
+                t = n.get('type', 'unknown')
+                type_counts[t] = type_counts.get(t, 0) + 1
+            print(f"DEBUG: IR type distribution: {type_counts}")
         schemas = job_ir.get("schemas", {})  # Get schemas from IR
         
         # Note: mappings from get_mappings() may not be used here since we have
@@ -505,54 +533,96 @@ class TranslationService:
         # First, identify which nodes are DB components and should be excluded
         excluded_node_ids = set()
         filtered_nodes = []
-        
+
         for node in nodes:
             ir_type = node.get("type", "")
             ir_subtype = node.get("subtype", "")
             talend_component = mappings.get((ir_type, ir_subtype), "tUnknown")
-            
-            # Skip DB components
-            if talend_component in ("tDBInput", "tDBOutput"):
+
+            # Only exclude DB components if explicitly requested
+            if not self.include_db_components and talend_component in ("tDBInput", "tDBOutput"):
                 excluded_node_ids.add(node.get("id"))
-                print(f"  Excluding DB component: {node.get('name')} ({ir_type}/{ir_subtype}) → {talend_component}")
+                if self.debug:
+                    print(f"  Excluding DB component: {node.get('name')} ({ir_type}/{ir_subtype}) → {talend_component}")
             else:
                 filtered_nodes.append(node)
-        
-        # Update nodes list to only include non-DB components
+
+        # Update nodes list to only include filtered nodes
         nodes = filtered_nodes
-        print(f"  Filtered {len(job_ir.get('nodes', []))} nodes to {len(nodes)} (removed {len(excluded_node_ids)} DB components)")
+        if self.debug:
+            removed = len(job_ir.get('nodes', [])) - len(nodes)
+            print(f"  Filtered {len(job_ir.get('nodes', []))} nodes to {len(nodes)} (removed {removed} DB components)")
         
         # Create lookup for node types to filter cyclic connections
         node_type_map = {node.get("id"): node.get("type") for node in job_ir.get("nodes", [])}
         
+        # Define node roles based on type: sources can only emit, sinks can only receive, transforms do both
+        source_types = {"file_read", "database_read", "Source"}
+        sink_types = {"file_write", "database_write", "custom_write", "Sink"}
+        transform_types = {"transform", "lookup", "custom_read", "map", "Transform"}
+        
+        def get_node_role(node_type):
+            """Determine if node is source, sink, or transform based on type"""
+            if node_type in source_types:
+                return "source"
+            elif node_type in sink_types:
+                return "sink"
+            elif node_type in transform_types:
+                return "transform"
+            else:
+                return "unknown"
+        
         # Filter links to exclude those connected to DB components AND cyclic/reverse connections
         filtered_links = []
         for link in links:
-            from_node_id = link.get("from", {}).get("nodeId")
-            to_node_id = link.get("to", {}).get("nodeId")
-            
+            from_node_id = link.get("from", {}).get("component_id")
+            to_node_id = link.get("to", {}).get("component_id")
+            link_id = link.get("id", "unknown")
+
             # Skip links that connect to/from excluded DB components
             if from_node_id in excluded_node_ids or to_node_id in excluded_node_ids:
-                print(f"  Excluding link from {from_node_id} to {to_node_id} (connected to DB component)")
+                if self.debug:
+                    print(f"  Excluding link {link_id} (connected to excluded DB component)")
                 continue
-            
-            # Filter out cyclic/reverse connections based on node types
-            # Rule 1: No links TO a Source node
-            to_type = node_type_map.get(to_node_id)
-            if to_type == "Source":
-                print(f"  Skipping reverse link {link.get('id')} to Source node {to_node_id}")
+
+            # Determine roles of from and to nodes
+            from_type = node_type_map.get(from_node_id, "unknown")
+            to_type = node_type_map.get(to_node_id, "unknown")
+            from_role = get_node_role(from_type)
+            to_role = get_node_role(to_type)
+
+            # Apply data flow rules
+            # Rule 1: No links FROM a Sink node (sinks don't produce data)
+            if from_role == "sink":
+                if self.debug:
+                    print(f"  Skipping link {link_id}: {from_type}(sink) cannot emit data")
                 continue
-                
-            # Rule 2: No links FROM a Sink node
-            from_type = node_type_map.get(from_node_id)
-            if from_type == "Sink":
-                print(f"  Skipping reverse link {link.get('id')} from Sink node {from_node_id}")
+
+            # Rule 2: No links TO a Source node (sources don't receive data)
+            if to_role == "source":
+                if self.debug:
+                    print(f"  Skipping link {link_id}: {to_type}(source) cannot receive data")
                 continue
-            
+
+            # Rule 3: No bidirectional/cyclic links - if A->B exists, don't allow B->A
+            # Check if reverse link exists
+            reverse_exists = any(
+                l.get("from", {}).get("component_id") == to_node_id and 
+                l.get("to", {}).get("component_id") == from_node_id 
+                for l in links
+            )
+            if reverse_exists and from_node_id > to_node_id:  # Only skip the "later" one to break ties
+                if self.debug:
+                    print(f"  Skipping link {link_id}: bidirectional link detected (keeping opposite direction)")
+                continue
+
             filtered_links.append(link)
-        
+
         links = filtered_links
-        print(f"  Filtered {len(job_ir.get('links', []))} links to {len(links)} (removed links to DB components)")
+        if self.debug:
+            original_link_count = len(job_ir.get('links', []) or job_ir.get('connections', []))
+            removed_links = original_link_count - len(links)
+            print(f"  Filtered {original_link_count} links to {len(links)} (removed {removed_links} links)")
         
         # Build Talend nodes
         talend_nodes = []
@@ -563,11 +633,38 @@ class TranslationService:
             ir_subtype = node.get("subtype", "")
             node_name = node.get("name", f"node_{idx}")
             
-            # Determine component type: prefer DB mapping, then customType, then tUnknown
-            talend_component = mappings.get((ir_type, ir_subtype))
+            # Determine component type: try mappings first, with several fallbacks
+            talend_component = None
+            # Try exact tuple lookup
+            try_keys = [ (ir_type, ir_subtype), (ir_type, ''), (ir_type, None), (ir_type.lower(), ir_subtype), (ir_type.title(), ir_subtype) ]
+            for k in try_keys:
+                if k in mappings:
+                    talend_component = mappings.get(k)
+                    if self.debug:
+                        print(f"    Mapping lookup: {k} -> {talend_component}")
+                    break
+
+            # Fallback to customType from props if no DB mapping
             if not talend_component:
-                # Fallback to customType from props if no DB mapping
-                talend_component = node.get("props", {}).get("customType", "tUnknown")
+                talend_component = node.get("props", {}).get("customType")
+                if talend_component and self.debug:
+                    print(f"    Using customType prop -> {talend_component}")
+
+            # Final fallback: map common IR types to Talend components
+            if not talend_component:
+                type_map = {
+                    'database_read': 'tDB2Input',
+                    'database_write': 'tDB2Output',
+                    'file_read': 'tFileInputDelimited',
+                    'file_write': 'tFileOutputDelimited',
+                    'transform': 'tMap',
+                    'lookup': 'tMap',
+                    'custom_write': 'tJavaRow',
+                    'custom_read': 'tJavaRow',
+                }
+                talend_component = type_map.get(ir_type, 'tUnknown')
+                if self.debug:
+                    print(f"    Fallback type mapping: {ir_type} -> {talend_component}")
             
             # Hardcoded Talend component mapping (DataStage → Talend)
             # The DB stores DataStage component names, but we need Talend components
@@ -586,6 +683,8 @@ class TranslationService:
             
             # Override with correct Talend component name if available
             if (ir_type, ir_subtype) in talend_component_overrides:
+                if self.debug:
+                    print(f"    Overriding component via hardcoded overrides for {(ir_type, ir_subtype)} -> {talend_component_overrides[(ir_type, ir_subtype)]}")
                 talend_component = talend_component_overrides[(ir_type, ir_subtype)]
             
             print(f"  Node {idx}: {node_name} ({ir_type}/{ir_subtype}) → {talend_component}")
@@ -604,10 +703,10 @@ class TranslationService:
             incoming_conn_name = "row1" # Default
             incoming_link = None # Track the incoming link for schema propagation
             for link in links: # filtered links
-                if link.get("to", {}).get("nodeId") == node.get("id"):
-                    from_id = link.get("from", {}).get("nodeId")
-                    # Find from_node name
-                    from_n_name = next((n.get("name") for n in nodes if n.get("id") == from_id), from_id)
+                if link.get("to", {}).get("component_id") == node.get("id"):
+                    from_id = link.get("from", {}).get("component_id")
+                    # Find from_node name using original_nodes to ensure names exist even if filtered
+                    from_n_name = next((n.get("name") for n in original_nodes if n.get("id") == from_id), from_id)
                     incoming_conn_name = f"row{from_n_name}"
                     incoming_link = link
                     break
@@ -616,6 +715,32 @@ class TranslationService:
             # Get schema for this node
             schema_ref = node.get("schemaRef")
             schema_columns = schemas.get(schema_ref, []) if schema_ref else []
+            
+            # If node schema is empty, try to extract from node's schema dict (comp_XXXX structure)
+            # This handles cases where schemas are stored as nested dicts with input/output pins
+            if not schema_columns:
+                node_id = node.get("id")
+                node_schema = schemas.get(node_id, {})
+                if isinstance(node_schema, dict):
+                    # Look for outputs first (for transforms/sources)
+                    if "outputs" in node_schema:
+                        outputs = node_schema.get("outputs", {})
+                        if isinstance(outputs, dict):
+                            # Get the first output's columns
+                            for output_name, output_data in outputs.items():
+                                output_cols = output_data.get("columns", [])
+                                if output_cols:
+                                    schema_columns = output_cols
+                                    break
+                    # If still empty, look for inputs
+                    if not schema_columns and "inputs" in node_schema:
+                        inputs = node_schema.get("inputs", {})
+                        if isinstance(inputs, dict):
+                            for input_name, input_data in inputs.items():
+                                input_cols = input_data.get("columns", [])
+                                if input_cols:
+                                    schema_columns = input_cols
+                                    break
 
             # Propagate schema from incoming link if node schema is empty
             if not schema_columns and incoming_link:
@@ -628,7 +753,7 @@ class TranslationService:
             # If a source node has empty schema, we should check what the downstream component expects
             if not schema_columns and (ir_type == "Source" or talend_component.startswith("tFileInput")):
                 # Find the first outgoing link
-                outgoing_link = next((l for l in links if l.get("from", {}).get("nodeId") == node.get("id")), None)
+                outgoing_link = next((l for l in links if l.get("from", {}).get("component_id") == node.get("id")), None)
                 if outgoing_link:
                     link_schema_ref = outgoing_link.get("schemaRef")
                     if link_schema_ref:
@@ -636,8 +761,8 @@ class TranslationService:
                     
                     # If link schema is still empty, look at the target node's schema
                     if not schema_columns:
-                        target_node_id = outgoing_link.get("to", {}).get("nodeId")
-                        target_node = next((n for n in nodes if n.get("id") == target_node_id), None)
+                        target_node_id = outgoing_link.get("to", {}).get("component_id")
+                        target_node = next((n for n in original_nodes if n.get("id") == target_node_id), None)
                         if target_node:
                             target_schema_ref = target_node.get("schemaRef")
                             if target_schema_ref:
@@ -647,10 +772,11 @@ class TranslationService:
                          pass
             
             # Build metadata and nodeData
+            # For transforms/lookups with multiple outputs, collect all outgoing connections
+            outgoing_connections = [l for l in links if l.get("from", {}).get("component_id") == node.get("id")]
             
-            # Build metadata and nodeData
             metadata, node_data = self._build_metadata_and_node_data(
-                talend_component, node, schema_columns, incoming_conn_name
+                talend_component, node, schema_columns, incoming_conn_name, outgoing_connections
             )
             
             # Set correct component version (tMap uses 2.1, others use 0.102)
@@ -678,13 +804,13 @@ class TranslationService:
         # Build Talend connections from links
         talend_connections = []
         for link in links:
-            from_node = link.get("from", {}).get("nodeId")
-            to_node = link.get("to", {}).get("nodeId")
+            from_node = link.get("from", {}).get("component_id")
+            to_node = link.get("to", {}).get("component_id")
             if from_node and to_node:
-                # Find node names by ID
-                from_name = next((n.get("name") for n in nodes if n.get("id") == from_node), from_node)
-                to_name = next((n.get("name") for n in nodes if n.get("id") == to_node), to_node)
-                
+                # Find node names by ID using the original_nodes lookup so names are preserved
+                from_name = next((n.get("name") for n in original_nodes if n.get("id") == from_node), from_node)
+                to_name = next((n.get("name") for n in original_nodes if n.get("id") == to_node), to_node)
+
                 connection = {
                     "source": from_name,
                     "target": to_name,
@@ -709,13 +835,23 @@ class TranslationService:
         ir_node: Dict[str, Any],
         schema_columns: List[Dict[str, Any]],
         incoming_conn_name: str = "row1",
+        outgoing_connections: List[Dict[str, Any]] = None,
     ) -> tuple:
         """Build metadata and nodeData for a Talend node from IR schema."""
-        ir_type = ir_node.get("type", "")
+        ir_type = ir_node.get("type", "").lower()
         ir_subtype = ir_node.get("subtype", "")
         
-        if component_name == "tMap" and ir_type == "Transform" and ir_subtype == "Map":
-            return self._generate_tmap_metadata_and_nodedata_dict(schema_columns, incoming_conn_name)
+        # Handle tMap/transform nodes - support multiple outputs
+        if component_name == "tMap" and (ir_type == "transform" or (ir_type == "Transform" and ir_subtype == "Map")):
+            return self._generate_tmap_metadata_and_nodedata_dict(
+                schema_columns, incoming_conn_name, outgoing_connections or []
+            )
+        
+        # Handle lookup nodes (also tMap components)
+        if component_name == "tMap" and ir_type == "lookup":
+            return self._generate_tmap_metadata_and_nodedata_dict(
+                schema_columns, incoming_conn_name, outgoing_connections or []
+            )
         
         if component_name.startswith("tDB") or component_name == "tFileInputDelimited":
             return (
@@ -729,13 +865,13 @@ class TranslationService:
                 None,
             )
         
-        if component_name == "tFilterRow" and ir_type == "Transform":
+        if component_name == "tFilterRow" and ir_type == "transform":
             return (
                 self._generate_simple_metadata(schema_columns, name="row1"),
                 None,
             )
         
-        if component_name == "tAggregateRow" and ir_type == "Transform":
+        if component_name == "tAggregateRow" and ir_type == "transform":
             return (
                 self._generate_simple_metadata(schema_columns, name="target"),
                 None,
@@ -751,15 +887,33 @@ class TranslationService:
         return [], None
 
     def _generate_tmap_metadata_and_nodedata_dict(
-        self, schema_columns: List[Dict[str, Any]], incoming_conn_name: str
+        self, schema_columns: List[Dict[str, Any]], incoming_conn_name: str, outgoing_connections: List[Dict[str, Any]] = None
     ) -> tuple:
-        """Generate metadata and nodeData for tMap component."""
+        """Generate metadata and nodeData for tMap component with support for multiple outputs."""
+        if outgoing_connections is None:
+            outgoing_connections = []
+        
         talend_columns = [self._ir_column_to_talend(col) for col in schema_columns]
         
-        # tMap only has metadata for output connector, input is defined in nodeData
-        metadata = [
-            {"connector": "FLOW", "name": "out1", "columns": talend_columns},
-        ]
+        # tMap has metadata for each output connector
+        # If we have outgoing connections, create metadata for each one
+        metadata = []
+        if outgoing_connections:
+            # Multiple outputs: create metadata for each target
+            for idx, conn in enumerate(outgoing_connections):
+                output_name = f"out{idx + 1}"  # out1, out2, etc.
+                metadata.append({
+                    "connector": "FLOW",
+                    "name": output_name,
+                    "columns": talend_columns,
+                })
+        else:
+            # Fallback: single output
+            metadata.append({
+                "connector": "FLOW",
+                "name": "out1",
+                "columns": talend_columns,
+            })
         
         output_entries = []
         for col in schema_columns:
@@ -1407,9 +1561,15 @@ class TranslationService:
         # Convert delimiter to XML-safe format
         delimiter = delimiter.replace('"', '&quot;')
         
-        # Determine header lines from firstLineColumnNames
-        first_line_cols = props.get("firstLineColumnNames", "false")
-        header_lines = "1" if first_line_cols.lower() == "true" else "0"
+        # Determine header lines: prioritize explicit header_lines property, then derived from firstLineColumnNames
+        explicit_header = props.get("header_lines")
+        if explicit_header is not None:
+            header_lines = str(explicit_header)
+        else:
+            first_line_cols = props.get("firstLineColumnNames", False)
+            # Handle both boolean and string "true"
+            is_header = str(first_line_cols).lower() == "true"
+            header_lines = "1" if is_header else "0"
         
         # XML-safe quote helper
         def xml_quote(val):

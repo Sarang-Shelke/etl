@@ -1,8 +1,8 @@
 {
   "irVersion": "1.0",
-  "generatedAt": "2025-12-10T18:00:11.672774Z",
+  "generatedAt": "2025-12-10T17:39:13.123421Z",
   "job": {
-    "id": "job-J_DEMO_001-202512102330",
+    "id": "job-J_DEMO_001-202512101739",
     "name": "J_DEMO_001"
   },
   "nodes": [
@@ -12,15 +12,10 @@
       "subtype": "File",
       "name": "Input_File",
       "props": {
-        "path": "D:\\ETL_Migrator\\inputfile.csv",
+        "path": "D:/ETL_Migrator/inputfile.csv",
         "delimiter": ",",
-        "firstLineColumnNames": true,
-        "row_separator": "\\n",
-        "header_lines": "1",
-        "footer_lines": "0",
-        "row_limit": "",
-        "remove_empty_row": true,
-        "die_on_error": false
+        "encoding": "UTF-8",
+        "firstLineColumnNames": true
       },
       "transformationDetails": {
         "hasTransformations": false,
@@ -31,7 +26,10 @@
       "schemaRef": "s_V0S0",
       "provenance": {
         "source": "dsx",
-        "location": "original.dsx"
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "J_DEMO_001.dsx"
       }
     },
     {
@@ -47,9 +45,15 @@
         "transformationCount": 4
       },
       "schemaRef": "s_V0S1",
+      "trxgenCode": "Value =+=+=+=",
+      "trxClassName": "V0S1_SIMPLE_USER_PROCESS_User_Transformer",
+      "jobParameterNames": "ENVIRONMENT",
       "provenance": {
         "source": "dsx",
-        "location": "original.dsx"
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "J_DEMO_001.dsx"
       }
     },
     {
@@ -58,14 +62,10 @@
       "subtype": "File",
       "name": "Output_File",
       "props": {
-        "path": "D:\\ETL_Migrator\\outputfile.csv",
+        "path": "D:/ETL_Migrator/outputfile.csv",
         "delimiter": ",",
-        "firstLineColumnNames": true,
-        "row_separator": "\\n",
-        "include_header": true,
-        "append": false,
-        "compress": false,
-        "advanced_separator": false
+        "encoding": "UTF-8",
+        "firstLineColumnNames": true
       },
       "transformationDetails": {
         "hasTransformations": false,
@@ -76,7 +76,10 @@
       "schemaRef": "s_V0S2",
       "provenance": {
         "source": "dsx",
-        "location": "original.dsx"
+        "location": "J_DEMO_001.dsx",
+        "lineStart": "--",
+        "lineEnd": "--",
+        "filePath": "J_DEMO_001.dsx"
       }
     }
   ],
@@ -125,14 +128,6 @@
         "name": "USERID",
         "type": "decimal",
         "nullable": true,
-        "hasTransformation": true,
-        "sourceColumns": [
-          "UserLink",
-          "UserLink.USERID",
-          "USERID"
-        ],
-        "functions": [],
-        "expression": "UserLink.USERID",
         "transformationLogic": {
           "type": "simple_column",
           "source_columns": [
@@ -143,20 +138,21 @@
           "functions": [],
           "expression": "UserLink.USERID"
         },
-        "transformationClassification": "simple_column"
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "UserLink",
+          "UserLink.USERID",
+          "USERID"
+        ],
+        "expression": "UserLink.USERID",
+        "functions": [],
+        "hasTransformation": true
       },
       {
         "name": "USERNAME",
-        "type": "varchar",
+        "type": "string",
         "nullable": true,
-        "hasTransformation": true,
-        "sourceColumns": [
-          "USERNAME"
-        ],
-        "functions": [
-          "UpperCase"
-        ],
-        "expression": "UpperCase(USERNAME)",
         "transformationLogic": {
           "type": "simple",
           "source_columns": [
@@ -167,62 +163,83 @@
           ],
           "expression": "UpperCase(USERNAME)"
         },
-        "transformationClassification": "simple"
+        "transformationClassification": "simple",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "USERNAME"
+        ],
+        "expression": "UpperCase(USERNAME)",
+        "functions": [
+          "UpperCase"
+        ],
+        "hasTransformation": true
       },
       {
         "name": "EMAIL",
-        "type": "varchar",
+        "type": "string",
         "nullable": true,
-        "hasTransformation": true,
-        "sourceColumns": [
-          "UserLink.EMAIL",
-          "UserLink",
-          "EMAIL"
-        ],
-        "functions": [],
-        "expression": "UserLink.EMAIL",
         "transformationLogic": {
           "type": "simple_column",
           "source_columns": [
-            "UserLink.EMAIL",
             "UserLink",
+            "UserLink.EMAIL",
             "EMAIL"
           ],
           "functions": [],
           "expression": "UserLink.EMAIL"
         },
-        "transformationClassification": "simple_column"
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "UserLink",
+          "UserLink.EMAIL",
+          "EMAIL"
+        ],
+        "expression": "UserLink.EMAIL",
+        "functions": [],
+        "hasTransformation": true
       },
       {
         "name": "STATUS",
-        "type": "varchar",
+        "type": "string",
         "nullable": true,
-        "hasTransformation": true,
-        "sourceColumns": [
-          "UserLink.STATUS",
-          "UserLink",
-          "STATUS"
-        ],
-        "functions": [],
-        "expression": "UserLink.STATUS",
         "transformationLogic": {
           "type": "simple_column",
           "source_columns": [
-            "UserLink.STATUS",
             "UserLink",
+            "UserLink.STATUS",
             "STATUS"
           ],
           "functions": [],
           "expression": "UserLink.STATUS"
         },
-        "transformationClassification": "simple_column"
+        "transformationClassification": "simple_column",
+        "complexityScore": 0.0,
+        "sourceColumns": [
+          "UserLink",
+          "UserLink.STATUS",
+          "STATUS"
+        ],
+        "expression": "UserLink.STATUS",
+        "functions": [],
+        "hasTransformation": true
       }
     ],
     "s_V0S2": []
   },
   "transformationTracking": {
-    "totalTransformations": 4,
-    "transformationTypes": {},
-    "complexityDistribution": {}
+    "totalTransformations": 3,
+    "transformationTypes": {
+      "simple_columns": 3,
+      "aggregations": 0,
+      "conditionals": 0,
+      "expressions": 0,
+      "constants": 0
+    },
+    "complexityDistribution": {
+      "simple": 3,
+      "aggregations": 0,
+      "complex": 0
+    }
   }
 }

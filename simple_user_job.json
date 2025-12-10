@@ -15,6 +15,12 @@
           "FilePath": "D:\\ETL_Migrator\\inputfile.csv",
           "FieldDelimiter": ",",
           "FirstLineColumnNames": "true",
+          "RowSeparator": "\\n",
+          "HeaderLines": "1",
+          "FooterLines": "0",
+          "RowLimit": "",
+          "RemoveEmptyRow": "true",
+          "DieOnError": "false",
           "USERID": null,
           "USERNAME": null,
           "EMAIL": null,
@@ -167,8 +173,8 @@
               "transformation_logic": {
                 "type": "simple_column",
                 "source_columns": [
-                  "UserLink",
                   "UserLink.EMAIL",
+                  "UserLink",
                   "EMAIL"
                 ],
                 "functions": [],
@@ -188,8 +194,8 @@
               "transformation_logic": {
                 "type": "simple_column",
                 "source_columns": [
-                  "UserLink",
                   "UserLink.STATUS",
+                  "UserLink",
                   "STATUS"
                 ],
                 "functions": [],
@@ -213,13 +219,20 @@
       "id": "V0S2",
       "name": "Output_File",
       "type": "CCustomStage",
-      "enhanced_type": "CCustomStage",
-      "properties": {},
+      "enhanced_type": "PxSequentialFile",
+      "properties": {
+        "stage_type": "PxSequentialFile"
+      },
       "enhanced_properties": {
         "configuration": {
           "FilePath": "D:\\ETL_Migrator\\outputfile.csv",
           "FieldDelimiter": ",",
           "FirstLineColumnNames": "true",
+          "RowSeparator": "\\n",
+          "IncludeHeader": "true",
+          "Append": "false",
+          "Compress": "false",
+          "AdvancedSeparator": "false",
           "USERID": null,
           "USERNAME": null,
           "EMAIL": null,
@@ -299,8 +312,8 @@
         ],
         "schema_changes": {
           "added": [
-            "STATUS",
             "USERNAME",
+            "STATUS",
             "EMAIL",
             "USERID"
           ],
