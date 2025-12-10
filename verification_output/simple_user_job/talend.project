@@ -5,19 +5,19 @@
     xmlns:TalendProperties="http://www.talend.org/properties">
 
     <TalendProperties:Project 
-        xmi:id="_1cb8722a74b541f28eb65d5952783359" 
+        xmi:id="_6b0f4c6f66f54f66ae819bfa352c86a3" 
         label="simple_user_job" 
         description="" 
         language="java" 
         technicalLabel="SIMPLE_USER_JOB" 
         local="true" 
-        author="_0cc552d8667642788a6324e32eba751e" 
+        author="_4d9fcd87db284cff85ef821b78be66d0" 
         productVersion="Talend Cloud Data Fabric-8.0.1.20250218_0945-patch" 
         type="DQ" 
         itemsRelationVersion="">
 
         <migrationTask 
-            xmi:id="_6cceb9d4672d495f913d0debb5146aee" 
+            xmi:id="_fa731d1e162e4b448275a1f78801bbf6" 
             id="org.talend.repository.model.migration.CheckProductVersionMigrationTask" 
             breaks="7.1.0" 
             version="7.1.1"/>
@@ -25,7 +25,7 @@
     </TalendProperties:Project>
 
     <TalendProperties:User 
-        xmi:id="_0cc552d8667642788a6324e32eba751e" 
+        xmi:id="_4d9fcd87db284cff85ef821b78be66d0" 
         login="etl.migrator@local"/>
 
 </xmi:XMI>

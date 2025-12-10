@@ -45,6 +45,9 @@
     <elementParameter field="CHECK" name="USE_HEADER_AS_IS" value="{{ use_header_as_is | default('false') }}"/>
     <elementParameter field="TEXT" name="SCHEMA_OPT_NUM" value="100" show="false"/>
     <elementParameter field="TEXT" name="CONNECTION_FORMAT" value="row"/>
+    {% for key, val in additional_parameters.items() %}
+    <elementParameter field="TEXT" name="{{ key }}" value="{{ val }}"/>
+    {% endfor %}
     <metadata connector="FLOW" name="{{ unique_name }}">
 {% for col in schema_columns %}
       <column comment="" key="{{ col.key | default('false') }}" length="{{ col.length | default('-1') }}" name="{{ col.name }}" nullable="{{ col.nullable | default('true') }}" pattern="{{ col.pattern | default('') }}" precision="{{ col.precision | default('-1') }}" sourceType="{{ col.sourceType | default('') }}" type="{{ col.talend_type | default('id_String') }}" originalLength="{{ col.originalLength | default('-1') }}" usefulColumn="true"/>

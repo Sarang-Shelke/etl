@@ -65,7 +65,8 @@
         "include_header": true,
         "append": false,
         "compress": false,
-        "advanced_separator": false
+        "advanced_separator": false,
+        "custom_test_property": "test_value_123"
       },
       "transformationDetails": {
         "hasTransformations": false,

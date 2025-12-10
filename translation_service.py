@@ -575,8 +575,11 @@ class TranslationService:
         # Filter links to exclude those connected to DB components AND cyclic/reverse connections
         filtered_links = []
         for link in links:
-            from_node_id = link.get("from", {}).get("component_id")
-            to_node_id = link.get("to", {}).get("component_id")
+            # Support both component_id (old IR) and nodeId (new IR)
+            from_obj = link.get("from", {})
+            to_obj = link.get("to", {})
+            from_node_id = from_obj.get("component_id") or from_obj.get("nodeId")
+            to_node_id = to_obj.get("component_id") or to_obj.get("nodeId")
             link_id = link.get("id", "unknown")
 
             # Skip links that connect to/from excluded DB components
@@ -606,12 +609,17 @@ class TranslationService:
 
             # Rule 3: No bidirectional/cyclic links - if A->B exists, don't allow B->A
             # Check if reverse link exists
+            if from_node_id is None or to_node_id is None:
+                if self.debug:
+                    print(f"  Skipping link {link_id}: Missing source or target node ID")
+                continue
+
             reverse_exists = any(
                 l.get("from", {}).get("component_id") == to_node_id and 
                 l.get("to", {}).get("component_id") == from_node_id 
                 for l in links
             )
-            if reverse_exists and from_node_id > to_node_id:  # Only skip the "later" one to break ties
+            if reverse_exists and str(from_node_id) > str(to_node_id):  # Only skip the "later" one to break ties, ensure strings
                 if self.debug:
                     print(f"  Skipping link {link_id}: bidirectional link detected (keeping opposite direction)")
                 continue
@@ -703,8 +711,10 @@ class TranslationService:
             incoming_conn_name = "row1" # Default
             incoming_link = None # Track the incoming link for schema propagation
             for link in links: # filtered links
-                if link.get("to", {}).get("component_id") == node.get("id"):
-                    from_id = link.get("from", {}).get("component_id")
+                to_id = link.get("to", {}).get("component_id") or link.get("to", {}).get("nodeId")
+                if to_id == node.get("id"):
+                    from_obj = link.get("from", {})
+                    from_id = from_obj.get("component_id") or from_obj.get("nodeId")
                     # Find from_node name using original_nodes to ensure names exist even if filtered
                     from_n_name = next((n.get("name") for n in original_nodes if n.get("id") == from_id), from_id)
                     incoming_conn_name = f"row{from_n_name}"
@@ -753,7 +763,7 @@ class TranslationService:
             # If a source node has empty schema, we should check what the downstream component expects
             if not schema_columns and (ir_type == "Source" or talend_component.startswith("tFileInput")):
                 # Find the first outgoing link
-                outgoing_link = next((l for l in links if l.get("from", {}).get("component_id") == node.get("id")), None)
+                outgoing_link = next((l for l in links if (l.get("from", {}).get("component_id") or l.get("from", {}).get("nodeId")) == node.get("id")), None)
                 if outgoing_link:
                     link_schema_ref = outgoing_link.get("schemaRef")
                     if link_schema_ref:
@@ -761,7 +771,8 @@ class TranslationService:
                     
                     # If link schema is still empty, look at the target node's schema
                     if not schema_columns:
-                        target_node_id = outgoing_link.get("to", {}).get("component_id")
+                        to_obj = outgoing_link.get("to", {})
+                        target_node_id = to_obj.get("component_id") or to_obj.get("nodeId")
                         target_node = next((n for n in original_nodes if n.get("id") == target_node_id), None)
                         if target_node:
                             target_schema_ref = target_node.get("schemaRef")
@@ -773,7 +784,7 @@ class TranslationService:
             
             # Build metadata and nodeData
             # For transforms/lookups with multiple outputs, collect all outgoing connections
-            outgoing_connections = [l for l in links if l.get("from", {}).get("component_id") == node.get("id")]
+            outgoing_connections = [l for l in links if (l.get("from", {}).get("component_id") or l.get("from", {}).get("nodeId")) == node.get("id")]
             
             metadata, node_data = self._build_metadata_and_node_data(
                 talend_component, node, schema_columns, incoming_conn_name, outgoing_connections
@@ -804,8 +815,11 @@ class TranslationService:
         # Build Talend connections from links
         talend_connections = []
         for link in links:
-            from_node = link.get("from", {}).get("component_id")
-            to_node = link.get("to", {}).get("component_id")
+            from_obj = link.get("from", {})
+            to_obj = link.get("to", {})
+            from_node = from_obj.get("component_id") or from_obj.get("nodeId")
+            to_node = to_obj.get("component_id") or to_obj.get("nodeId")
+            
             if from_node and to_node:
                 # Find node names by ID using the original_nodes lookup so names are preserved
                 from_name = next((n.get("name") for n in original_nodes if n.get("id") == from_node), from_node)
@@ -1506,7 +1520,7 @@ class TranslationService:
             Rendered XML string for the component.
         """
         # Prepare template context with all needed variables
-        props = node.get("props", {})
+        props = node.get("props") or {}
         # config = props.get("configuration", {})
         
         # Convert IR schema columns to template-friendly format with Talend types
@@ -1608,6 +1622,24 @@ class TranslationService:
             # Schema columns for dynamic sections
             "schema_columns": processed_columns,
         }
+
+        # Calculate additional parameters (properties not explicitly mapped)
+        # Define keys that are already handled in the context above
+        handled_keys = {
+            "unique_name", "pos_x", "pos_y", "file_path", "file", "path", "filepath", "filename",
+            "csv_option", "row_separator", "csv_row_separator", "field_separator", "delimiter",
+            "escape_char", "text_enclosure", "header_lines", "header", "footer_lines", "footer",
+            "row_limit", "limit", "remove_empty_row", "uncompress", "die_on_error",
+            "trim_all", "advanced_separator", "check_fields_num", "check_date",
+            "encoding", "encoding_type", "split_record", "enable_decode", "destination",
+            "use_header_as_is", "temp_directory"
+        }
+        
+        additional_parameters = {
+            k: v for k, v in props.items() 
+            if k not in handled_keys and isinstance(v, (str, int, float, bool))
+        }
+        context["additional_parameters"] = additional_parameters
         
         # Render the template
         template = Template(template_content)
@@ -1636,7 +1668,7 @@ class TranslationService:
             Rendered XML string for the component.
         """
         # Prepare template context with all needed variables
-        props = node.get("props", {})
+        props = node.get("props") or {}
         # config = props.get("configuration", {})
         
         # get file path from props
@@ -1736,6 +1768,24 @@ class TranslationService:
             # Schema columns for dynamic sections
             "schema_columns": processed_columns,
         }
+
+        # Calculate additional parameters (properties not explicitly mapped)
+        # Define keys that are already handled in the context above
+        handled_keys = {
+            "unique_name", "pos_x", "pos_y", "filepath", "file", "path", "file_path", 
+            "delimiter", "field_separator", "row_separator",
+            "use_stream", "stream_name", "append", "include_header", "compress",
+            "csv_option", "advanced_separator", "create_dir", "split", "split_every",
+            "flush_on_row", "flush_on_row_num", "row_mode", "delete_empty_file", "file_exist_exception",
+            "encoding", "encoding_type", "escape_char", "text_enclosure",
+            "thousands_separator", "decimal_separator", "os_line_separator", "csv_row_separator"
+        }
+        
+        additional_parameters = {
+            k: v for k, v in props.items() 
+            if k not in handled_keys and isinstance(v, (str, int, float, bool))
+        }
+        context["additional_parameters"] = additional_parameters
         
         # Render the template
         template = Template(template_content)

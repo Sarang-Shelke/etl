@@ -26,6 +26,8 @@ import json
 from translation_service import TranslationService
 from db import get_db
 
+from translate import get_mappings
+
 async def main() -> None:
     # Enable debug to get detailed diagnostics during IR->Talend generation
     svc = TranslationService(db=get_db(), debug=True)
@@ -63,16 +65,12 @@ async def main() -> None:
                         "schemas": ir.get("schemas", {})
                     }
         
-        print(f"IR structure - keys: {list(ir.keys())}")
-        if 'job' in ir:
-            print(f"  - job name: {ir.get('job', {}).get('name', 'N/A')}")
-        print(f"  - nodes: {len(ir.get('nodes', []))}")
-        print(f"  - links: {len(ir.get('links', []))}")
-        print(f"  - schemas: {len(ir.get('schemas', {}))}")
+        
         print(f"\nNote: DB components (tDBInput, tDBOutput) will be filtered out during translation")
     
-    translated = await svc.translate_logic(ir)
-    # paths = svc.render_first_job(translated, output_base_dir="generated_jobs_test1")
-    # print(paths)
+    # translated = await svc.translate_logic(ir)
+    mappings = await get_mappings()
+    paths = await svc.fill_jinja_templates(ir, mappings, output_base_dir="verification_output")
+    print(paths)
 
 asyncio.run(main())
